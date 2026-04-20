@@ -2,6 +2,22 @@
 
 The kiosk can use a **USB barcode scanner**, but it is **fully optional**. Touch, mouse, and the on-screen command palette drive the same flows when no scanner is present.
 
+## Why serial on the server (not HID or browser serial)
+
+Scanners often offer **USB HID keyboard** (“keyboard wedge”) mode: each scan is injected as keystrokes into whatever window has focus. That is simple for a single desktop app, but it fits this project poorly:
+
+- **Focus and context** — On a kiosk, focus can move between inputs, dialogs, or the command palette. Keystrokes follow the focused element, so scans can land in the wrong field or be mixed with real typing. There is no single, explicit “scan event” for the app to validate.
+- **One pipeline** — The workshop flows (command codes, quantity, bin IDs) are interpreted in **one place** on the server, then broadcast over the existing **WebSocket** channel to every connected UI. HID mode would duplicate or fight with that pipeline if you also tried to read scans in the browser.
+- **Operations** — Line-terminated **serial** reads map cleanly to “one scan = one line” for logging, debugging, and tests. The same path runs in Docker (pass `/dev/ttyUSB0` into the container) or on a native Pi install.
+
+**Chromium [Web Serial](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API)** could open the COM port from the frontend instead. We still prefer server-side serial because:
+
+- **Permissions and deployment** — Web Serial needs a **secure context** (HTTPS or `localhost`) and user interaction to choose a port; on a wall-mounted Pi or locked-down kiosk, that UX is awkward compared to configuring `SCANNER_PORT` once on the server.
+- **One attachment, many clients** — Multiple browser tabs or machines can view the UI; only the **API** should own the device so scans are not duplicated or split across clients.
+- **Docker** — The common pattern is device passthrough to the **app** container, not to individual browsers inside it.
+
+So: **serial/COM mode → Node `serialport` on the server → WebSocket to the kiosk** keeps behavior predictable for a workshop setting.
+
 ## What the server expects
 
 The API opens the scanner as a **serial port** (Node `serialport`). That means the device must appear as a **virtual COM / USB CDC** device (sometimes labeled **USB-VCP** or **COM port emulation**), **not** as a USB HID keyboard (keyboard wedge).

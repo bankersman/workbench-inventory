@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Docs — scanner design rationale — 2026-04-21
+
+**Done**
+
+- `docs/guide/hardware/scanner.md`: why serial is opened on the server (vs HID wedge and Chromium Web Serial).
+
 ### Docs — Getting started + Hardware IA — 2026-04-21
 
 **Done**
