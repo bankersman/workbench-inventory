@@ -63,12 +63,14 @@ _Status: complete._
 
 **Goal:** Full project lifecycle with BOM, availability indicators, pull and install tracking, CSV import and export, shopping list generation.
 
-- [ ] Step 5.1 — Project module
-- [ ] Step 5.2 — BOM module
-- [ ] Step 5.3 — BOM import
-- [ ] Step 5.4 — BOM and order list export
-- [ ] Step 5.5 — Projects list screen
-- [ ] Step 5.6 — Project detail screen
+_Status: complete._
+
+- [x] Step 5.1 — Project module
+- [x] Step 5.2 — BOM module
+- [x] Step 5.3 — BOM import
+- [x] Step 5.4 — BOM and order list export
+- [x] Step 5.5 — Projects list screen
+- [x] Step 5.6 — Project detail screen
 
 ---
 

@@ -2,6 +2,50 @@
 
 ## [Unreleased]
 
+### [Phase 5.6] Project detail screen — 2026-04-20
+
+**Done**
+
+- `ProjectDetailScreen`: project metadata, BOM list with links to items, CSV export link.
+
+### [Phase 5.5] Projects list screen — 2026-04-20
+
+**Done**
+
+- `ProjectsListScreen` lists `/api/projects`.
+
+### [Phase 5.4] BOM and order list export — 2026-04-20
+
+**Done**
+
+- `GET /api/projects/:id/export/bom.csv` and `GET /api/projects/:id/export/missing.csv` (missing = `still_needed > 0`).
+
+### [Phase 5.3] BOM import — 2026-04-20
+
+**Done**
+
+- `BomImportService.previewCsv`, `POST /api/projects/:id/bom/preview-import`, `POST /api/projects/:id/bom/confirm-import` (flexible column names: `name`/`item`/`qty`/`quantity`).
+
+### [Phase 5.2] BOM module — 2026-04-20
+
+**Done**
+
+- BOM line CRUD under `/api/projects/:id/bom`; `GET .../bom/availability` combines lines with `AvailabilityService`.
+
+### [Phase 5.1] Project module — 2026-04-20
+
+**Done**
+
+- Project CRUD; `POST /api/projects/:id/complete` applies PLAN completion stock adjustment; dependency `csv-parse`.
+
+**Tests**
+
+- `project.service.spec.ts` — CSV export shape.
+
+**Considerations**
+
+- Mouser/TME pipe shopping lists for a project are covered in Phase 6 shared export utilities (global order list).
+
 ### [Phase 4.7] Item detail screen — 2026-04-20
 
 **Done**
