@@ -6,6 +6,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AvailabilityModule } from './availability/availability.module';
 import { CategoryModule } from './category/category.module';
 import { ContainerModule } from './container/container.module';
 import { DatabaseModule } from './database/database.module';
@@ -23,6 +24,7 @@ const frontendDist = join(__dirname, 'frontend');
     ItemModule,
     CategoryModule,
     ScanModule,
+    AvailabilityModule,
     ...(existsSync(frontendDist)
       ? [
           ServeStaticModule.forRoot({

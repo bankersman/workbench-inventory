@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+### [Phase 2.6] Availability service — 2026-04-20
+
+**Done**
+
+- `AvailabilityService`: `getItemAvailability` / `getProjectAvailability` per PLAN derived fields (`inWarehouse`, `totalReserved`, `effectivelyFree`, `stillNeeded`); HTTP `GET /api/availability/items/:itemId` and `GET /api/availability/projects/:projectId`.
+
+**Tests**
+
+- `availability.service.spec.ts` — mocked aggregates for item availability and project line `stillNeeded`.
+
+**Considerations**
+
+- `getProjectAvailability` calls `getItemAvailability` per BOM line (N+1); acceptable for initial scale.
+
 ### [Phase 2.5] Unified scan resolution — 2026-04-20
 
 **Done**
