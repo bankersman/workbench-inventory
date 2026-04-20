@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### Frontend overhaul — Phase 1 — 2026-04-21
+
+**Done**
+
+- **Tailwind CSS v4** with Vite plugin; **`dark`** class variant; semantic CSS variables for legacy [`App.css`](frontend/src/App.css) (command palette) until full migration.
+- **Theme:** [`ThemeProvider`](frontend/src/theme/ThemeProvider.tsx), [`useTheme`](frontend/src/theme/useTheme.ts), **localStorage** `workbench-theme`, **`prefers-color-scheme`** default; **Light/Dark** in [Settings](frontend/src/screens/SettingsScreen.tsx) and quick toggle in [AppFooter](frontend/src/components/AppFooter.tsx).
+- **GitHub** link in footer to [bankersman/workbench-inventory](https://github.com/bankersman/workbench-inventory).
+- **TanStack Query:** [`queryClient`](frontend/src/queryClient.ts), lists on [Projects](frontend/src/screens/ProjectsListScreen.tsx) and [Inventory](frontend/src/screens/InventoryScreen.tsx).
+- **Shell:** [AppLayout](frontend/src/AppLayout.tsx), [StatusBar](frontend/src/StatusBar.tsx), bottom nav, [Home](frontend/src/screens/HomeScreen.tsx) restyled; [`index.html`](frontend/index.html) title **Workbench Inventory**.
+- **README:** [Local development](README.md) (Nest + Vite vs production static).
+
 ### Frontend overhaul — Phase 0 — 2026-04-21
 
 **Done**
