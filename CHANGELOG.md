@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Frontend overhaul — Phase 4 — 2026-04-21
+
+**Done**
+
+- **Parts list:** [ItemsListScreen](frontend/src/screens/ItemsListScreen.tsx) — search `q`, filters (category, storage unit, container), shareable query string; links to detail and bin.
+- **Create part:** [ItemCreateScreen](frontend/src/screens/ItemCreateScreen.tsx) at `/items/new` with optional `?containerId=`; home and container detail link in with defaults.
+- **Part detail:** [ItemDetailScreen](frontend/src/screens/ItemDetailScreen.tsx) — availability block; **adjust quantity** (delta + reason, before/after feedback); **edit** (bin, category, reorder levels, etc.); **delete** with confirm.
+- **Routes:** `/items`, `/items/new`, `/items/:id` (static routes ordered before `:id`).
+
 ### Frontend overhaul — Phase 3 — 2026-04-21
 
 **Done**

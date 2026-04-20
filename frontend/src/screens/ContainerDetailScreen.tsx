@@ -159,6 +159,21 @@ export function ContainerDetailScreen() {
         </div>
       </div>
 
+      <div className="flex flex-wrap gap-2">
+        <Link
+          to={`/items?containerId=${data.id}`}
+          className="inline-flex min-h-11 items-center rounded-xl border border-violet-300 bg-violet-50 px-4 font-medium text-violet-900 dark:border-violet-800 dark:bg-violet-950/50 dark:text-violet-100"
+        >
+          Parts in this bin
+        </Link>
+        <Link
+          to={`/items/new?containerId=${data.id}`}
+          className="inline-flex min-h-11 items-center rounded-xl bg-violet-600 px-4 font-medium text-white hover:bg-violet-700 dark:bg-violet-500"
+        >
+          Add part here
+        </Link>
+      </div>
+
       <div className="rounded-2xl border border-stone-200 bg-white/90 p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/80">
         <h2 className="text-sm font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
           Location

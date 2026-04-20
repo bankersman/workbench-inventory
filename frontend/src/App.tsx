@@ -4,7 +4,9 @@ import { AppLayout } from './AppLayout';
 import { ContainerDetailScreen } from './screens/ContainerDetailScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { InventoryScreen } from './screens/InventoryScreen';
+import { ItemCreateScreen } from './screens/ItemCreateScreen';
 import { ItemDetailScreen } from './screens/ItemDetailScreen';
+import { ItemsListScreen } from './screens/ItemsListScreen';
 import { OrderListScreen } from './screens/OrderListScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { ProjectDetailScreen } from './screens/ProjectDetailScreen';
@@ -21,6 +23,8 @@ export default function App() {
         <Route path="inventory" element={<InventoryScreen />} />
         <Route path="storage-units/:id" element={<StorageUnitDetailScreen />} />
         <Route path="containers/:id" element={<ContainerDetailScreen />} />
+        <Route path="items/new" element={<ItemCreateScreen />} />
+        <Route path="items" element={<ItemsListScreen />} />
         <Route path="items/:id" element={<ItemDetailScreen />} />
         <Route path="projects" element={<ProjectsListScreen />} />
         <Route path="projects/:id" element={<ProjectDetailScreen />} />
