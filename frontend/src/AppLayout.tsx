@@ -9,6 +9,7 @@ import { useScanner } from './useScanner';
 function navClass({ isActive }: { isActive: boolean }): string {
   return [
     'flex min-h-12 flex-1 items-center justify-center rounded-xl px-2 text-center text-sm font-medium transition-colors',
+    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500',
     isActive
       ? 'bg-violet-100 text-violet-900 dark:bg-violet-950/80 dark:text-violet-100'
       : 'text-zinc-600 hover:bg-stone-200/80 dark:text-zinc-400 dark:hover:bg-zinc-800/80',
@@ -36,7 +37,11 @@ export function AppLayout() {
           Returning to idle in a few seconds…
         </div>
       ) : null}
-      <main className="flex flex-1 flex-col overflow-y-auto px-4 pb-32 pt-4 text-left">
+      <main
+        id="main-content"
+        className="flex flex-1 flex-col overflow-y-auto px-4 pb-32 pt-4 text-left"
+        tabIndex={-1}
+      >
         <div className="mx-auto w-full max-w-3xl flex-1">
           <Outlet />
         </div>

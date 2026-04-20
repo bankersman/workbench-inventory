@@ -77,7 +77,12 @@ export function CommandPalette() {
                 </button>
               ))}
             </div>
-            <button type="button" className="command-close" onClick={() => setOpen(false)}>
+            <button
+              type="button"
+              className="command-close"
+              aria-label="Close command palette"
+              onClick={() => setOpen(false)}
+            >
               Close
             </button>
           </div>

@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Frontend overhaul — Phase 6 — 2026-04-21
+
+**Done**
+
+- **A11y:** Bottom nav links get visible **focus** rings; **main** landmark `id="main-content"` with `tabIndex={-1}` for programmatic focus; command palette **close** control has an accessible name.
+- **Tests:** [Vitest](frontend/src/api.test.ts) coverage for [`parseApiErrorMessage`](frontend/src/api.ts) (Nest JSON shapes and fallbacks).
+
 ### Frontend overhaul — Phase 5 — 2026-04-21
 
 **Done**
