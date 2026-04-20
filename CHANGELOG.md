@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Frontend overhaul — Phase 3 — 2026-04-21
+
+**Done**
+
+- **Inventory hub:** [InventoryScreen](frontend/src/screens/InventoryScreen.tsx) — **Add storage area** (name, optional parent, notes); navigates to the new unit.
+- **Storage unit:** [StorageUnitDetailScreen](frontend/src/screens/StorageUnitDetailScreen.tsx) — Tailwind layout; **edit** name/parent/notes; **delete** with plain-language confirm; **New bin** (`POST /containers` with `storageUnitId`); list of bins; labels.
+- **Container:** [ContainerDetailScreen](frontend/src/screens/ContainerDetailScreen.tsx) — location + project summary; **edit** bin (storage unit + optional project + notes); **delete** with confirm (blocked when parts still reference the bin); TanStack Query + invalidation.
+
 ### Frontend overhaul — Phase 2 — 2026-04-21
 
 **Done**
