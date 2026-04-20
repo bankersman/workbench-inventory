@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+### [Phase 2.5] Unified scan resolution — 2026-04-20
+
+**Done**
+
+- `ScanModule`: `POST /api/scan/resolve` with `{ value }`; resolves `SU:`/`BIN:`/`PBIN:`/`PRJ:`/stored barcodes, `CMD:*`, `QTY:*`, and item packaging barcodes via `items.barcode`.
+
+**Tests**
+
+- `scan-resolve.service.spec.ts` — `CMD:`, `QTY:`, `PRJ:` resolution with mocked repositories.
+
+**Considerations**
+
+- `PBIN:` containers distinguished from `BIN:` only by stored barcode prefix; `PRJ:` uses numeric id (leading zeros allowed in the string).
+
 ### [Phase 2.4] Category module — 2026-04-20
 
 **Done**

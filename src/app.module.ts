@@ -10,6 +10,7 @@ import { CategoryModule } from './category/category.module';
 import { ContainerModule } from './container/container.module';
 import { DatabaseModule } from './database/database.module';
 import { ItemModule } from './item/item.module';
+import { ScanModule } from './scan/scan.module';
 import { StorageUnitModule } from './storage-unit/storage-unit.module';
 
 const frontendDist = join(__dirname, 'frontend');
@@ -21,6 +22,7 @@ const frontendDist = join(__dirname, 'frontend');
     ContainerModule,
     ItemModule,
     CategoryModule,
+    ScanModule,
     ...(existsSync(frontendDist)
       ? [
           ServeStaticModule.forRoot({
