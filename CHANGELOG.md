@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+### [Phase 1.2] Entities and migration — 2026-04-20
+
+**Done**
+
+- TypeORM entities for PLAN.md data model: `StorageUnit`, `Category`, `Project` (`ProjectStatus`), `Container`, `Item`, `SupplierData`, `BOMLine`; shared `ALL_ENTITIES` export; category attribute typing in `category-attribute.types.ts`.
+- Initial migration `src/migrations/1776715115341-InitialSchema.ts` (SQLite tables, FKs, `items.attributes` default `'{}'`); `migrationsRun: true` in Nest so pending migrations apply on startup; `src/data-source.ts` for TypeORM CLI.
+- `resolveDatabasePath()` moved to `src/database/database-path.ts` for reuse with CLI.
+- `CategorySeedService` + `default-categories.ts`: seeds all PLAN.md default categories when `categories` is empty; `seedDefaultCategoriesIfEmpty()` for tests and idempotency.
+- Root scripts: `migration:run`, `migration:generate` (append migration name path after `--`).
+
+**Tests**
+
+- `src/database/category-seed.service.spec.ts` — in-memory SQLite: full seed list, skip when non-empty, double-call idempotency.
+
+**Considerations**
+
+- **Bidirectional TypeORM relations:** Inverse `@OneToMany` sides omitted where they caused circular imports; FK `@ManyToOne` sides are sufficient for schema and queries (inverse relations can be re-added later with lazy patterns if needed).
+- **Item.attributes default:** SQL migration sets `DEFAULT ('{}')`; entity has no TypeORM `default` to avoid the broken `DEFAULT ([object Object])` TypeORM generated for `simple-json`.
+- **Auto-generated migration replaced:** First `migration:generate` output included invalid JSON defaults and redundant SQLite table rebuilds; replaced with a single hand-written `up`/`down` matching entities.
+
 ### [Phase 1.1] Project scaffold and tooling — 2026-04-20
 
 **Done**

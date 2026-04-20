@@ -1,18 +1,13 @@
 import { mkdirSync } from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { ALL_ENTITIES, Category } from '../entities';
+import { CategorySeedService } from './category-seed.service';
+import { resolveDatabasePath } from './database-path';
 import { DatabaseInitService } from './database-init.service';
-
-export function resolveDatabasePath(): string {
-  const raw = process.env.DB_PATH;
-  if (raw && raw.trim().length > 0) {
-    return raw.trim();
-  }
-  return `${process.cwd()}/data/inventory.db`;
-}
 
 @Module({
   imports: [
@@ -23,13 +18,16 @@ export function resolveDatabasePath(): string {
         return {
           type: 'better-sqlite3' as const,
           database,
-          entities: [],
+          entities: ALL_ENTITIES,
+          migrations: [join(__dirname, '..', 'migrations', '*.js')],
+          migrationsRun: true,
           synchronize: false,
           logging: false,
         };
       },
     }),
+    TypeOrmModule.forFeature([Category]),
   ],
-  providers: [DatabaseInitService],
+  providers: [DatabaseInitService, CategorySeedService],
 })
 export class DatabaseModule {}

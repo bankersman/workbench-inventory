@@ -17,7 +17,9 @@
     "test": "jest && npm run test --workspace frontend",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "typecheck": "tsc --noEmit -p tsconfig.json && npm run typecheck --workspace frontend"
+    "typecheck": "tsc --noEmit -p tsconfig.json && npm run typecheck --workspace frontend",
+    "migration:run": "node ./node_modules/typeorm/cli-ts-node-commonjs.js migration:run -d src/data-source.ts",
+    "migration:generate": "node ./node_modules/typeorm/cli-ts-node-commonjs.js migration:generate -d src/data-source.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",
