@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Docs — GHCR pull/run — 2026-04-20
+
+**Done**
+
+- `docker-compose.ghcr.yml` to run published images without building; new VitePress page `docs/guide/docker.md` (pull, pin tags, `ghcr.io` login, non-root volumes); README and getting-started updated with links.
+
 ### Docker — distroless split images — 2026-04-20
 
 **Done**

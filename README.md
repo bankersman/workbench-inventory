@@ -4,11 +4,22 @@ NestJS API and React kiosk for workshop stock, BOM/projects, supplier shopping l
 
 ## Quickstart (Docker Compose)
 
+**Build from this repo** (for development or customization):
+
 ```bash
 git clone <your-remote-url>
 cd workshop-inventory
 docker compose up --build
 ```
+
+**Run published images** from [GitHub Container Registry](https://github.com/bankersman/workbench-inventory/pkgs/container/workbench-inventory) (no clone required—you only need `docker-compose.ghcr.yml`):
+
+```bash
+docker compose -f docker-compose.ghcr.yml pull
+docker compose -f docker-compose.ghcr.yml up -d
+```
+
+Use a checkout path or copy [`docker-compose.ghcr.yml`](./docker-compose.ghcr.yml) next to your `data/` / `backups/` folders. Full steps, tags, private-registry login, and non-root volume permissions are in the docs: **[Docker (GHCR)](https://bankersman.github.io/workbench-inventory/guide/docker.html)** (in-repo: [`docs/guide/docker.md`](./docs/guide/docker.md)).
 
 Open [http://localhost:3000](http://localhost:3000). Compose runs two **distroless** services (Nest app + Python label sidecar on port 5050). Persisted data lives in `./data` and backups in `./backups`.
 

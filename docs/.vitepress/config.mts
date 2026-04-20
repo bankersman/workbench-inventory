@@ -27,6 +27,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Getting started', link: '/guide/getting-started' },
+      { text: 'Docker (GHCR)', link: '/guide/docker' },
       { text: 'Configuration', link: '/guide/configuration' },
       { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
       { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },
@@ -37,6 +38,7 @@ export default defineConfig({
         text: 'Guide',
         items: [
           { text: 'Getting started', link: '/guide/getting-started' },
+          { text: 'Docker (GHCR)', link: '/guide/docker' },
           { text: 'Configuration', link: '/guide/configuration' },
           { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
           { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },

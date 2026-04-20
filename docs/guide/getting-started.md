@@ -2,13 +2,24 @@
 
 ## Docker Compose (recommended)
 
-From the repository root:
+### Build from source (repository root)
 
 ```bash
 docker compose up --build
 ```
 
-Open `http://localhost:3000`. Compose builds **two** images (Nest app and label sidecar; both distroless) and wires `LABEL_SIDECAR_URL` to the sidecar service. Data is stored under `./data` and backups under `./backups` (see `docker-compose.yml`).
+### Run published images (GHCR)
+
+If you only want pre-built images (no `npm` / local Docker build), use `docker-compose.ghcr.yml`:
+
+```bash
+docker compose -f docker-compose.ghcr.yml pull
+docker compose -f docker-compose.ghcr.yml up -d
+```
+
+See **[Docker (GHCR)](./docker.md)** for image names, version tags, registry login, and host permissions for the non-root containers.
+
+Open `http://localhost:3000`. Both stacks use two services (Nest app + label sidecar on 5050) and the same volume layout: `./data` and `./backups` (see `docker-compose.yml` or `docker-compose.ghcr.yml`).
 
 To use a **USB serial barcode scanner** with Docker on Linux, configure `SCANNER_PORT` and pass the host device into the container — see **[Hardware scanner](./hardware-scanner.md)**.
 

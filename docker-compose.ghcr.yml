@@ -1,0 +1,27 @@
+# Run pre-built images from GitHub Container Registry (no local build).
+# See docs/guide/docker.md and README "Published images (GHCR)".
+#
+#   docker compose -f docker-compose.ghcr.yml pull
+#   docker compose -f docker-compose.ghcr.yml up -d
+
+services:
+  app:
+    image: ghcr.io/bankersman/workbench-inventory:latest
+    ports:
+      - '3000:3000'
+    depends_on:
+      - label-sidecar
+    environment:
+      PORT: '3000'
+      DB_PATH: /opt/inventory/data/inventory.db
+      LABEL_SIDECAR_URL: http://label-sidecar:5050
+    volumes:
+      - ./data:/opt/inventory/data
+      - ./backups:/opt/inventory/backups
+
+  label-sidecar:
+    image: ghcr.io/bankersman/workbench-inventory-label-sidecar:latest
+    ports:
+      - '5050:5050'
+    environment:
+      LABEL_SIDECAR_PORT: '5050'
