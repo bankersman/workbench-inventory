@@ -23,49 +23,44 @@ COPY . .
 
 RUN npm run build
 
-FROM node:24-bookworm-slim AS runtime
+FROM node:24-bookworm AS prod_deps
 
-WORKDIR /opt/inventory
+WORKDIR /app
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-    python3 \
-    python3-pip \
-    curl \
-    libcairo2 \
-    libpango-1.0-0 \
-    libjpeg62-turbo \
-    libgif7 \
-    librsvg2-2 \
-  && rm -rf /var/lib/apt/lists/*
-
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/package.json ./
-COPY --from=build /app/package-lock.json ./
+COPY --from=build /app/package.json /app/package-lock.json ./
 COPY --from=build /app/node_modules ./node_modules
 
 RUN npm prune --omit=dev
 
-COPY label-sidecar ./label-sidecar
+FROM node:24-bookworm AS native_libs
 
-RUN pip3 install --no-cache-dir --break-system-packages -r label-sidecar/requirements.txt \
-  || pip3 install --no-cache-dir -r label-sidecar/requirements.txt
+WORKDIR /app
 
-COPY scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
-  && chown -R node:node /opt/inventory
+COPY --from=prod_deps /app/node_modules ./node_modules
+COPY scripts/collect-distroless-libs.sh /collect-distroless-libs.sh
+
+RUN chmod +x /collect-distroless-libs.sh \
+  && /collect-distroless-libs.sh /sysroot \
+    /app/node_modules/canvas/build/Release/canvas.node \
+    /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node
+
+FROM gcr.io/distroless/nodejs24-debian12:nonroot AS runtime
+
+WORKDIR /opt/inventory
+
+COPY --from=native_libs /sysroot /
+
+COPY --from=build /app/dist ./dist
+COPY --from=prod_deps /app/node_modules ./node_modules
+COPY --from=prod_deps /app/package.json ./
 
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV LABEL_SIDECAR_PORT=5050
 ENV DB_PATH=/opt/inventory/data/inventory.db
 
-USER node
-
 EXPOSE 3000
-EXPOSE 5050
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
-  CMD curl -fsS http://127.0.0.1:3000/api/health || exit 1
+  CMD ["/nodejs/bin/node", "-e", "fetch('http://127.0.0.1:'+(process.env.PORT||'3000')+'/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["dist/main.js"]

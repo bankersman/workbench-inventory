@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Docker — distroless split images — 2026-04-20
+
+**Done**
+
+- **App** image: `gcr.io/distroless/nodejs24-debian12:nonroot`; native addons (`canvas`, `better-sqlite3`) ship extra `.so` libraries via `scripts/collect-distroless-libs.sh`; health check uses Node `fetch` (no `curl`).
+- **Label sidecar** image: `label-sidecar/Dockerfile` on `gcr.io/distroless/python3-debian12:nonroot`; Flask deps installed in a build stage and copied into the runtime image.
+- `docker-compose.yml`: `app` + `label-sidecar` services; `LABEL_SIDECAR_URL=http://label-sidecar:5050`; removed monolithic shell entrypoint.
+- **GHCR**: workflow publishes `ghcr.io/<repo>` and `ghcr.io/<repo>-label-sidecar` with the same version tags.
+
 ### Docker / label sidecar — `LABEL_SIDECAR_PORT` — 2026-04-20
 
 **Done**

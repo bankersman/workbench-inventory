@@ -8,7 +8,7 @@ From the repository root:
 docker compose up --build
 ```
 
-Open `http://localhost:3000`. Data is stored under `./data` and backups under `./backups` (see `docker-compose.yml`).
+Open `http://localhost:3000`. Compose builds **two** images (Nest app and label sidecar; both distroless) and wires `LABEL_SIDECAR_URL` to the sidecar service. Data is stored under `./data` and backups under `./backups` (see `docker-compose.yml`).
 
 To use a **USB serial barcode scanner** with Docker on Linux, configure `SCANNER_PORT` and pass the host device into the container — see **[Hardware scanner](./hardware-scanner.md)**.
 

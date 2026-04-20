@@ -10,7 +10,7 @@ cd workshop-inventory
 docker compose up --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Persisted data lives in `./data` and backups in `./backups`.
+Open [http://localhost:3000](http://localhost:3000). Compose runs two **distroless** services (Nest app + Python label sidecar on port 5050). Persisted data lives in `./data` and backups in `./backups`.
 
 ### Optional USB barcode scanner
 

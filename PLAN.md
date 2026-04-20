@@ -1060,10 +1060,9 @@ Jobs:
 1. Build multi-arch Docker image (`linux/amd64`, `linux/arm64` for Pi)
 2. Push to GitHub Container Registry (`ghcr.io`)
 3. Tag as both `v1.2.3` and `latest`
+4. Second image for the label sidecar: `ghcr.io/owner/workbench-inventory-label-sidecar` (same tags)
 
-The label-sidecar Python process is included in the same image (multi-process via
-`supervisord` or a simple entrypoint script). The image is self-contained — no separate
-Python container needed for simple deployments.
+The **label sidecar** is a **separate** distroless Python image (`label-sidecar/Dockerfile`). The main app image is distroless Node only (`gcr.io/distroless/nodejs24-debian12:nonroot`); native Node addons bundle their shared libraries at build time.
 
 #### Step 10.3 — Docker Compose
 `docker-compose.yml` at repo root for local development and target deployment:
@@ -1072,26 +1071,31 @@ Python container needed for simple deployments.
 services:
   app:
     image: ghcr.io/owner/workbench-inventory:latest
+    depends_on:
+      - label-sidecar
     ports:
       - "3000:3000"
+    environment:
+      LABEL_SIDECAR_URL: http://label-sidecar:5050
     volumes:
       - ./data:/opt/inventory/data
       - ./backups:/opt/inventory/backups
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0   # optional, scanner passthrough
     env_file: .env
+  label-sidecar:
+    image: ghcr.io/owner/workbench-inventory-label-sidecar:latest
+    ports:
+      - "5050:5050"
 ```
 
 Volume mounts keep the database and backups outside the container.
 Scanner device passthrough is optional — omit the `devices` section if no scanner.
 
 #### Step 10.4 — Dockerfile
-- Multi-stage build: build stage (Node 24, full deps) → runtime stage (Node 24 slim + Python)
-- Frontend built in build stage, output copied to runtime stage
-- NestJS compiled in build stage, output copied to runtime stage
-- Python sidecar dependencies installed in runtime stage
-- Non-root user for runtime
-- Health check: `GET /api/health`
+- **App** (`Dockerfile`): multi-stage build (Node 24 Bookworm) → runtime `gcr.io/distroless/nodejs24-debian12:nonroot`; copy extra `.so` for `canvas` / `better-sqlite3`; health check via Node `fetch` to `/api/health`
+- **Sidecar** (`label-sidecar/Dockerfile`): pip install in build stage → `gcr.io/distroless/python3-debian12:nonroot`
+- Non-root (`65532`) in both runtimes
 
 ---
 
