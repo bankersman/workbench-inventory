@@ -10,19 +10,19 @@ Docker Compose remains a good option for development or x86 machines; see [Getti
 - **Database:** SQLite file on disk (default under `./data` or set `DB_PATH`).
 - **Migrations:** Applied automatically on startup (`migrationsRun: true` in the app).
 
-## 1. Install Node.js (22+)
+## 1. Install Node.js (24+)
 
 Use a **system-wide** Node so `systemd` can run `/usr/bin/node` (or adjust `ExecStart` in the unit file).
 
 Example using [NodeSource](https://github.com/nodesource/distributions) (check their docs for current commands):
 
 ```bash
-curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
 sudo apt-get install -y nodejs
-node -v   # should be v22.x
+node -v   # should be v24.x
 ```
 
-Alternatively install [nvm](https://github.com/nvm-sh/nvm) for your login user only — then you **must** set `ExecStart` to the full path of `node` from `which node` in that environment, or use a small wrapper script.
+Alternatively install [nvm](https://github.com/nvm-sh/nvm) (`nvm install 24` / `nvm use 24`) for your login user only — then you **must** set `ExecStart` to the full path of `node` from `which node` in that environment, or use a small wrapper script.
 
 ## 2. System packages for native modules
 

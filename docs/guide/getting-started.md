@@ -16,7 +16,7 @@ For a **native systemd install on a Raspberry Pi** (no Docker), see **[Raspberry
 
 ## Local development
 
-Requires Node.js 22+ and npm. Install dependencies and run migrations (if needed), then start the API and frontend:
+Requires Node.js 24+ and npm (see repo root `.nvmrc` if you use **nvm**). Install dependencies and run migrations (if needed), then start the API and frontend:
 
 ```bash
 npm install

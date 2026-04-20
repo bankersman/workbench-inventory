@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Tooling — Node.js 24 — 2026-04-20
+
+**Done**
+
+- `engines.node` `>=24`; `@types/node` ^24; `.nvmrc` **24**; CI, Docs workflow, and Docker base images use Node 24; contributor and VitePress docs updated (including NodeSource `setup_24.x`).
+
 ### Docs — Raspberry Pi native + systemd — 2026-04-20
 
 **Done**
@@ -49,7 +55,7 @@
 
 **Done**
 
-- Multi-stage image: Node 22 build (native deps for canvas), runtime slim + Python sidecar deps; non-root `node` user; health check `GET /api/health`; entrypoint runs Flask sidecar + Nest.
+- Multi-stage image: Node 24 build (native deps for canvas), runtime slim + Python sidecar deps; non-root `node` user; health check `GET /api/health`; entrypoint runs Flask sidecar + Nest.
 
 ### [Phase 10.3] Docker Compose — 2026-04-20
 
@@ -477,6 +483,6 @@
 
 **Considerations**
 
-- **Node version:** PLAN specifies Node.js 24+; environment currently reports v22.22.0. Dependencies install and tests pass on Node 22; upgrade to 24+ for production alignment when available.
+- **Node version:** Target **Node.js 24+** (`package.json` `engines`, CI, Docker). Local dev with `nvm use 24` is supported.
 - **`@nestjs/platform-socket.io`:** Not added yet; `socket.io` is installed for later WebSocket gateway work (Phase 3).
 - **Static assets:** `ServeStaticModule` is only registered when `dist/frontend` exists (typically after `npm run build`), so `nest start` without a prior full build still runs API-only — intentional for backend-only dev.

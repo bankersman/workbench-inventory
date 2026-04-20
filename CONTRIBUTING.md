@@ -4,7 +4,7 @@ Thanks for helping improve Workbench Inventory. This document explains how to se
 
 ## Development setup
 
-1. Install **Node.js 22+** and **npm**.
+1. Install **Node.js 24+** and **npm** (see `package.json` `engines.node`). With [nvm](https://github.com/nvm-sh/nvm), run `nvm install` / `nvm use` in the repo root (`.nvmrc` pins **24**).
 2. Clone the repository and run `npm install` at the repo root (workspaces install the frontend).
 3. Copy environment variables as needed (see `docs/guide/configuration.md` and any `.env.example`).
 4. Run database migrations: `npm run migration:run`.
