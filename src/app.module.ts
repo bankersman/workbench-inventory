@@ -11,7 +11,9 @@ import { CategoryModule } from './category/category.module';
 import { ContainerModule } from './container/container.module';
 import { DatabaseModule } from './database/database.module';
 import { ItemModule } from './item/item.module';
+import { OrderListModule } from './order-list/order-list.module';
 import { ProjectModule } from './project/project.module';
+import { SettingsModule } from './settings/settings.module';
 import { ScanModule } from './scan/scan.module';
 import { ScannerModule } from './scanner/scanner.module';
 import { StorageUnitModule } from './storage-unit/storage-unit.module';
@@ -25,6 +27,8 @@ const frontendDist = join(__dirname, 'frontend');
     ContainerModule,
     ItemModule,
     ProjectModule,
+    SettingsModule,
+    OrderListModule,
     CategoryModule,
     ScanModule,
     AvailabilityModule,

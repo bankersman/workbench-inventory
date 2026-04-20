@@ -1,3 +1,4 @@
+import { AppSetting } from './app-setting.entity';
 import { BOMLine } from './bom-line.entity';
 import { Category } from './category.entity';
 import { Container } from './container.entity';
@@ -7,6 +8,7 @@ import { StorageUnit } from './storage-unit.entity';
 import { SupplierData } from './supplier-data.entity';
 
 export const ALL_ENTITIES = [
+  AppSetting,
   StorageUnit,
   Category,
   Project,
@@ -16,6 +18,7 @@ export const ALL_ENTITIES = [
   BOMLine,
 ];
 
+export { AppSetting } from './app-setting.entity';
 export { BOMLine } from './bom-line.entity';
 export type {
   CategoryAttributeDefinition,

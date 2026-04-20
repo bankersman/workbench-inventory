@@ -2,6 +2,44 @@
 
 ## [Unreleased]
 
+### [Phase 6.5] Order list screen — 2026-04-20
+
+**Done**
+
+- `OrderListScreen`: low stock vs project gaps, reload, refresh prices, CSV export, Mouser/TME copy areas.
+
+### [Phase 6.4] Batch refresh — 2026-04-20
+
+**Done**
+
+- `POST /api/order-list/refresh-prices` runs `SupplierRefreshService` (200ms between SKUs).
+
+### [Phase 6.3] TME service — 2026-04-20
+
+**Done**
+
+- `TmeService.lookupBySku`: HMAC-SHA1 signing for `https://api.tme.eu/Products/Search`; uses `TME_APP_KEY` / `TME_APP_SECRET`.
+
+### [Phase 6.2] Mouser service — 2026-04-20
+
+**Done**
+
+- `MouserService.lookupBySku` via Mouser search API; `MOUSER_API_KEY`.
+
+### [Phase 6.1] Order list module — 2026-04-20
+
+**Done**
+
+- `GET /api/order-list` (low stock + project gaps), CSV and Mouser/TME pipe exports; `app_settings` migration for later settings consumers.
+
+**Tests**
+
+- `order-list-export.util.spec.ts` — CSV and pipe formats.
+
+**Considerations**
+
+- Supplier keys are read from environment variables (`MOUSER_API_KEY`, `TME_APP_KEY`, `TME_APP_SECRET`).
+
 ### [Phase 5.6] Project detail screen — 2026-04-20
 
 **Done**

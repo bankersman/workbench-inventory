@@ -78,11 +78,13 @@ _Status: complete._
 
 **Goal:** Global order list with live supplier data, batch refresh, all export formats.
 
-- [ ] Step 6.1 — Order list module
-- [ ] Step 6.2 — Mouser service
-- [ ] Step 6.3 — TME service
-- [ ] Step 6.4 — Batch refresh
-- [ ] Step 6.5 — Order list screen
+_Status: complete._
+
+- [x] Step 6.1 — Order list module
+- [x] Step 6.2 — Mouser service
+- [x] Step 6.3 — TME service
+- [x] Step 6.4 — Batch refresh
+- [x] Step 6.5 — Order list screen
 
 ---
 

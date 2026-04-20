@@ -5,6 +5,7 @@ import { ContainerDetailScreen } from './screens/ContainerDetailScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { InventoryScreen } from './screens/InventoryScreen';
 import { ItemDetailScreen } from './screens/ItemDetailScreen';
+import { OrderListScreen } from './screens/OrderListScreen';
 import { PlaceholderScreen } from './screens/PlaceholderScreen';
 import { ProjectDetailScreen } from './screens/ProjectDetailScreen';
 import { ProjectsListScreen } from './screens/ProjectsListScreen';
@@ -23,10 +24,7 @@ export default function App() {
         <Route path="items/:id" element={<ItemDetailScreen />} />
         <Route path="projects" element={<ProjectsListScreen />} />
         <Route path="projects/:id" element={<ProjectDetailScreen />} />
-        <Route
-          path="order"
-          element={<PlaceholderScreen title="Order list">Phase 6.</PlaceholderScreen>}
-        />
+        <Route path="order" element={<OrderListScreen />} />
         <Route
           path="settings"
           element={<PlaceholderScreen title="Settings">Phase 9.</PlaceholderScreen>}
