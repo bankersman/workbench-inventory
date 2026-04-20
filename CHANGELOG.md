@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Docs — VitePress base for GitHub Pages — 2026-04-20
+
+**Done**
+
+- Default `base` set to `/workbench-inventory/` for [bankersman/workbench-inventory](https://github.com/bankersman/workbench-inventory) Pages; GitHub link in theme; README points at the live docs URL.
+
 ### [Phase 11.3] Supporting repo files — 2026-04-20
 
 **Done**

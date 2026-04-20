@@ -18,9 +18,8 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      # Base matches docs/.vitepress/config.mts (GitHub Pages project site path).
       - name: Build VitePress
-        env:
-          VITEPRESS_BASE: /${{ github.event.repository.name }}/
         run: npm run docs:build
       - uses: peaceiris/actions-gh-pages@v4
         with:

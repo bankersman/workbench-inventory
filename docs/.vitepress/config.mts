@@ -1,12 +1,29 @@
 import { defineConfig } from 'vitepress';
 
-const base = process.env.VITEPRESS_BASE ?? '/';
+/** GitHub Pages project URL: https://bankersman.github.io/workbench-inventory/ */
+const defaultBase = '/workbench-inventory/';
+
+function normalizeBase(raw: string): string {
+  let b = raw.trim();
+  if (!b.startsWith('/')) {
+    b = `/${b}`;
+  }
+  return b.endsWith('/') ? b : `${b}/`;
+}
+
+const base = normalizeBase(process.env.VITEPRESS_BASE ?? defaultBase);
 
 export default defineConfig({
   title: 'Workbench Inventory',
   description: 'NestJS API and React kiosk for workshop inventory',
   base,
   themeConfig: {
+    socialLinks: [
+      {
+        icon: 'github',
+        link: 'https://github.com/bankersman/workbench-inventory',
+      },
+    ],
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Getting started', link: '/guide/getting-started' },

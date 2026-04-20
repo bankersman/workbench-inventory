@@ -14,7 +14,8 @@ Open [http://localhost:3000](http://localhost:3000). Persisted data lives in `./
 
 ## Documentation
 
-- **User & developer guide (VitePress):** build with `npm run docs:build`, or after enabling GitHub Pages on the `gh-pages` branch, browse the site published from this repo’s **Docs** workflow.
+- **Live site (GitHub Pages):** [https://bankersman.github.io/workbench-inventory/](https://bankersman.github.io/workbench-inventory/)
+- **Local:** `npm run docs:dev` — open the URL Vite prints (includes the `/workbench-inventory/` base path). To build: `npm run docs:build`.
 - **Contributing:** [CONTRIBUTING.md](./CONTRIBUTING.md)
 - **Changelog:** [CHANGELOG.md](./CHANGELOG.md)
 

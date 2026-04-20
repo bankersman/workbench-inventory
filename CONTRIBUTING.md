@@ -21,6 +21,8 @@ npm run test
 npm run build
 ```
 
+**VitePress** (`docs/`): the default `base` matches GitHub Pages at `https://bankersman.github.io/workbench-inventory/`. For a local dev server at the site root, run `VITEPRESS_BASE=/ npm run docs:dev`.
+
 ## Branches and commits
 
 - Use short-lived branches off `main` named by intent, e.g. `fix/order-list-csv`, `feat/label-template`.
