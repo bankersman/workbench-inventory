@@ -4,7 +4,7 @@ Checklist for the UX-first frontend overhaul (see project plan). After each phas
 
 - [x] Phase 0 — SPA static fallback, fetchJson errors, OrderList apiBase, progress file
 - [x] Phase 1 — Tailwind shell, theme toggle, GitHub link, TanStack Query, primitives
-- [ ] Phase 2 — Projects and BOM workflows
+- [x] Phase 2 — Projects and BOM workflows
 - [ ] Phase 3 — Storage units and containers CRUD
 - [ ] Phase 4 — Items search, adjust quantity, edit
 - [ ] Phase 5 — Categories and settings

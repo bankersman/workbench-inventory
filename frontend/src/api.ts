@@ -46,5 +46,28 @@ export async function fetchJson<T>(path: string, init?: RequestInit): Promise<T>
     const text = await res.text();
     throw new Error(parseApiErrorMessage(text, res.status, res.statusText));
   }
-  return res.json() as Promise<T>;
+  if (res.status === 204) {
+    return undefined as T;
+  }
+  const text = await res.text();
+  if (!text.trim()) {
+    return undefined as T;
+  }
+  return JSON.parse(text) as T;
+}
+
+/** DELETE/POST that return 204 No Content. */
+export async function fetchNoContent(path: string, init?: RequestInit): Promise<void> {
+  const res = await fetch(`${apiBase()}${path}`, {
+    ...init,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      ...init?.headers,
+    },
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(parseApiErrorMessage(text, res.status, res.statusText));
+  }
 }

@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Frontend overhaul — Phase 2 — 2026-04-21
+
+**Done**
+
+- **Projects list:** [ProjectsListScreen](frontend/src/screens/ProjectsListScreen.tsx) — **New project** modal, `POST /projects`, status at a glance, TanStack invalidation + navigation to detail.
+- **Project detail / BOM:** [ProjectDetailScreen](frontend/src/screens/ProjectDetailScreen.tsx) — edit project; delete/complete with confirmations; BOM **add / edit / remove**; **availability** via `GET .../bom/availability`; **CSV import** (preview → confirm); export BOM and missing-links; separate loading/error for BOM vs project header.
+- **API client:** [`fetchJson`](frontend/src/api.ts) handles **204** and empty bodies; **`fetchNoContent`** for no-body success responses.
+
 ### Frontend overhaul — Phase 1 — 2026-04-21
 
 **Done**
