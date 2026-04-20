@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { LabelSection } from '../components/LabelSection';
 import { fetchJson } from '../api';
 
 interface StorageUnitDetail {
@@ -55,6 +56,7 @@ export function StorageUnitDetailScreen() {
           </li>
         ))}
       </ul>
+      <LabelSection entityType="storage-unit" entityId={data.id} />
       <Link to="/inventory">← Back</Link>
     </section>
   );

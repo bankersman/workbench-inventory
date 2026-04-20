@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { LabelSection } from '../components/LabelSection';
 import { apiBase, fetchJson } from '../api';
 
 interface Project {
@@ -65,6 +66,7 @@ export function ProjectDetailScreen() {
           Export BOM CSV
         </a>
       </p>
+      {id ? <LabelSection entityType="project" entityId={Number(id)} /> : null}
       <h2>BOM</h2>
       <ul className="detail-list">
         {bom.map((line) => (

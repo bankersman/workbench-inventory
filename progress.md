@@ -92,10 +92,12 @@ _Status: complete._
 
 **Goal:** Generate and print Code 128 labels for all scannable entities.
 
-- [ ] Step 7.1 — Python sidecar
-- [ ] Step 7.2 — Label service
-- [ ] Step 7.3 — Label and command sheet endpoints
-- [ ] Step 7.4 — Label UI
+_Status: complete._
+
+- [x] Step 7.1 — Python sidecar
+- [x] Step 7.2 — Label service
+- [x] Step 7.3 — Label and command sheet endpoints
+- [x] Step 7.4 — Label UI
 
 ---
 

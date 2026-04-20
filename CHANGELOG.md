@@ -2,6 +2,38 @@
 
 ## [Unreleased]
 
+### [Phase 7.4] Label UI — 2026-04-20
+
+**Done**
+
+- `LabelSection` on container, storage unit, and project detail screens (preview PNG + send to sidecar).
+
+### [Phase 7.3] Label and command sheet endpoints — 2026-04-20
+
+**Done**
+
+- `POST /api/labels/preview`, `POST /api/labels/print`, `GET /api/labels/barcode.png`, `GET /api/labels/command-sheet`, `GET /api/labels/sidecar-status`.
+
+### [Phase 7.2] Label service — 2026-04-20
+
+**Done**
+
+- `LabelService`: Code 128 via `bwip-js`, PNG layout via `canvas`; templates `bin-standard` / `bin-compact` / `storage-unit` / `project-bin`.
+
+### [Phase 7.1] Python sidecar — 2026-04-20
+
+**Done**
+
+- `label-sidecar/sidecar.py` (Flask `:5050`), `requirements.txt`; decodes PNG and acknowledges print (hardware optional via `BROTHER_QL_PRINTER`).
+
+**Tests**
+
+- `label.service.spec.ts` — command code list.
+
+**Considerations**
+
+- `LABEL_SIDECAR_URL` defaults to `http://127.0.0.1:5050`.
+
 ### [Phase 6.5] Order list screen — 2026-04-20
 
 **Done**

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { LabelSection } from '../components/LabelSection';
 import { fetchJson } from '../api';
 
 interface ContainerDetail {
@@ -60,6 +61,7 @@ export function ContainerDetailScreen() {
           {data.project.status})
         </p>
       ) : null}
+      <LabelSection entityType="container" entityId={data.id} />
       <Link to="/inventory">← Back</Link>
     </section>
   );
