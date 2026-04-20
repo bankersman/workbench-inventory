@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+### [Phase 2.4] Category module — 2026-04-20
+
+**Done**
+
+- `CategoryModule` CRUD at `/api/categories`; `assertValidCategoryAttributes()` validates PLAN attribute definition shape (`number` | `text` | `enum` + `options` for enums).
+
+**Tests**
+
+- `category-attributes.validator.spec.ts` — valid enum defs, invalid type, enum without options.
+
+**Considerations**
+
+- `CreateCategoryDto` defers deep attribute validation to the service so JSON shape errors return `400` with clear messages.
+
 ### [Phase 2.3] Item module — 2026-04-20
 
 **Done**

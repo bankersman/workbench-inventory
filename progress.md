@@ -23,7 +23,7 @@ _Status: complete._
 - [x] Step 2.1 — Storage unit module
 - [x] Step 2.2 — Container module
 - [x] Step 2.3 — Item module
-- [ ] Step 2.4 — Category module
+- [x] Step 2.4 — Category module
 - [ ] Step 2.5 — Unified scan resolution
 - [ ] Step 2.6 — Availability service
 
