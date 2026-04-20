@@ -28,6 +28,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Getting started', link: '/guide/getting-started' },
       { text: 'Configuration', link: '/guide/configuration' },
+      { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
       { text: 'Development', link: '/guide/development' },
     ],
     sidebar: [
@@ -36,6 +37,7 @@ export default defineConfig({
         items: [
           { text: 'Getting started', link: '/guide/getting-started' },
           { text: 'Configuration', link: '/guide/configuration' },
+          { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
           { text: 'Usage', link: '/guide/usage' },
           { text: 'Development', link: '/guide/development' },
         ],

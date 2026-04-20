@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Docs — hardware barcode scanner — 2026-04-20
+
+**Done**
+
+- New VitePress page `docs/guide/hardware-scanner.md` (serial/CDC mode, baud, line endings, Docker, verification); README and configuration guide cross-links; nav/sidebar entry.
+
 ### CI — GitHub Pages deploy via official Actions — 2026-04-20
 
 **Done**
