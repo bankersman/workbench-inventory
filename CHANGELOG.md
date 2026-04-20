@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### [Phase 2.2] Container module — 2026-04-20
+
+**Done**
+
+- `ContainerModule` CRUD at `/api/containers`; detail includes **storage unit** (`id`, `barcode`, `name`) and **project** (`id`, `name`, `status`) when FKs are set.
+- Barcodes assigned as `BIN:` + zero-padded id (5 digits); validates `storageUnitId` / `projectId` when provided.
+
+**Tests**
+
+- `container.service.spec.ts` — `BadRequestException` when storage unit or project does not exist.
+
+**Considerations**
+
+- Same placeholder-then-final barcode pattern as storage units.
+
 ### [Phase 2.1] Storage unit module — 2026-04-20
 
 **Done**
