@@ -7,6 +7,6 @@ Checklist for the UX-first frontend overhaul (see project plan). After each phas
 - [x] Phase 2 — Projects and BOM workflows
 - [x] Phase 3 — Storage units and containers CRUD
 - [x] Phase 4 — Items search, adjust quantity, edit
-- [ ] Phase 5 — Categories and settings
+- [x] Phase 5 — Categories and settings
 - [ ] Phase 6 — A11y polish, optional Vitest helpers
 - [ ] Phase 7 — PLAN.md, README, docs, CHANGELOG coherence

@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Frontend overhaul — Phase 5 — 2026-04-21
+
+**Done**
+
+- **Categories:** [SettingsScreen](frontend/src/screens/SettingsScreen.tsx) — list with **New category**, **Rename**, **Delete** (plain-language confirm); TanStack Query + invalidation; backup/scanner/labels sections unchanged aside from coexistence.
+
 ### Frontend overhaul — Phase 4 — 2026-04-21
 
 **Done**
