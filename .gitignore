@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.vite/
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# SQLite / local data (adjust if you commit fixtures)
+*.db
+*.db-shm
+*.db-wal
+data/
+backups/
+
+# Tests and coverage
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python (label sidecar)
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.Python
+
+# OS and editors
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+
+# Misc
+tmp/
+temp/
+.cache/
