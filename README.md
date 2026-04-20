@@ -19,7 +19,7 @@ docker compose -f docker-compose.ghcr.yml pull
 docker compose -f docker-compose.ghcr.yml up -d
 ```
 
-Use a checkout path or copy [`docker-compose.ghcr.yml`](./docker-compose.ghcr.yml) next to your `data/` / `backups/` folders. Full steps, tags, private-registry login, and non-root volume permissions are in the docs: **[Docker (GHCR)](https://bankersman.github.io/workbench-inventory/guide/docker.html)** (in-repo: [`docs/guide/docker.md`](./docs/guide/docker.md)).
+Use a checkout path or copy [`docker-compose.ghcr.yml`](./docker-compose.ghcr.yml) next to your `data/` / `backups/` folders. The **label sidecar is optional**—you can run only the main image ([`docker-compose.app-only.yml`](./docker-compose.app-only.yml) or `docker run` with volume flags—see docs). Full steps, tags, private-registry login, and non-root volume permissions are in **[Docker (GHCR)](https://bankersman.github.io/workbench-inventory/guide/docker.html)** ([`docs/guide/docker.md`](./docs/guide/docker.md)).
 
 Open [http://localhost:3000](http://localhost:3000). Compose runs two **distroless** services (Nest app + Python label sidecar on port 5050). Persisted data lives in `./data` and backups in `./backups`.
 

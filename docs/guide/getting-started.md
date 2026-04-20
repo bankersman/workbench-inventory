@@ -17,7 +17,9 @@ docker compose -f docker-compose.ghcr.yml pull
 docker compose -f docker-compose.ghcr.yml up -d
 ```
 
-See **[Docker (GHCR)](./docker.md)** for image names, version tags, registry login, and host permissions for the non-root containers.
+To skip the label sidecar entirely, use **`docker-compose.app-only.yml`** or a `docker run` one-liner—see **[Docker (GHCR)](./docker.md)**.
+
+See that page for image names, version tags, registry login, host permissions for the non-root containers, and when the sidecar is optional.
 
 Open `http://localhost:3000`. Both stacks use two services (Nest app + label sidecar on 5050) and the same volume layout: `./data` and `./backups` (see `docker-compose.yml` or `docker-compose.ghcr.yml`).
 
