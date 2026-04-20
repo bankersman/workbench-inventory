@@ -2,6 +2,56 @@
 
 ## [Unreleased]
 
+### [Phase 4.7] Item detail screen — 2026-04-20
+
+**Done**
+
+- `ItemDetailScreen` loads item + `/api/availability/items/:id` and links to container.
+
+### [Phase 4.6] Container detail screen — 2026-04-20
+
+**Done**
+
+- `ContainerDetailScreen` loads `/api/containers/:id` with storage unit / project links.
+
+### [Phase 4.5] Storage unit detail screen — 2026-04-20
+
+**Done**
+
+- `StorageUnitDetailScreen` lists child containers from API.
+
+### [Phase 4.4] Home screen — 2026-04-20
+
+**Done**
+
+- `HomeScreen` with quick links into inventory/projects.
+
+### [Phase 4.3] Status bar — 2026-04-20
+
+**Done**
+
+- `StatusBar` shown when command state ≠ `IDLE`; cancel/confirm and ± stepper wired to `dispatchLine` / `adjustQty`.
+
+### [Phase 4.2] Scanner hook and state machine — 2026-04-20
+
+**Done**
+
+- `useScanner` (Socket.IO kiosk, `useRef` callback); `commandStateMachine` + `useCommandState` (touch events + hardware); Vitest tests for reducer.
+
+### [Phase 4.1] App shell — 2026-04-20
+
+**Done**
+
+- `BrowserRouter`, `AppLayout` with bottom nav (Home, Inventory, Projects, Order, Settings), dark-friendly layout CSS, 48px+ tap targets; Vite dev proxy for `/api` and `/socket.io`.
+
+**Tests**
+
+- `commandStateMachine.test.ts` (Vitest).
+
+**Considerations**
+
+- Global search / unknown-barcode registration flows are partial until later phases; detail routes assume seeded or manually created entities.
+
 ### [Phase 3.3] On-screen command palette — 2026-04-20
 
 **Done**

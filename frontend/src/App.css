@@ -1,3 +1,149 @@
+.kiosk-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  flex: 1;
+  text-align: left;
+}
+
+.kiosk-main {
+  flex: 1;
+  padding: 16px 16px 88px;
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-around;
+  gap: 4px;
+  padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  min-height: 56px;
+  box-sizing: border-box;
+}
+
+.nav-item {
+  flex: 1;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.nav-item.active {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.status-bar {
+  position: sticky;
+  top: 0;
+  z-index: 35;
+  background: var(--code-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 12px;
+}
+
+.status-bar-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.95rem;
+  color: var(--text-h);
+}
+
+.status-mode {
+  font-weight: 600;
+}
+
+.status-target,
+.status-qty {
+  color: var(--text);
+}
+
+.status-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.status-btn {
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.status-btn-primary {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}
+
+.status-btn-danger {
+  border-color: #b91c1c;
+  color: #fecaca;
+}
+
+.screen {
+  max-width: 42rem;
+}
+
+.screen h1 {
+  margin-top: 0;
+}
+
+.screen-hint,
+.meta {
+  color: var(--text);
+}
+
+.detail-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.detail-list li {
+  margin-bottom: 8px;
+}
+
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.quick-link {
+  min-height: 48px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text-h);
+}
+
+.error {
+  color: #fecaca;
+}
+
 .app-root {
   position: relative;
   min-height: 100%;
@@ -20,7 +166,7 @@
 .command-fab {
   position: fixed;
   right: 16px;
-  bottom: 16px;
+  bottom: 80px;
   z-index: 40;
   width: 56px;
   height: 56px;

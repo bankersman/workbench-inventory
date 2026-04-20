@@ -47,13 +47,15 @@ _Status: complete._
 
 **Goal:** React kiosk app, scanner state machine, core navigation and screens working.
 
-- [ ] Step 4.1 — App shell
-- [ ] Step 4.2 — Scanner hook and state machine
-- [ ] Step 4.3 — Status bar
-- [ ] Step 4.4 — Home screen
-- [ ] Step 4.5 — Storage unit detail screen
-- [ ] Step 4.6 — Container detail screen
-- [ ] Step 4.7 — Item detail screen
+_Status: complete._
+
+- [x] Step 4.1 — App shell
+- [x] Step 4.2 — Scanner hook and state machine
+- [x] Step 4.3 — Status bar
+- [x] Step 4.4 — Home screen
+- [x] Step 4.5 — Storage unit detail screen
+- [x] Step 4.6 — Container detail screen
+- [x] Step 4.7 — Item detail screen
 
 ---
 
