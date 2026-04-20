@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { apiBase, parseApiErrorMessage } from '../api';
+
 type OrderEntry = {
   itemId: number;
   itemName: string;
@@ -24,9 +26,10 @@ type OrderListResponse = {
 };
 
 async function fetchOrderList(): Promise<OrderListResponse> {
-  const res = await fetch('/api/order-list');
+  const res = await fetch(`${apiBase()}/order-list`);
   if (!res.ok) {
-    throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    throw new Error(parseApiErrorMessage(text, res.status, res.statusText));
   }
   return (await res.json()) as OrderListResponse;
 }

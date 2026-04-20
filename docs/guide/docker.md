@@ -2,9 +2,9 @@
 
 Tagged releases build **multi-arch** images (`linux/amd64`, `linux/arm64`) and push them to **GitHub Container Registry** (`ghcr.io`).
 
-| Image | Purpose |
-| ----- | ------- |
-| `ghcr.io/bankersman/workbench-inventory` | NestJS app + static UI |
+| Image                                                  | Purpose                    |
+| ------------------------------------------------------ | -------------------------- |
+| `ghcr.io/bankersman/workbench-inventory`               | NestJS app + static UI     |
 | `ghcr.io/bankersman/workbench-inventory-label-sidecar` | Python Flask label service |
 
 Tags follow the release (for example `v0.0.1` → images tagged `0.0.1`, `0.0`, and `latest` on that release line).

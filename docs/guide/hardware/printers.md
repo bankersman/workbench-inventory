@@ -9,18 +9,18 @@ Physical label printing is **optional**. The app always renders **Code 128** lab
 
 Configure intent with:
 
-| Variable | Purpose |
-| -------- | ------- |
+| Variable             | Purpose                                                                        |
+| -------------------- | ------------------------------------------------------------------------------ |
 | `BROTHER_QL_PRINTER` | Optional printer identifier passed through to the sidecar for real deployments |
 
 ## Sidecar HTTP API
 
 The Flask app (`label-sidecar/sidecar.py`) exposes:
 
-| Method | Path | Role |
-| ------ | ---- | ---- |
-| `GET` | `/status` | Health — used by **Settings** and `BrotherQlService` |
-| `POST` | `/print` | JSON body `{ "png_base64": "..." }` — decodes PNG and (when configured) forwards to hardware |
+| Method | Path      | Role                                                                                         |
+| ------ | --------- | -------------------------------------------------------------------------------------------- |
+| `GET`  | `/status` | Health — used by **Settings** and `BrotherQlService`                                         |
+| `POST` | `/print`  | JSON body `{ "png_base64": "..." }` — decodes PNG and (when configured) forwards to hardware |
 
 The Nest app calls the sidecar base URL from `LABEL_SIDECAR_URL` (default `http://127.0.0.1:5050`). The sidecar listens on **`LABEL_SIDECAR_PORT`** (default **5050**), not `PORT`.
 

@@ -37,6 +37,10 @@ The app talks to a scanner as a **serial (USB CDC / COM) device** with **line-te
 
 To run **natively** on the Pi under **systemd** (typical for production kiosks with USB hardware), follow **[Raspberry Pi (native)](https://bankersman.github.io/workbench-inventory/guide/raspberry-pi-native.html)**. The repo includes `deploy/workbench-inventory.service` as a starting point.
 
+## Local development (API + Vite)
+
+From the repo root: `npm ci`, then run the Nest API (`npm run start:dev`, default port **3000**) and in another terminal the Vite dev server (`npm run dev --workspace frontend`, default **5173**). Vite proxies `/api` and `/socket.io` to the API. Open the Vite URL for hot reload; for **production-like** deep links (`/projects`, etc.) on one port, run `npm run build` and `npm run start:prod` so Nest serves [`dist/frontend`](frontend/vite.config.ts).
+
 ## Documentation
 
 - **Live site (GitHub Pages):** [https://bankersman.github.io/workbench-inventory/](https://bankersman.github.io/workbench-inventory/)

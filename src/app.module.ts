@@ -44,6 +44,8 @@ const frontendDist = join(__dirname, 'frontend');
           ServeStaticModule.forRoot({
             rootPath: frontendDist,
             exclude: ['/api*'],
+            // Express 5: serve index.html for client-side routes on full page load (e.g. /projects).
+            renderPath: '{*any}',
           }),
         ]
       : []),

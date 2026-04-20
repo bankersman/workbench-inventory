@@ -42,11 +42,11 @@ features:
 
 ## Quick links
 
-| I want to… | Go to |
-| ---------- | ----- |
-| Clone & run with Compose | [Getting started](/guide/getting-started/) |
-| Pull pre-built images | [Docker (GHCR)](/guide/docker) |
-| Env vars and paths | [Configuration](/guide/configuration) |
-| Printers & label sidecar | [Printers & label sidecar](/guide/hardware/printers) |
-| USB scanner in Docker | [USB barcode scanner](/guide/hardware/scanner) |
-| Deploy on a Pi without Docker | [Raspberry Pi (native)](/guide/raspberry-pi-native) |
+| I want to…                    | Go to                                                |
+| ----------------------------- | ---------------------------------------------------- |
+| Clone & run with Compose      | [Getting started](/guide/getting-started/)           |
+| Pull pre-built images         | [Docker (GHCR)](/guide/docker)                       |
+| Env vars and paths            | [Configuration](/guide/configuration)                |
+| Printers & label sidecar      | [Printers & label sidecar](/guide/hardware/printers) |
+| USB scanner in Docker         | [USB barcode scanner](/guide/hardware/scanner)       |
+| Deploy on a Pi without Docker | [Raspberry Pi (native)](/guide/raspberry-pi-native)  |

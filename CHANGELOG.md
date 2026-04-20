@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Frontend overhaul — Phase 0 — 2026-04-21
+
+**Done**
+
+- **SPA deep links:** [`ServeStaticModule`](src/app.module.ts) sets explicit `renderPath: '{*any}'` so full page loads to client routes (e.g. `/projects`) serve `index.html`.
+- **API errors:** [`parseApiErrorMessage`](frontend/src/api.ts) + [`fetchJson`](frontend/src/api.ts) surface Nest JSON `message` / `error` instead of raw blobs.
+- **Order list:** [`OrderListScreen`](frontend/src/screens/OrderListScreen.tsx) uses [`apiBase()`](frontend/src/api.ts) for `/order-list` (works with `VITE_API_BASE`).
+- **Progress tracker:** [`progress-frontend-overhaul.md`](progress-frontend-overhaul.md) checklist for phases 0–7.
+
 ### Docs — scanner design rationale — 2026-04-21
 
 **Done**
