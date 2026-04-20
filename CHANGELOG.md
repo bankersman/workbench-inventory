@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+### [Phase 2.1] Storage unit module — 2026-04-20
+
+**Done**
+
+- `StorageUnitModule` with CRUD at `/api/storage-units`; `GET /api/storage-units/:id` returns the unit plus direct child **containers** in this storage unit (`id`, `barcode`, `name`).
+- Barcodes assigned on create as `SU:` + zero-padded id (5 digits); `ValidationPipe` enabled globally (`whitelist`, `forbidNonWhitelisted`, `transform`).
+- Update rejects circular parent chains by walking ancestors of the proposed parent (`BadRequestException`).
+- Dependency: `@nestjs/mapped-types` for `UpdateStorageUnitDto`.
+
+**Tests**
+
+- `storage-unit.service.spec.ts` — mocked repositories: cycle detection on update, successful reparent with detail response.
+
+**Considerations**
+
+- First save uses a unique placeholder barcode, then overwrites with the final `SU:` value (two writes per create).
+
 ### [Phase 1.3] Verify — 2026-04-20
 
 **Done**

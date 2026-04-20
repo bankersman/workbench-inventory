@@ -20,7 +20,7 @@ _Status: complete._
 
 **Goal:** Full create/read/update/delete for storage units, containers, items, categories. Unified barcode scan resolution working.
 
-- [ ] Step 2.1 — Storage unit module
+- [x] Step 2.1 — Storage unit module
 - [ ] Step 2.2 — Container module
 - [ ] Step 2.3 — Item module
 - [ ] Step 2.4 — Category module
