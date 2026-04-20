@@ -2,6 +2,52 @@
 
 ## [Unreleased]
 
+### [Phase 11.3] Supporting repo files — 2026-04-20
+
+**Done**
+
+- `README.md`, `LICENSE` (MIT), `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md`; changelog continues to be maintained manually (`CHANGELOG.md`).
+
+### [Phase 11.2] Contribution guide — 2026-04-20
+
+**Done**
+
+- `CONTRIBUTING.md`: setup, PR checklist, extending suppliers, labels, categories, tests.
+
+### [Phase 11.1] GitHub Pages site — 2026-04-20
+
+**Done**
+
+- VitePress site under `docs/` (`npm run docs:dev` / `docs:build`); workflow `.github/workflows/docs.yml` publishes to `gh-pages` with `VITEPRESS_BASE` set from the repository name.
+
+### [Phase 10.4] Dockerfile — 2026-04-20
+
+**Done**
+
+- Multi-stage image: Node 22 build (native deps for canvas), runtime slim + Python sidecar deps; non-root `node` user; health check `GET /api/health`; entrypoint runs Flask sidecar + Nest.
+
+### [Phase 10.3] Docker Compose — 2026-04-20
+
+**Done**
+
+- `docker-compose.yml` with data/backups volumes and ports 3000 / 5050.
+
+### [Phase 10.2] GitHub Actions: Docker build and publish — 2026-04-20
+
+**Done**
+
+- `.github/workflows/docker-publish.yml`: build/push to `ghcr.io/${{ github.repository }}` on version tags `v*.*.*`, `linux/amd64` + `linux/arm64`.
+
+### [Phase 10.1] GitHub Actions: CI pipeline — 2026-04-20
+
+**Done**
+
+- `.github/workflows/ci.yml`: parallel jobs for lint, typecheck, test (coverage artifact), build; native packages for canvas on Ubuntu runners.
+
+**Considerations**
+
+- Enable GitHub Pages from the `gh-pages` branch to serve the VitePress site; set the Pages “base” path to match `/repo-name/` if using a project site URL.
+
 ### [Phase 9.5] Second screen QA — 2026-04-20
 
 **Done**

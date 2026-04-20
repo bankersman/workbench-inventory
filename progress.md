@@ -131,10 +131,12 @@ _Status: complete._
 
 **Goal:** GitHub Actions pipeline running quality checks on every PR and push. Docker image built and published on release. App runnable via Docker Compose for anyone without a Pi or local Node setup.
 
-- [ ] Step 10.1 — GitHub Actions: CI pipeline
-- [ ] Step 10.2 — GitHub Actions: Docker build and publish
-- [ ] Step 10.3 — Docker Compose
-- [ ] Step 10.4 — Dockerfile
+_Status: complete._
+
+- [x] Step 10.1 — GitHub Actions: CI pipeline
+- [x] Step 10.2 — GitHub Actions: Docker build and publish
+- [x] Step 10.3 — Docker Compose
+- [x] Step 10.4 — Dockerfile
 
 ---
 
@@ -142,6 +144,8 @@ _Status: complete._
 
 **Goal:** GitHub Pages site with user-facing manual and project info. Contribution guide for open source contributors.
 
-- [ ] Step 11.1 — GitHub Pages site
-- [ ] Step 11.2 — Contribution guide (`CONTRIBUTING.md`)
-- [ ] Step 11.3 — Supporting repo files
+_Status: complete._
+
+- [x] Step 11.1 — GitHub Pages site
+- [x] Step 11.2 — Contribution guide (`CONTRIBUTING.md`)
+- [x] Step 11.3 — Supporting repo files
