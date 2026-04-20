@@ -20,4 +20,12 @@ describe('AppController', () => {
       expect(appController.getRoot()).toBe('Workbench Inventory API');
     });
   });
+
+  describe('getHealth', () => {
+    it('returns ok and semver from package.json', () => {
+      const body = appController.getHealth();
+      expect(body.ok).toBe(true);
+      expect(body.version).toMatch(/^\d+\.\d+\.\d+$/);
+    });
+  });
 });

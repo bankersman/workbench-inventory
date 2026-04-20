@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+### [Phase 1.3] Verify — 2026-04-20
+
+**Done**
+
+- `GET /api/health` returns `{ ok: true, version: string }` with `version` read from root `package.json` (`AppService.getAppVersion()`).
+
+**Tests**
+
+- `app.controller.spec.ts` — health payload shape and semver-like version string.
+
+**Considerations**
+
+- Version is resolved at `AppService` construction from `process.cwd()`; correct when the server is started from the repo root (Docker/PM2 should set cwd accordingly).
+
 ### [Phase 1.2] Entities and migration — 2026-04-20
 
 **Done**

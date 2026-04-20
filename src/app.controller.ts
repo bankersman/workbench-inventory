@@ -10,4 +10,9 @@ export class AppController {
   getRoot(): string {
     return this.appService.getRootMessage();
   }
+
+  @Get('health')
+  getHealth(): { ok: true; version: string } {
+    return { ok: true, version: this.appService.getAppVersion() };
+  }
 }
