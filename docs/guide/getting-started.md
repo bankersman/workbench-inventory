@@ -17,7 +17,7 @@ docker compose -f docker-compose.ghcr.yml pull
 docker compose -f docker-compose.ghcr.yml up -d
 ```
 
-To skip the label sidecar entirely, use **`docker-compose.app-only.yml`** or a `docker run` one-liner—see **[Docker (GHCR)](./docker.md)**.
+To skip the label sidecar entirely, use the **one-line `docker run`** on **[Docker (GHCR)](./docker.md)** (no repo clone needed).
 
 See that page for image names, version tags, registry login, host permissions for the non-root containers, and when the sidecar is optional.
 

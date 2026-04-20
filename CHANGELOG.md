@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Docs — Docker app-only one-liner — 2026-04-21
+
+**Done**
+
+- Lead with copy-pastable `docker run` (no repo); removed `docker-compose.app-only.yml`; README shows the same one-liner before Compose.
+
 ### Docs — VitePress nav & home — 2026-04-21
 
 **Done**
@@ -14,7 +20,7 @@
 **Done**
 
 - `docker-compose.ghcr.yml` to run published images without building; new VitePress page `docs/guide/docker.md` (pull, pin tags, `ghcr.io` login, non-root volumes); README and getting-started updated with links.
-- Document optional label sidecar; `docker-compose.app-only.yml` and `docker run` for app-only (ports + volumes).
+- Document optional label sidecar; app-only via a single **`docker run`** one-liner (no compose file); removed `docker-compose.app-only.yml`.
 
 ### Docker — distroless split images — 2026-04-20
 

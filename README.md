@@ -12,14 +12,20 @@ cd workshop-inventory
 docker compose up --build
 ```
 
-**Run published images** from [GitHub Container Registry](https://github.com/bankersman/workbench-inventory/pkgs/container/workbench-inventory) (no clone required—you only need `docker-compose.ghcr.yml`):
+**Run the app image only** (no Git clone; optional label sidecar omitted):
+
+```bash
+mkdir -p data backups && docker run --rm -p 3000:3000 -v "$(pwd)/data:/opt/inventory/data" -v "$(pwd)/backups:/opt/inventory/backups" -e PORT=3000 -e DB_PATH=/opt/inventory/data/inventory.db ghcr.io/bankersman/workbench-inventory:latest
+```
+
+**Compose (app + label sidecar)** — copy [`docker-compose.ghcr.yml`](./docker-compose.ghcr.yml) from this repo or use a checkout:
 
 ```bash
 docker compose -f docker-compose.ghcr.yml pull
 docker compose -f docker-compose.ghcr.yml up -d
 ```
 
-Use a checkout path or copy [`docker-compose.ghcr.yml`](./docker-compose.ghcr.yml) next to your `data/` / `backups/` folders. The **label sidecar is optional**—you can run only the main image ([`docker-compose.app-only.yml`](./docker-compose.app-only.yml) or `docker run` with volume flags—see docs). Full steps, tags, private-registry login, and non-root volume permissions are in **[Docker (GHCR)](https://bankersman.github.io/workbench-inventory/guide/docker.html)** ([`docs/guide/docker.md`](./docs/guide/docker.md)).
+More detail (custom host port, pinning versions, `ghcr.io` login, volume permissions) is in **[Docker (GHCR)](https://bankersman.github.io/workbench-inventory/guide/docker.html)** ([`docs/guide/docker.md`](./docs/guide/docker.md)).
 
 Open [http://localhost:3000](http://localhost:3000). Compose runs two **distroless** services (Nest app + Python label sidecar on port 5050). Persisted data lives in `./data` and backups in `./backups`.
 
