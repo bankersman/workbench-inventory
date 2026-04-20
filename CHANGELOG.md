@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### CI — GitHub Actions runtime (Node 24) — 2026-04-20
+
+**Done**
+
+- Bumped `actions/checkout`, `actions/setup-node`, `actions/upload-artifact`, `actions/upload-pages-artifact`, and `actions/deploy-pages` to current majors so workflows use the Node 24 action runtime (addresses GitHub deprecation notices for Node 20–based action versions).
+
 ### Tooling — Node.js 24 — 2026-04-20
 
 **Done**
