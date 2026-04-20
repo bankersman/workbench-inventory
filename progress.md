@@ -8,7 +8,7 @@ Specification: [PLAN.md](./PLAN.md). Check off each step when it is complete.
 
 **Goal:** NestJS running, SQLite connected via TypeORM, schema migrated, seed data loaded, health check responding, all code quality tooling configured and passing.
 
-- [ ] Step 1.1 — Project scaffold and tooling
+- [x] Step 1.1 — Project scaffold and tooling
 - [ ] Step 1.2 — Entities and migration
 - [ ] Step 1.3 — Verify
 
