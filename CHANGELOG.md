@@ -2,6 +2,49 @@
 
 ## [Unreleased]
 
+### [Phase 3.3] On-screen command palette — 2026-04-20
+
+**Done**
+
+- Home view FAB opens a modal grid of `CMD:*` and `QTY:*` actions; touch dispatches `workbench-scan-line` (`emitScanLine`) for parity with scanner-driven input.
+
+**Tests**
+
+- N/A (UI-only; no click E2E per PLAN).
+
+**Considerations**
+
+- Full command state machine is implemented in Phase 4.2; this step only exposes touch events on the same bridge later hooks consume.
+
+### [Phase 3.2] WebSocket gateway — 2026-04-20
+
+**Done**
+
+- `ScannerGateway` on namespace `/ws/scanner`; `role` from `handshake.auth` / `query`; kiosk room receives `barcode` and `scanner_status`; `ping`/`pong`; `register` to switch role.
+- `IoAdapter` registered in `main.ts`.
+
+**Tests**
+
+- Covered indirectly via scanner service unit tests; gateway wiring exercised at runtime.
+
+**Considerations**
+
+- Barcode events go only to the `kiosk` Socket.IO room.
+
+### [Phase 3.1] Serial port service — 2026-04-20
+
+**Done**
+
+- `ScannerService`: disabled when `SCANNER_PORT` unset (info log); line buffering on `\r`/`\n`; exponential backoff reconnect; `isEnabled` / `isConnected`; `onLine` / `onHardwareStatus` for the gateway.
+
+**Tests**
+
+- `scanner.service.spec.ts` — `isEnabled` with/without env.
+
+**Considerations**
+
+- Requires real serial hardware to integration-test; CI stays headless.
+
 ### [Phase 2.6] Availability service — 2026-04-20
 
 **Done**

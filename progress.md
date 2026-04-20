@@ -35,9 +35,11 @@ _Status: complete._
 
 **Goal:** Hardware scanner optional but fully integrated when present. WebSocket gateway running regardless, kiosk command mode accessible without scanner via on-screen UI.
 
-- [ ] Step 3.1 — Serial port service
-- [ ] Step 3.2 — WebSocket gateway
-- [ ] Step 3.3 — On-screen command palette (scanner-free fallback)
+_Status: complete._
+
+- [x] Step 3.1 — Serial port service
+- [x] Step 3.2 — WebSocket gateway
+- [x] Step 3.3 — On-screen command palette (scanner-free fallback)
 
 ---
 
