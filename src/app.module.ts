@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ContainerModule } from './container/container.module';
 import { DatabaseModule } from './database/database.module';
+import { ItemModule } from './item/item.module';
 import { StorageUnitModule } from './storage-unit/storage-unit.module';
 
 const frontendDist = join(__dirname, 'frontend');
@@ -17,6 +18,7 @@ const frontendDist = join(__dirname, 'frontend');
     DatabaseModule,
     StorageUnitModule,
     ContainerModule,
+    ItemModule,
     ...(existsSync(frontendDist)
       ? [
           ServeStaticModule.forRoot({

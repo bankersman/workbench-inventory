@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### [Phase 2.3] Item module — 2026-04-20
+
+**Done**
+
+- `ItemModule` CRUD at `/api/items`; list supports `q`, `categoryId`, `containerId`, `storageUnitId`, and `attr[key]=value` (bracket form) plus nested `attr` object; filters use `json_extract` + text cast for attribute equality.
+- `POST /api/items/:id/adjust-quantity` with `{ delta, reason }`; rejects negative resulting stock.
+
+**Tests**
+
+- `item.service.spec.ts` — `parseAttrFromQuery`, adjustment rejection and success paths.
+
+**Considerations**
+
+- Free-text `q` strips `%` and `_` to avoid LIKE metacharacter injection/surprises.
+
 ### [Phase 2.2] Container module — 2026-04-20
 
 **Done**
