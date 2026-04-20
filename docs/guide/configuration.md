@@ -11,7 +11,8 @@ Environment variables (see also `.env.example` if present):
 | `MOUSER_API_KEY`                 | Mouser API key for price lookup                                                                          |
 | `TME_APP_KEY` / `TME_APP_SECRET` | TME API credentials                                                                                      |
 | `NAS_PATH`                       | Optional `rsync` destination for backups                                                                 |
-| `LABEL_SIDECAR_URL`              | Python label sidecar base URL                                                                            |
+| `LABEL_SIDECAR_URL`              | Python label sidecar base URL                                                                              |
+| `LABEL_SIDECAR_PORT`             | Sidecar listen port (default `5050`). Separate from `PORT` (main app).                                    |
 | `BROTHER_QL_PRINTER`             | Optional printer identifier for the sidecar                                                              |
 
 The kiosk WebSocket namespace is `/ws/scanner` with Socket.IO path `/socket.io`.

@@ -57,6 +57,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
 
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV LABEL_SIDECAR_PORT=5050
 ENV DB_PATH=/opt/inventory/data/inventory.db
 
 USER node

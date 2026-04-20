@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Docker / label sidecar — `LABEL_SIDECAR_PORT` — 2026-04-20
+
+**Done**
+
+- Flask sidecar reads `LABEL_SIDECAR_PORT` (default `5050`) instead of `PORT`, so the main app’s `PORT` no longer collides with the sidecar when both run in one container. `Dockerfile`, `docker-compose.yml`, `.env.example`, and docs updated.
+
 ### CI — GitHub Actions runtime (Node 24) — 2026-04-20
 
 **Done**

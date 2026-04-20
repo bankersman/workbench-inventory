@@ -9,5 +9,6 @@ services:
       - ./backups:/opt/inventory/backups
     environment:
       PORT: '3000'
+      LABEL_SIDECAR_PORT: '5050'
       DB_PATH: /opt/inventory/data/inventory.db
       LABEL_SIDECAR_URL: http://127.0.0.1:5050

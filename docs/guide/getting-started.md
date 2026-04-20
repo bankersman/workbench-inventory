@@ -39,4 +39,4 @@ pip install -r label-sidecar/requirements.txt
 python label-sidecar/sidecar.py
 ```
 
-Set `LABEL_SIDECAR_URL` if not using the default `http://127.0.0.1:5050`.
+Set `LABEL_SIDECAR_URL` if not using the default `http://127.0.0.1:5050`. The sidecar listens on `LABEL_SIDECAR_PORT` (default `5050`), not `PORT`.

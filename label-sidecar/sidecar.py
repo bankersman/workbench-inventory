@@ -42,5 +42,5 @@ def print_label() -> Any:
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", "5050"))
+    port = int(os.environ.get("LABEL_SIDECAR_PORT", "5050"))
     app.run(host="0.0.0.0", port=port)
