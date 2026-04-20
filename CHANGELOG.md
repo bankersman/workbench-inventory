@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Frontend overhaul — Phase 7 — 2026-04-21
+
+**Done**
+
+- **Docs alignment:** [README.md](README.md) **Web UI** subsection; [PLAN.md](PLAN.md) tech stack row for Tailwind + TanStack Query; [progress.md](progress.md) links [progress-frontend-overhaul.md](progress-frontend-overhaul.md); [local dev](docs/guide/getting-started/local.md) notes SPA routes and single-port build.
+
 ### Frontend overhaul — Phase 6 — 2026-04-21
 
 **Done**

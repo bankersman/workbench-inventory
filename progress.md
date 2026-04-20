@@ -2,6 +2,8 @@
 
 Specification: [PLAN.md](./PLAN.md). Check off each step when it is complete.
 
+**UX / UI overhaul:** see [progress-frontend-overhaul.md](./progress-frontend-overhaul.md) for the shipped kiosk UI work (Tailwind shell, TanStack Query, flows through settings).
+
 ---
 
 ## Phase 1 — Foundation

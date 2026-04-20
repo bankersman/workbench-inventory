@@ -15,7 +15,7 @@
 | Framework | NestJS | Modules, DI, scheduler, WebSocket, all built-in |
 | ORM | TypeORM | Native NestJS integration, database-agnostic |
 | Database | SQLite via `better-sqlite3` | Single file, WAL mode. Assumed for development and production target. TypeORM config abstracted so other DBs are possible without code changes |
-| Frontend | React 18 + Vite | Served as static files from NestJS |
+| Frontend | React 18 + Vite + Tailwind CSS + TanStack Query | Served as static files from NestJS; task-oriented kiosk UI (inventory, parts, projects/BOM, order list, settings) |
 | Barcode input | `serialport` npm package | Scanner in USB CDC serial mode, server-side only |
 | Scheduler | `@nestjs/schedule` | Cron-based backup, no OS-level cron required |
 | WebSocket | `@nestjs/websockets` + `socket.io` | Scanner event broadcast to kiosk only |

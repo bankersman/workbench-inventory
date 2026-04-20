@@ -39,7 +39,11 @@ To run **natively** on the Pi under **systemd** (typical for production kiosks w
 
 ## Local development (API + Vite)
 
-From the repo root: `npm ci`, then run the Nest API (`npm run start:dev`, default port **3000**) and in another terminal the Vite dev server (`npm run dev --workspace frontend`, default **5173**). Vite proxies `/api` and `/socket.io` to the API. Open the Vite URL for hot reload; for **production-like** deep links (`/projects`, etc.) on one port, run `npm run build` and `npm run start:prod` so Nest serves [`dist/frontend`](frontend/vite.config.ts).
+From the repo root: `npm ci`, then run the Nest API (`npm run start:dev`, default port **3000**) and in another terminal the Vite dev server (`npm run dev --workspace frontend`, default **5173**). Vite proxies `/api` and `/socket.io` to the API. Open the Vite URL for hot reload; for **production-like** deep links (`/projects`, `/items`, etc.) on one port, run `npm run build` and `npm run start:prod` so Nest serves [`dist/frontend`](frontend/vite.config.ts).
+
+### Web UI (kiosk app)
+
+The React SPA is styled with **Tailwind CSS** and loads server state via **TanStack Query**. It includes a bottom nav shell, light/dark theme (Settings or footer), and task-oriented flows: **Inventory** (storage areas and bins), **Parts** (search, create, adjust stock), **Projects** (BOM, CSV import/export, completion), **Order** (reorder list), and **Settings** (categories, backup, scanner/sidecar status).
 
 ## Documentation
 
