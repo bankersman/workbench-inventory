@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Docs — VitePress nav & home — 2026-04-21
+
+**Done**
+
+- Top nav: **Install & run** dropdown (getting started, Docker, Pi, hardware scanner); **Usage** added to nav; sidebar grouped to match.
+- Home: hero art (`docs/public/hero-icon.svg`), richer tagline, three CTAs, six feature cards with icons, **Quick links** table.
+
 ### Docs — GHCR pull/run — 2026-04-20
 
 **Done**

@@ -26,22 +26,34 @@ export default defineConfig({
     ],
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Getting started', link: '/guide/getting-started' },
-      { text: 'Docker (GHCR)', link: '/guide/docker' },
+      {
+        text: 'Install & run',
+        items: [
+          { text: 'Getting started', link: '/guide/getting-started' },
+          { text: 'Docker (GHCR)', link: '/guide/docker' },
+          { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },
+          { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
+        ],
+      },
       { text: 'Configuration', link: '/guide/configuration' },
-      { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
-      { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },
+      { text: 'Usage', link: '/guide/usage' },
       { text: 'Development', link: '/guide/development' },
     ],
     sidebar: [
       {
         text: 'Guide',
         items: [
-          { text: 'Getting started', link: '/guide/getting-started' },
-          { text: 'Docker (GHCR)', link: '/guide/docker' },
+          {
+            text: 'Install & run',
+            collapsed: false,
+            items: [
+              { text: 'Getting started', link: '/guide/getting-started' },
+              { text: 'Docker (GHCR)', link: '/guide/docker' },
+              { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },
+              { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
+            ],
+          },
           { text: 'Configuration', link: '/guide/configuration' },
-          { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
-          { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },
           { text: 'Usage', link: '/guide/usage' },
           { text: 'Development', link: '/guide/development' },
         ],
