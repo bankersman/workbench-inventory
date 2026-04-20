@@ -1,0 +1,35 @@
+# systemd unit for native installs (e.g. Raspberry Pi).
+# Copy to /etc/systemd/system/ and adjust paths, user, and ExecStart if your Node binary is not /usr/bin/node.
+#
+#   sudo cp deploy/workbench-inventory.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now workbench-inventory
+
+[Unit]
+Description=Workbench Inventory (NestJS API + kiosk UI)
+Documentation=https://github.com/bankersman/workbench-inventory
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=inventory
+Group=inventory
+WorkingDirectory=/opt/inventory
+Environment=NODE_ENV=production
+# Create /opt/inventory/.env with at least DB_PATH, PORT, optional SCANNER_PORT, etc.
+EnvironmentFile=-/opt/inventory/.env
+ExecStart=/usr/bin/node dist/main.js
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=workbench-inventory
+
+# Allow access to USB serial scanners (group that owns /dev/ttyUSB0, etc.)
+SupplementaryGroups=dialout
+
+UMask=0002
+
+[Install]
+WantedBy=multi-user.target

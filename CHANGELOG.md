@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Docs — Raspberry Pi native + systemd — 2026-04-20
+
+**Done**
+
+- `docs/guide/raspberry-pi-native.md`: Node install, build deps, deploy under `/opt/inventory`, `.env`, dedicated user, systemd enable, updates, optional sidecar.
+- `deploy/workbench-inventory.service` example unit; README and VitePress nav/sidebar links.
+
 ### Docs — hardware barcode scanner — 2026-04-20
 
 **Done**

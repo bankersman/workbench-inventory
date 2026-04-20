@@ -8,4 +8,5 @@ data
 backups
 docs/.vitepress/dist
 docs/.vitepress/cache
+deploy/*.service
 .git

@@ -29,6 +29,7 @@ export default defineConfig({
       { text: 'Getting started', link: '/guide/getting-started' },
       { text: 'Configuration', link: '/guide/configuration' },
       { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
+      { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },
       { text: 'Development', link: '/guide/development' },
     ],
     sidebar: [
@@ -38,6 +39,7 @@ export default defineConfig({
           { text: 'Getting started', link: '/guide/getting-started' },
           { text: 'Configuration', link: '/guide/configuration' },
           { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
+          { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },
           { text: 'Usage', link: '/guide/usage' },
           { text: 'Development', link: '/guide/development' },
         ],

@@ -12,6 +12,8 @@ Open `http://localhost:3000`. Data is stored under `./data` and backups under `.
 
 To use a **USB serial barcode scanner** with Docker on Linux, configure `SCANNER_PORT` and pass the host device into the container — see **[Hardware scanner](./hardware-scanner.md)**.
 
+For a **native systemd install on a Raspberry Pi** (no Docker), see **[Raspberry Pi (native)](./raspberry-pi-native.md)**.
+
 ## Local development
 
 Requires Node.js 22+ and npm. Install dependencies and run migrations (if needed), then start the API and frontend:

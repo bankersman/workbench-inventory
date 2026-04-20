@@ -16,6 +16,10 @@ Open [http://localhost:3000](http://localhost:3000). Persisted data lives in `./
 
 The app talks to a scanner as a **serial (USB CDC / COM) device** with **line-terminated** reads (default **9600 baud**). It is **not** the same as keyboard-wedge mode. Set `SCANNER_PORT` (and optionally `SCANNER_BAUD`) on the server; in Docker on Linux, pass through the host device (e.g. `/dev/ttyUSB0`). Full setup, Docker snippet, and verification steps are in the docs: **[Hardware scanner](https://bankersman.github.io/workbench-inventory/guide/hardware-scanner.html)** (same content in-repo: `docs/guide/hardware-scanner.md`).
 
+### Raspberry Pi without Docker
+
+To run **natively** on the Pi under **systemd** (typical for production kiosks with USB hardware), follow **[Raspberry Pi (native)](https://bankersman.github.io/workbench-inventory/guide/raspberry-pi-native.html)**. The repo includes `deploy/workbench-inventory.service` as a starting point.
+
 ## Documentation
 
 - **Live site (GitHub Pages):** [https://bankersman.github.io/workbench-inventory/](https://bankersman.github.io/workbench-inventory/)
