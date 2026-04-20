@@ -434,3 +434,42 @@
     border-right-color: var(--border);
   }
 }
+
+.inactivity-toast {
+  position: sticky;
+  top: 0;
+  z-index: 34;
+  padding: 10px 12px;
+  text-align: center;
+  background: #5c3b00;
+  color: #fff;
+  font-weight: 600;
+}
+
+.warning-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 16px;
+}
+
+.warning-card {
+  max-width: 480px;
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.warning-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}

@@ -2,6 +2,58 @@
 
 ## [Unreleased]
 
+### [Phase 9.5] Second screen QA — 2026-04-20
+
+**Done**
+
+- Existing responsive rules retained; kiosk + touch navigation unchanged.
+
+### [Phase 9.4] Resilience — 2026-04-20
+
+**Done**
+
+- `AppErrorBoundary` for API/render failures; Socket.IO client reconnection enabled; serial scanner reconnect already in `ScannerService`.
+
+### [Phase 9.3] Inactivity timeout — 2026-04-20
+
+**Done**
+
+- Command mode resets after 30s idle; sticky toast in the last 5s (`useCommandState.inactiveWarn`).
+
+### [Phase 9.2] Warning system — 2026-04-20
+
+**Done**
+
+- `WarningProvider`, `useWarning`, `WarningDialog` (ready for BOM/item warning flows).
+
+### [Phase 9.1] Settings screen — 2026-04-20
+
+**Done**
+
+- `SettingsScreen`: categories list, scanner status, supplier env note, backup controls, label sidecar status, command sheet link.
+
+### [Phase 8.3] Backup endpoints and Settings UI — 2026-04-20
+
+**Done**
+
+- Backup section on Settings; `GET /api/backup/status`, `POST /api/backup/run`, `GET /api/backup/download`.
+
+### [Phase 8.2] Scheduler — 2026-04-20
+
+**Done**
+
+- `BackupScheduler` `@Cron('0 2 * * *')`; `ScheduleModule.forRoot()` in `AppModule`.
+
+### [Phase 8.1] Backup service — 2026-04-20
+
+**Done**
+
+- `BackupService`: copy DB to `backups/inventory_YYYYMMDD.db`, prune older than 30 days, optional `NAS_PATH` rsync, `last_backup` in `app_settings`.
+
+**Tests**
+
+- `backup.service.spec.ts` — backups path.
+
 ### [Phase 7.4] Label UI — 2026-04-20
 
 **Done**

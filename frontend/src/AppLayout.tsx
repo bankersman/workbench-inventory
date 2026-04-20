@@ -1,16 +1,16 @@
 import { NavLink, Outlet } from 'react-router-dom';
 
 import { CommandPalette } from './CommandPalette';
-
-function navClass({ isActive }: { isActive: boolean }): string {
-  return isActive ? 'nav-item active' : 'nav-item';
-}
 import { StatusBar } from './StatusBar';
 import { useCommandState } from './useCommandState';
 import { useScanner } from './useScanner';
 
+function navClass({ isActive }: { isActive: boolean }): string {
+  return isActive ? 'nav-item active' : 'nav-item';
+}
+
 export function AppLayout() {
-  const { state, dispatchLine, adjustQty } = useCommandState();
+  const { state, dispatchLine, adjustQty, inactiveWarn } = useCommandState();
   useScanner((raw) => dispatchLine(raw));
 
   return (
@@ -22,6 +22,11 @@ export function AppLayout() {
         onDecQty={() => adjustQty(-1)}
         onIncQty={() => adjustQty(1)}
       />
+      {inactiveWarn ? (
+        <div className="inactivity-toast" role="status">
+          Returning to idle in a few seconds…
+        </div>
+      ) : null}
       <main className="kiosk-main">
         <Outlet />
       </main>

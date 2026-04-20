@@ -2,11 +2,13 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AvailabilityModule } from './availability/availability.module';
+import { BackupModule } from './backup/backup.module';
 import { CategoryModule } from './category/category.module';
 import { ContainerModule } from './container/container.module';
 import { DatabaseModule } from './database/database.module';
@@ -23,6 +25,7 @@ const frontendDist = join(__dirname, 'frontend');
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     DatabaseModule,
     StorageUnitModule,
     ContainerModule,
@@ -31,6 +34,7 @@ const frontendDist = join(__dirname, 'frontend');
     SettingsModule,
     OrderListModule,
     LabelModule,
+    BackupModule,
     CategoryModule,
     ScanModule,
     AvailabilityModule,

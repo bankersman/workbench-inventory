@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { type CommandState, initialCommandState, reduceCommandState } from './commandStateMachine';
 import { SCAN_LINE_EVENT } from './scanBridge';
+
+const IDLE_TIMEOUT_MS = 30_000;
+const WARN_BEFORE_MS = 5_000;
 
 export interface UseCommandStateResult {
   state: CommandState;
@@ -9,6 +12,8 @@ export interface UseCommandStateResult {
   /** Stepper for quantity while in *\_AWAITING_QTY modes (PLAN status bar). */
   adjustQty: (delta: number) => void;
   reset: () => void;
+  /** True in the last few seconds before inactivity timeout resets command mode. */
+  inactiveWarn: boolean;
 }
 
 /**
@@ -17,26 +22,67 @@ export interface UseCommandStateResult {
  */
 export function useCommandState(): UseCommandStateResult {
   const [state, setState] = useState<CommandState>(initialCommandState);
+  const [inactiveWarn, setInactiveWarn] = useState(false);
+  const lastActivityRef = useRef(0);
 
-  const dispatchLine = useCallback((raw: string) => {
-    setState((prev) => reduceCommandState(prev, raw).next);
+  const bumpActivity = useCallback(() => {
+    lastActivityRef.current = Date.now();
+    setInactiveWarn(false);
   }, []);
 
-  const reset = useCallback(() => setState(initialCommandState()), []);
+  const dispatchLine = useCallback(
+    (raw: string) => {
+      bumpActivity();
+      setState((prev) => reduceCommandState(prev, raw).next);
+    },
+    [bumpActivity],
+  );
 
-  const adjustQty = useCallback((delta: number) => {
-    setState((prev) => {
-      if (
-        prev.mode !== 'TAKE_AWAITING_QTY' &&
-        prev.mode !== 'ADD_AWAITING_QTY' &&
-        prev.mode !== 'PULL_AWAITING_QTY'
-      ) {
-        return prev;
+  const reset = useCallback(() => {
+    bumpActivity();
+    setState(initialCommandState());
+  }, [bumpActivity]);
+
+  const adjustQty = useCallback(
+    (delta: number) => {
+      bumpActivity();
+      setState((prev) => {
+        if (
+          prev.mode !== 'TAKE_AWAITING_QTY' &&
+          prev.mode !== 'ADD_AWAITING_QTY' &&
+          prev.mode !== 'PULL_AWAITING_QTY'
+        ) {
+          return prev;
+        }
+        const nextQty = Math.max(1, prev.qty + delta);
+        return { ...prev, qty: nextQty };
+      });
+    },
+    [bumpActivity],
+  );
+
+  useEffect(() => {
+    if (state.mode === 'IDLE') {
+      queueMicrotask(() => {
+        setInactiveWarn(false);
+      });
+      return;
+    }
+    lastActivityRef.current = Date.now();
+    const id = window.setInterval(() => {
+      const elapsed = Date.now() - lastActivityRef.current;
+      if (elapsed >= IDLE_TIMEOUT_MS - WARN_BEFORE_MS && elapsed < IDLE_TIMEOUT_MS) {
+        setInactiveWarn(true);
+      } else if (elapsed < IDLE_TIMEOUT_MS - WARN_BEFORE_MS) {
+        setInactiveWarn(false);
       }
-      const nextQty = Math.max(1, prev.qty + delta);
-      return { ...prev, qty: nextQty };
-    });
-  }, []);
+      if (elapsed >= IDLE_TIMEOUT_MS) {
+        setInactiveWarn(false);
+        setState(initialCommandState());
+      }
+    }, 400);
+    return () => clearInterval(id);
+  }, [state.mode]);
 
   useEffect(() => {
     const handler = (ev: Event) => {
@@ -50,5 +96,5 @@ export function useCommandState(): UseCommandStateResult {
     return () => window.removeEventListener(SCAN_LINE_EVENT, handler);
   }, [dispatchLine]);
 
-  return { state, dispatchLine, adjustQty, reset };
+  return { state, dispatchLine, adjustQty, reset, inactiveWarn };
 }

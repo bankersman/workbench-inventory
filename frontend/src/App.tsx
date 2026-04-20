@@ -6,7 +6,7 @@ import { HomeScreen } from './screens/HomeScreen';
 import { InventoryScreen } from './screens/InventoryScreen';
 import { ItemDetailScreen } from './screens/ItemDetailScreen';
 import { OrderListScreen } from './screens/OrderListScreen';
-import { PlaceholderScreen } from './screens/PlaceholderScreen';
+import { SettingsScreen } from './screens/SettingsScreen';
 import { ProjectDetailScreen } from './screens/ProjectDetailScreen';
 import { ProjectsListScreen } from './screens/ProjectsListScreen';
 import { StorageUnitDetailScreen } from './screens/StorageUnitDetailScreen';
@@ -25,10 +25,7 @@ export default function App() {
         <Route path="projects" element={<ProjectsListScreen />} />
         <Route path="projects/:id" element={<ProjectDetailScreen />} />
         <Route path="order" element={<OrderListScreen />} />
-        <Route
-          path="settings"
-          element={<PlaceholderScreen title="Settings">Phase 9.</PlaceholderScreen>}
-        />
+        <Route path="settings" element={<SettingsScreen />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

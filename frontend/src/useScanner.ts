@@ -25,6 +25,9 @@ export function useScanner(onLine?: (raw: string) => void): UseScannerResult {
         path: '/socket.io',
         transports: ['websocket', 'polling'],
         auth: { role: 'kiosk' },
+        reconnection: true,
+        reconnectionAttempts: Infinity,
+        reconnectionDelay: 1000,
       });
     } catch (e) {
       setTimeout(() => setLastError(String(e)), 0);

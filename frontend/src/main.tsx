@@ -4,11 +4,17 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './App.tsx';
+import { AppErrorBoundary } from './AppErrorBoundary.tsx';
+import { WarningProvider } from './useWarning.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <AppErrorBoundary>
+        <WarningProvider>
+          <App />
+        </WarningProvider>
+      </AppErrorBoundary>
     </BrowserRouter>
   </StrictMode>,
 );

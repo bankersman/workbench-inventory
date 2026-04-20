@@ -105,9 +105,11 @@ _Status: complete._
 
 **Goal:** Nightly scheduled backup and manual controls.
 
-- [ ] Step 8.1 — Backup service
-- [ ] Step 8.2 — Scheduler
-- [ ] Step 8.3 — Backup endpoints and Settings UI section
+_Status: complete._
+
+- [x] Step 8.1 — Backup service
+- [x] Step 8.2 — Scheduler
+- [x] Step 8.3 — Backup endpoints and Settings UI section
 
 ---
 
@@ -115,11 +117,13 @@ _Status: complete._
 
 **Goal:** Complete settings screen, all warnings wired, production-stable on Pi.
 
-- [ ] Step 9.1 — Settings screen
-- [ ] Step 9.2 — Warning system
-- [ ] Step 9.3 — Inactivity timeout
-- [ ] Step 9.4 — Resilience
-- [ ] Step 9.5 — Second screen QA
+_Status: complete._
+
+- [x] Step 9.1 — Settings screen
+- [x] Step 9.2 — Warning system
+- [x] Step 9.3 — Inactivity timeout
+- [x] Step 9.4 — Resilience
+- [x] Step 9.5 — Second screen QA
 
 ---
 
