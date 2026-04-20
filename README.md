@@ -15,6 +15,7 @@ Open [http://localhost:3000](http://localhost:3000). Persisted data lives in `./
 ## Documentation
 
 - **Live site (GitHub Pages):** [https://bankersman.github.io/workbench-inventory/](https://bankersman.github.io/workbench-inventory/)
+- **Pages setup:** In the repo **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”). The `Docs` workflow builds VitePress and deploys via `actions/deploy-pages`. If you previously used the `gh-pages` branch with another action, that branch is no longer required for publishing.
 - **Local:** `npm run docs:dev` — open the URL Vite prints (includes the `/workbench-inventory/` base path). To build: `npm run docs:build`.
 - **Contributing:** [CONTRIBUTING.md](./CONTRIBUTING.md)
 - **Changelog:** [CHANGELOG.md](./CHANGELOG.md)

@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### CI — GitHub Pages deploy via official Actions — 2026-04-20
+
+**Done**
+
+- Replaced `peaceiris/actions-gh-pages` with `actions/upload-pages-artifact` + `actions/deploy-pages` so deployments work when **Pages → Source** is **GitHub Actions** (fixes 404 when only the `gh-pages` branch was updated).
+
 ### Docs — VitePress base for GitHub Pages — 2026-04-20
 
 **Done**
