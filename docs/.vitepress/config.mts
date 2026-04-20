@@ -27,12 +27,19 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       {
-        text: 'Install & run',
+        text: 'Getting started',
         items: [
-          { text: 'Getting started', link: '/guide/getting-started' },
+          { text: 'Overview', link: '/guide/getting-started/' },
           { text: 'Docker (GHCR)', link: '/guide/docker' },
           { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },
-          { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
+          { text: 'Local development', link: '/guide/getting-started/local' },
+        ],
+      },
+      {
+        text: 'Hardware',
+        items: [
+          { text: 'Printers & label sidecar', link: '/guide/hardware/printers' },
+          { text: 'USB barcode scanner', link: '/guide/hardware/scanner' },
         ],
       },
       { text: 'Configuration', link: '/guide/configuration' },
@@ -44,13 +51,21 @@ export default defineConfig({
         text: 'Guide',
         items: [
           {
-            text: 'Install & run',
+            text: 'Getting started',
             collapsed: false,
             items: [
-              { text: 'Getting started', link: '/guide/getting-started' },
+              { text: 'Overview', link: '/guide/getting-started/' },
               { text: 'Docker (GHCR)', link: '/guide/docker' },
               { text: 'Raspberry Pi (native)', link: '/guide/raspberry-pi-native' },
-              { text: 'Hardware scanner', link: '/guide/hardware-scanner' },
+              { text: 'Local development', link: '/guide/getting-started/local' },
+            ],
+          },
+          {
+            text: 'Hardware',
+            collapsed: false,
+            items: [
+              { text: 'Printers & label sidecar', link: '/guide/hardware/printers' },
+              { text: 'USB barcode scanner', link: '/guide/hardware/scanner' },
             ],
           },
           { text: 'Configuration', link: '/guide/configuration' },

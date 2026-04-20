@@ -2,7 +2,7 @@
 
 This guide runs the app **directly on Raspberry Pi OS** with **systemd** — no Docker. Use this when you want tight integration with USB devices (scanner, printer), minimal overhead, or a layout that matches `/opt/inventory` in the project spec.
 
-Docker Compose remains a good option for development or x86 machines; see [Getting started](./getting-started.md).
+Docker Compose remains a good option for development or x86 machines; see [Getting started](/guide/getting-started/).
 
 ## Overview
 
@@ -126,4 +126,4 @@ sudo systemctl restart workbench-inventory
 
 ## 9. Optional: label sidecar
 
-If you use the Python Brother sidecar on the same Pi, run it separately (another systemd unit or process) and set `LABEL_SIDECAR_URL` in `.env` (e.g. `http://127.0.0.1:5050`). The main app does not start Python for you.
+If you use the Python Brother sidecar on the same Pi, run it separately (another systemd unit or process) and set `LABEL_SIDECAR_URL` in `.env` (e.g. `http://127.0.0.1:5050`). The main app does not start Python for you. See **[Printers & label sidecar](/guide/hardware/printers)** for API and hardware context.

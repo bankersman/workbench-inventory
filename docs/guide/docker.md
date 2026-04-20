@@ -45,7 +45,7 @@ docker compose -f docker-compose.ghcr.yml pull
 docker compose -f docker-compose.ghcr.yml up -d
 ```
 
-Open `http://localhost:3000` in a browser. The database file is under `./data` and backups under `./backups`, same as the [build-from-source](/guide/getting-started) compose file.
+Open `http://localhost:3000` in a browser. The database file is under `./data` and backups under `./backups`, same as the [build-from-source](/guide/getting-started/) compose file.
 
 The Compose file includes **both** the app and the **label sidecar**. To run **without** the sidecar, use the [one-line `docker run`](#app-only-one-line-no-repo-clone) above instead of Compose.
 
@@ -72,8 +72,8 @@ sudo chown -R 65532:65532 data backups
 
 ## USB serial scanner
 
-To pass a device into the **app** service, extend the compose file with `devices`, `group_add`, and `SCANNER_PORT` as described in **[Hardware scanner](./hardware-scanner.md)**.
+To pass a device into the **app** service, extend the compose file with `devices`, `group_add`, and `SCANNER_PORT` as described in **[USB barcode scanner](/guide/hardware/scanner)**.
 
 ## Building from source instead
 
-To build images locally from this repository, use the default `docker-compose.yml` and `docker compose up --build` — see **[Getting started](/guide/getting-started)**.
+To build images locally from this repository, use the default `docker-compose.yml` and `docker compose up --build` — see **[Getting started](/guide/getting-started/)**.

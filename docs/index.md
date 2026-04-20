@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: /guide/getting-started
+      link: /guide/getting-started/
     - theme: alt
       text: Docker images
       link: /guide/docker
@@ -27,8 +27,8 @@ features:
     title: Kiosk-first UI
     details: Touch-friendly React UI with an on-screen command palette — same flows as a serial scanner when you want them.
   - icon: 🔌
-    title: Hardware scanner
-    details: USB serial (CDC) barcode input with line-terminated reads — optional, fully disabled until you configure a port.
+    title: USB scanner
+    details: USB serial (CDC) barcode input with line-terminated reads — optional until you configure SCANNER_PORT.
   - icon: 🏷️
     title: Labels
     details: Code 128 labels rendered as PNG; optional Python sidecar for Brother QL forwarding when you need physical prints.
@@ -44,8 +44,9 @@ features:
 
 | I want to… | Go to |
 | ---------- | ----- |
-| Run locally or with Compose | [Getting started](/guide/getting-started) |
+| Clone & run with Compose | [Getting started](/guide/getting-started/) |
 | Pull pre-built images | [Docker (GHCR)](/guide/docker) |
 | Env vars and paths | [Configuration](/guide/configuration) |
-| Set up a USB scanner in Docker | [Hardware scanner](/guide/hardware-scanner) |
+| Printers & label sidecar | [Printers & label sidecar](/guide/hardware/printers) |
+| USB scanner in Docker | [USB barcode scanner](/guide/hardware/scanner) |
 | Deploy on a Pi without Docker | [Raspberry Pi (native)](/guide/raspberry-pi-native) |

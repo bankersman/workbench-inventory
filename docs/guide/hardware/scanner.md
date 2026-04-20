@@ -1,4 +1,4 @@
-# Hardware barcode scanner
+# USB barcode scanner
 
 The kiosk can use a **USB barcode scanner**, but it is **fully optional**. Touch, mouse, and the on-screen command palette drive the same flows when no scanner is present.
 

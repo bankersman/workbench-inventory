@@ -19,4 +19,4 @@ The kiosk WebSocket namespace is `/ws/scanner` with Socket.IO path `/socket.io`.
 
 ### Scanner details
 
-The server reads **lines** over a **USB serial (CDC / virtual COM)** device — not USB HID keyboard mode. See **[Hardware scanner](./hardware-scanner.md)** for mode, line endings, Docker, and troubleshooting.
+The server reads **lines** over a **USB serial (CDC / virtual COM)** device — not USB HID keyboard mode. See **[USB barcode scanner](/guide/hardware/scanner)** for mode, line endings, Docker, and troubleshooting.

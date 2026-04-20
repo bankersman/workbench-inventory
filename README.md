@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000). Compose runs two **distrole
 
 ### Optional USB barcode scanner
 
-The app talks to a scanner as a **serial (USB CDC / COM) device** with **line-terminated** reads (default **9600 baud**). It is **not** the same as keyboard-wedge mode. Set `SCANNER_PORT` (and optionally `SCANNER_BAUD`) on the server; in Docker on Linux, pass through the host device (e.g. `/dev/ttyUSB0`). Full setup, Docker snippet, and verification steps are in the docs: **[Hardware scanner](https://bankersman.github.io/workbench-inventory/guide/hardware-scanner.html)** (same content in-repo: `docs/guide/hardware-scanner.md`).
+The app talks to a scanner as a **serial (USB CDC / COM) device** with **line-terminated** reads (default **9600 baud**). It is **not** the same as keyboard-wedge mode. Set `SCANNER_PORT` (and optionally `SCANNER_BAUD`) on the server; in Docker on Linux, pass through the host device (e.g. `/dev/ttyUSB0`). Full setup, Docker snippet, and verification steps are in the docs: **[USB barcode scanner](https://bankersman.github.io/workbench-inventory/guide/hardware/scanner.html)** (in-repo: `docs/guide/hardware/scanner.md`).
 
 ### Raspberry Pi without Docker
 
