@@ -18,12 +18,19 @@ interface ScannerStatus {
   connected: boolean;
 }
 
+interface PrinterStatus {
+  ok: boolean;
+  configured?: boolean;
+  backend?: 'tcp' | 'usb';
+  detail?: string;
+}
+
 export function SettingsScreen() {
   const qc = useQueryClient();
   const [err, setErr] = useState<string | null>(null);
   const [backup, setBackup] = useState<BackupStatus | null>(null);
   const [scanner, setScanner] = useState<ScannerStatus | null>(null);
-  const [sidecar, setSidecar] = useState<{ ok: boolean } | null>(null);
+  const [printer, setPrinter] = useState<PrinterStatus | null>(null);
   const [backupBusy, setBackupBusy] = useState(false);
 
   const [deleteRow, setDeleteRow] = useState<CategoryWithAttributes | null>(null);
@@ -51,10 +58,10 @@ export function SettingsScreen() {
     void fetchJson<ScannerStatus>('/scanner/status')
       .then(setScanner)
       .catch(() => setScanner(null));
-    void fetch(`${apiBase()}/labels/sidecar-status`)
-      .then((r) => r.json() as Promise<{ ok: boolean }>)
-      .then(setSidecar)
-      .catch(() => setSidecar(null));
+    void fetch(`${apiBase()}/labels/printer-status`)
+      .then((r) => r.json() as Promise<PrinterStatus>)
+      .then(setPrinter)
+      .catch(() => setPrinter(null));
   }, []);
 
   const runBackup = async () => {
@@ -254,8 +261,30 @@ export function SettingsScreen() {
 
         <SectionCard title="Labels">
           <p className="text-zinc-800 dark:text-zinc-200">
-            Sidecar: {sidecar ? (sidecar.ok ? 'reachable' : 'not ready') : 'unknown'} — set{' '}
-            <code>LABEL_SIDECAR_URL</code> if needed.
+            Brother QL:{' '}
+            {printer
+              ? printer.ok
+                ? 'ready'
+                : printer.configured === false
+                  ? 'not configured'
+                  : 'not ready'
+              : 'unknown'}
+            {printer?.detail ? (
+              <span className="block text-sm text-zinc-500 dark:text-zinc-400">{printer.detail}</span>
+            ) : null}
+          </p>
+          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+            Physical printing uses{' '}
+            <code className="rounded bg-stone-100 px-1 dark:bg-zinc-800">BROTHER_QL_BACKEND</code>{' '}
+            (<code className="rounded bg-stone-100 px-1 dark:bg-zinc-800">tcp</code> or{' '}
+            <code className="rounded bg-stone-100 px-1 dark:bg-zinc-800">usb</code>),{' '}
+            <code className="rounded bg-stone-100 px-1 dark:bg-zinc-800">BROTHER_QL_MODEL</code>,{' '}
+            <code className="rounded bg-stone-100 px-1 dark:bg-zinc-800">BROTHER_QL_LABEL</code>, and
+            for TCP{' '}
+            <code className="rounded bg-stone-100 px-1 dark:bg-zinc-800">BROTHER_QL_HOST</code> /{' '}
+            <code className="rounded bg-stone-100 px-1 dark:bg-zinc-800">BROTHER_QL_PORT</code>{' '}
+            (default <code className="rounded bg-stone-100 px-1 dark:bg-zinc-800">9100</code>) on the
+            server.
           </p>
         </SectionCard>
 
