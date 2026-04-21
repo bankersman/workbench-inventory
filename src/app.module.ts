@@ -43,7 +43,9 @@ const frontendDist = join(__dirname, 'frontend');
       ? [
           ServeStaticModule.forRoot({
             rootPath: frontendDist,
-            exclude: ['/api*'],
+            // Express 5 + path-to-regexp v6: `/api*` is invalid (throws at runtime → 500 on deep links).
+            // Use a named wildcard so API routes skip the SPA fallback.
+            exclude: ['/api/{*path}'],
             // Express 5: serve index.html for client-side routes on full page load (e.g. /projects).
             renderPath: '{*any}',
           }),

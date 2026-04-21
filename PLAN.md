@@ -571,7 +571,7 @@ flowchart TB
 - **Styling:** **Tailwind CSS** (v4 + Vite plugin); `darkMode: 'class'` on `<html>`; **`dark:`** variants so one component tree covers light and dark.
 - **Server state:** **TanStack Query** (`QueryClientProvider` in `frontend/src/main.tsx`)—caching, mutations, invalidation after actions.
 - **HTTP helpers:** **`apiBase()`** (supports `VITE_API_BASE`), **`fetchJson`**, **`fetchNoContent`**; **`parseApiErrorMessage`** for Nest JSON bodies (`message` / `message[]` / `error`).
-- **Production static:** Vite build output to `dist/`; Nest **`ServeStaticModule`** serves the SPA; **SPA fallback** so deep links (`/projects`, `/items`, …) return **`index.html`** (not 404); API under global prefix (e.g. `/api`).
+- **Production static:** Vite build output to `dist/`; Nest **`ServeStaticModule`** serves the SPA; **SPA fallback** so deep links (`/projects`, `/items`, `/order`, …) return **`index.html`** (not 404). With **Express 5** / **path-to-regexp v6**, `exclude` must use a valid pattern (e.g. `'/api/{*path}'`), not `'/api*'` (invalid—runtime throw caused **500** on non-root paths before the fix). API routes stay under the global prefix (e.g. `/api`).
 - **Dev:** Vite dev server proxies `/api` (and scanner/socket as configured); full stack = Nest + `npm run dev --workspace frontend`; single-port deep links = production build + Nest.
 
 ### Theme, shell, and global chrome

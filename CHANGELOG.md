@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Fix — SPA deep links (ServeStatic exclude) — 2026-04-21
+
+**Done**
+
+- **[ServeStaticModule](src/app.module.ts):** `exclude` changed from `'/api*'` to **`'/api/{*path}'`**. Express 5’s `path-to-regexp` rejects `*`-only globs; the old value threw on every SPA path (`/order`, `/projects`, …), yielding **500 JSON** instead of `index.html`.
+
 ### Docs — PLAN.md workshop UI (full overhaul plan) — 2026-04-21
 
 **Done**
