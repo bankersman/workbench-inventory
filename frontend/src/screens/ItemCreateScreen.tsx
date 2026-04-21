@@ -3,11 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { fetchJson } from '../api';
-
-interface CategoryRow {
-  id: number;
-  name: string;
-}
+import type { CategoryWithAttributes } from '../types/category';
 
 interface ContainerRow {
   id: number;
@@ -30,11 +26,12 @@ export function ItemCreateScreen() {
   const [description, setDescription] = useState('');
   const [notes, setNotes] = useState('');
   const [barcode, setBarcode] = useState('');
+  const [draftAttributes, setDraftAttributes] = useState<Record<string, string>>({});
   const [err, setErr] = useState<string | null>(null);
 
   const categoriesQ = useQuery({
     queryKey: ['categories'],
-    queryFn: () => fetchJson<CategoryRow[]>('/categories'),
+    queryFn: () => fetchJson<CategoryWithAttributes[]>('/categories'),
   });
 
   const containersQ = useQuery({
@@ -44,6 +41,8 @@ export function ItemCreateScreen() {
 
   const categories = categoriesQ.data ?? [];
   const containers = containersQ.data ?? [];
+  const selectedCategory =
+    categoryId === '' ? null : (categories.find((c) => c.id === Number(categoryId)) ?? null);
 
   const createMut = useMutation({
     mutationFn: (body: {
@@ -55,6 +54,7 @@ export function ItemCreateScreen() {
       description?: string | null;
       notes?: string | null;
       barcode?: string | null;
+      attributes?: Record<string, string | number | null>;
     }) =>
       fetchJson<{ id: number }>('/items', {
         method: 'POST',
@@ -93,6 +93,25 @@ export function ItemCreateScreen() {
           }
           const u = unit.trim() || 'ea';
           const qn = Number(quantity);
+          const attributes: Record<string, string | number | null> = {};
+          for (const def of selectedCategory?.attributes ?? []) {
+            const raw = draftAttributes[def.key] ?? '';
+            const trimmed = raw.trim();
+            if (trimmed === '') {
+              attributes[def.key] = null;
+              continue;
+            }
+            if (def.type === 'number') {
+              const parsed = Number(trimmed);
+              if (!Number.isFinite(parsed)) {
+                setErr(`Field "${def.label}" must be a valid number`);
+                return;
+              }
+              attributes[def.key] = parsed;
+              continue;
+            }
+            attributes[def.key] = trimmed;
+          }
           setErr(null);
           createMut.mutate({
             name: trimmed,
@@ -103,6 +122,7 @@ export function ItemCreateScreen() {
             notes: notes.trim() || null,
             barcode: barcode.trim() || null,
             categoryId: categoryId === '' ? null : Number(categoryId),
+            attributes,
           });
         }}
       >
@@ -186,7 +206,10 @@ export function ItemCreateScreen() {
               id="ic-cat"
               className="mt-1 w-full rounded-xl border border-stone-300 bg-white px-3 py-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
               value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
+              onChange={(e) => {
+                setCategoryId(e.target.value);
+                setDraftAttributes({});
+              }}
             >
               <option value="">— None —</option>
               {categories.map((c) => (
@@ -196,6 +219,68 @@ export function ItemCreateScreen() {
               ))}
             </select>
           </div>
+          {selectedCategory ? (
+            <div className="sm:col-span-2 rounded-xl border border-stone-200 p-3 dark:border-zinc-700">
+              <h2 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                Category fields
+              </h2>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                Fields come from the selected category schema.
+              </p>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                {selectedCategory.attributes.map((def) => {
+                  const label = def.unit ? `${def.label} (${def.unit})` : def.label;
+                  const value = draftAttributes[def.key] ?? '';
+                  if (def.type === 'enum') {
+                    return (
+                      <div key={def.key}>
+                        <label
+                          htmlFor={`ic-attr-${def.key}`}
+                          className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                        >
+                          {label}
+                        </label>
+                        <select
+                          id={`ic-attr-${def.key}`}
+                          className="mt-1 w-full rounded-xl border border-stone-300 bg-white px-3 py-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
+                          value={value}
+                          onChange={(e) =>
+                            setDraftAttributes((prev) => ({ ...prev, [def.key]: e.target.value }))
+                          }
+                        >
+                          <option value="">— Select —</option>
+                          {(def.options ?? []).map((opt) => (
+                            <option key={opt} value={opt}>
+                              {opt}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div key={def.key}>
+                      <label
+                        htmlFor={`ic-attr-${def.key}`}
+                        className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                      >
+                        {label}
+                      </label>
+                      <input
+                        id={`ic-attr-${def.key}`}
+                        type={def.type === 'number' ? 'number' : 'text'}
+                        className="mt-1 w-full rounded-xl border border-stone-300 bg-white px-3 py-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
+                        value={value}
+                        onChange={(e) =>
+                          setDraftAttributes((prev) => ({ ...prev, [def.key]: e.target.value }))
+                        }
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
           <div className="sm:col-span-2">
             <label
               htmlFor="ic-desc"

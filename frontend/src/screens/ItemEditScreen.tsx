@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { fetchJson } from '../api';
 import { PageBody, PageHero } from '../components/PageShell';
+import type { CategoryAttributeDefinition, CategoryWithAttributes } from '../types/category';
 
 interface ItemDetail {
   id: number;
@@ -17,11 +18,13 @@ interface ItemDetail {
   minQty: number | null;
   reorderQty: number | null;
   notes: string | null;
+  attributes: Record<string, string | number | null>;
 }
 
 interface CategoryRow {
   id: number;
   name: string;
+  attributes: CategoryAttributeDefinition[];
 }
 
 interface ContainerRow {
@@ -56,7 +59,20 @@ function ItemEditForm({
     data.reorderQty != null ? String(data.reorderQty) : '',
   );
   const [editNotes, setEditNotes] = useState(data.notes ?? '');
+  const [draftAttributes, setDraftAttributes] = useState<Record<string, string>>(
+    Object.fromEntries(
+      Object.entries(data.attributes ?? {}).map(([key, value]) => [
+        key,
+        value == null ? '' : String(value),
+      ]),
+    ),
+  );
+  const [categoryResetNotice, setCategoryResetNotice] = useState(false);
   const [editErr, setEditErr] = useState<string | null>(null);
+  const selectedCategory =
+    editCategoryId === ''
+      ? null
+      : (categories.find((c) => c.id === Number(editCategoryId)) ?? null);
 
   const patchMut = useMutation({
     mutationFn: (body: Record<string, unknown>) =>
@@ -96,6 +112,26 @@ function ItemEditForm({
           containerId: Number(editContainerId),
           categoryId: editCategoryId === '' ? null : Number(editCategoryId),
         };
+        const attributes: Record<string, string | number | null> = {};
+        for (const def of selectedCategory?.attributes ?? []) {
+          const raw = draftAttributes[def.key] ?? '';
+          const trimmedAttr = raw.trim();
+          if (trimmedAttr === '') {
+            attributes[def.key] = null;
+            continue;
+          }
+          if (def.type === 'number') {
+            const parsed = Number(trimmedAttr);
+            if (!Number.isFinite(parsed)) {
+              setEditErr(`Field "${def.label}" must be a valid number`);
+              return;
+            }
+            attributes[def.key] = parsed;
+            continue;
+          }
+          attributes[def.key] = trimmedAttr;
+        }
+        body.attributes = attributes;
         const mn = editMinQty.trim();
         const rq = editReorderQty.trim();
         body.minQty = mn === '' ? null : Number(mn);
@@ -105,8 +141,11 @@ function ItemEditForm({
       }}
     >
       <div>
-        <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Name</label>
+        <label htmlFor="ie-name" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          Name
+        </label>
         <input
+          id="ie-name"
           className="mt-1 w-full rounded-xl border border-stone-300 bg-white px-3 py-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
           value={editName}
           onChange={(e) => setEditName(e.target.value)}
@@ -144,11 +183,21 @@ function ItemEditForm({
         </select>
       </div>
       <div className="mt-3">
-        <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Category</label>
+        <label
+          htmlFor="ie-category"
+          className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+        >
+          Category
+        </label>
         <select
+          id="ie-category"
           className="mt-1 w-full rounded-xl border border-stone-300 bg-white px-3 py-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
           value={editCategoryId}
-          onChange={(e) => setEditCategoryId(e.target.value)}
+          onChange={(e) => {
+            setEditCategoryId(e.target.value);
+            setDraftAttributes({});
+            setCategoryResetNotice(true);
+          }}
         >
           <option value="">— None —</option>
           {categories.map((c) => (
@@ -158,6 +207,68 @@ function ItemEditForm({
           ))}
         </select>
       </div>
+      {selectedCategory ? (
+        <div className="mt-3 rounded-xl border border-stone-200 p-3 dark:border-zinc-700">
+          <h2 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Category fields</h2>
+          {categoryResetNotice ? (
+            <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+              Category changed: custom field values were reset for the new schema.
+            </p>
+          ) : null}
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            {selectedCategory.attributes.map((def) => {
+              const label = def.unit ? `${def.label} (${def.unit})` : def.label;
+              const value = draftAttributes[def.key] ?? '';
+              if (def.type === 'enum') {
+                return (
+                  <div key={def.key}>
+                    <label
+                      htmlFor={`ie-attr-${def.key}`}
+                      className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                    >
+                      {label}
+                    </label>
+                    <select
+                      id={`ie-attr-${def.key}`}
+                      className="mt-1 w-full rounded-xl border border-stone-300 bg-white px-3 py-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
+                      value={value}
+                      onChange={(e) =>
+                        setDraftAttributes((prev) => ({ ...prev, [def.key]: e.target.value }))
+                      }
+                    >
+                      <option value="">— Select —</option>
+                      {(def.options ?? []).map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                );
+              }
+              return (
+                <div key={def.key}>
+                  <label
+                    htmlFor={`ie-attr-${def.key}`}
+                    className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                  >
+                    {label}
+                  </label>
+                  <input
+                    id={`ie-attr-${def.key}`}
+                    type={def.type === 'number' ? 'number' : 'text'}
+                    className="mt-1 w-full rounded-xl border border-stone-300 bg-white px-3 py-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
+                    value={value}
+                    onChange={(e) =>
+                      setDraftAttributes((prev) => ({ ...prev, [def.key]: e.target.value }))
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
       <div className="mt-3 grid grid-cols-2 gap-2">
         <div>
           <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Min qty</label>
@@ -229,7 +340,7 @@ export function ItemEditScreen() {
 
   const categoriesQ = useQuery({
     queryKey: ['categories'],
-    queryFn: () => fetchJson<CategoryRow[]>('/categories'),
+    queryFn: () => fetchJson<CategoryWithAttributes[]>('/categories'),
   });
 
   const containersQ = useQuery({

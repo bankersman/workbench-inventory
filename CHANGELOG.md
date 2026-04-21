@@ -15,6 +15,13 @@
 - Category create/edit screens now include a custom-attribute editor (`key`, `label`, `type`, optional `unit`, enum `options`) and submit `attributes` in category `POST`/`PATCH` payloads with client-side validation for required fields, key format, uniqueness, and enum options.
 - Added frontend tests in [`frontend/src/screens/CategoryScreens.test.tsx`](frontend/src/screens/CategoryScreens.test.tsx) covering attribute row add/remove behavior, duplicate-key validation, enum options payload formatting, and edit-screen patch payloads.
 
+### Frontend — category attributes UI (step 3) — 2026-04-21
+
+**Done**
+
+- Item create/edit screens now render dynamic **Category fields** from the selected category schema and persist item `attributes` in `POST /items` and `PATCH /items/:id` payloads, including number coercion and reset-on-category-change behavior.
+- Added focused tests in [`frontend/src/screens/ItemAttributeForms.test.tsx`](frontend/src/screens/ItemAttributeForms.test.tsx) for number/text/enum payload coercion, category-change resets, and edit-form initialization from existing attribute values.
+
 ### Tooling — pnpm workspace — 2026-04-21
 
 **Done**
