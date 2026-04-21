@@ -30,6 +30,12 @@
 - Added fallback key/value rendering when category metadata is unavailable but item attributes exist.
 - Added tests in [`frontend/src/screens/ItemDetailScreen.test.tsx`](frontend/src/screens/ItemDetailScreen.test.tsx) for category-based rendering and fallback behavior.
 
+### Frontend — category attributes UI (step 5) — 2026-04-21
+
+**Done**
+
+- Settings category rows now show the number of custom fields defined for each category (e.g. `0 fields`, `3 fields`) to make schema coverage visible at a glance.
+
 ### Tooling — pnpm workspace — 2026-04-21
 
 **Done**

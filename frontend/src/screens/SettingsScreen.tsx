@@ -4,17 +4,13 @@ import { Link } from 'react-router-dom';
 
 import { apiBase, fetchJson, fetchNoContent } from '../api';
 import { PageBody, PageHero, SectionCard } from '../components/PageShell';
+import type { CategoryWithAttributes } from '../types/category';
 
 interface BackupStatus {
   lastBackup: string | null;
   backupsDirectory: string;
   databasePath: string;
   databaseExists: boolean;
-}
-
-interface CategoryRow {
-  id: number;
-  name: string;
 }
 
 interface ScannerStatus {
@@ -30,12 +26,12 @@ export function SettingsScreen() {
   const [sidecar, setSidecar] = useState<{ ok: boolean } | null>(null);
   const [backupBusy, setBackupBusy] = useState(false);
 
-  const [deleteRow, setDeleteRow] = useState<CategoryRow | null>(null);
+  const [deleteRow, setDeleteRow] = useState<CategoryWithAttributes | null>(null);
   const [deleteErr, setDeleteErr] = useState<string | null>(null);
 
   const categoriesQ = useQuery({
     queryKey: ['categories'],
-    queryFn: () => fetchJson<CategoryRow[]>('/categories'),
+    queryFn: () => fetchJson<CategoryWithAttributes[]>('/categories'),
   });
 
   const deleteCat = useMutation({
@@ -133,7 +129,12 @@ export function SettingsScreen() {
                   key={c.id}
                   className="flex flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
                 >
-                  <span className="font-medium text-zinc-900 dark:text-zinc-100">{c.name}</span>
+                  <div>
+                    <span className="font-medium text-zinc-900 dark:text-zinc-100">{c.name}</span>
+                    <span className="ml-2 rounded-full border border-stone-300 px-2 py-0.5 text-xs text-zinc-600 dark:border-zinc-600 dark:text-zinc-300">
+                      {c.attributes.length} field{c.attributes.length === 1 ? '' : 's'}
+                    </span>
+                  </div>
                   <div className="flex gap-2">
                     <Link
                       to={`/settings/categories/${c.id}/edit`}
