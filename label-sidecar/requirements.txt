@@ -1,3 +1,0 @@
-flask>=3.0.0
-# Optional hardware printing (install when deploying with a Brother QL on the host):
-# brother_ql>=0.2.0

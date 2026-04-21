@@ -3,21 +3,9 @@ services:
     build: .
     ports:
       - '3000:3000'
-    depends_on:
-      - label-sidecar
     environment:
       PORT: '3000'
       DB_PATH: /opt/inventory/data/inventory.db
-      LABEL_SIDECAR_URL: http://label-sidecar:5050
     volumes:
       - ./data:/opt/inventory/data
       - ./backups:/opt/inventory/backups
-
-  label-sidecar:
-    build:
-      context: .
-      dockerfile: label-sidecar/Dockerfile
-    ports:
-      - '5050:5050'
-    environment:
-      LABEL_SIDECAR_PORT: '5050'

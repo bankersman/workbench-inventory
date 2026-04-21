@@ -34,7 +34,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Python (label sidecar)
+# Python (local tooling / scripts)
 .venv/
 venv/
 __pycache__/
