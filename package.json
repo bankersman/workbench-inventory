@@ -3,26 +3,24 @@
   "version": "0.0.1",
   "private": true,
   "description": "Workbench Inventory — NestJS API + React kiosk (see PLAN.md)",
+  "packageManager": "pnpm@9.15.9",
   "engines": {
     "node": ">=24.0.0"
   },
-  "workspaces": [
-    "frontend"
-  ],
   "scripts": {
-    "build": "nest build && npm run build --workspace frontend",
+    "build": "nest build && pnpm --filter frontend run build",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:prod": "node dist/main",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "jest && npm run test --workspace frontend",
+    "test": "jest && pnpm --filter frontend run test",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "typecheck": "tsc --noEmit -p tsconfig.json && npm run typecheck --workspace frontend",
+    "typecheck": "tsc --noEmit -p tsconfig.json && pnpm --filter frontend run typecheck",
     "migration:run": "node ./node_modules/typeorm/cli-ts-node-commonjs.js migration:run -d src/data-source.ts",
     "migration:generate": "node ./node_modules/typeorm/cli-ts-node-commonjs.js migration:generate -d src/data-source.ts"
   },

@@ -1,17 +1,17 @@
 # Local development
 
-Requires Node.js 24+ and npm (see repo root `.nvmrc` if you use **nvm**). Install dependencies and run migrations (if needed), then start the API and frontend:
+Requires Node.js 24+ and **pnpm** (see `package.json` `packageManager`; enable with `corepack enable` on Node 16+). See repo root `.nvmrc` if you use **nvm**. Install dependencies and run migrations (if needed), then start the API and frontend:
 
 ```bash
-npm install
-npm run migration:run
-npm run start:dev
+pnpm install
+pnpm run migration:run
+pnpm run start:dev
 ```
 
 In another terminal:
 
 ```bash
-cd frontend && npm run dev
+pnpm --filter frontend run dev
 ```
 
 The Vite dev server proxies `/api` and `/socket.io` to `http://localhost:3000`.

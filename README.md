@@ -39,7 +39,7 @@ To run **natively** on the Pi under **systemd** (typical for production kiosks w
 
 ## Local development (API + Vite)
 
-From the repo root: `npm ci`, then run the Nest API (`npm run start:dev`, default port **3000**) and in another terminal the Vite dev server (`npm run dev --workspace frontend`, default **5173**). Vite proxies `/api` and `/socket.io` to the API. Open the Vite URL for hot reload; for **production-like** deep links (`/projects`, `/items`, etc.) on one port, run `npm run build` and `npm run start:prod` so Nest serves [`dist/frontend`](frontend/vite.config.ts).
+From the repo root: `pnpm install --frozen-lockfile`, then run the Nest API (`pnpm run start:dev`, default port **3000**) and in another terminal the Vite dev server (`pnpm --filter frontend run dev`, default **5173**). Vite proxies `/api` and `/socket.io` to the API. Open the Vite URL for hot reload; for **production-like** deep links (`/projects`, `/items`, etc.) on one port, run `pnpm run build` and `pnpm run start:prod` so Nest serves [`dist/frontend`](frontend/vite.config.ts).
 
 ### Web UI (kiosk app)
 
@@ -49,7 +49,7 @@ The React SPA is styled with **Tailwind CSS** and loads server state via **TanSt
 
 - **Live site (GitHub Pages):** [https://bankersman.github.io/workbench-inventory/](https://bankersman.github.io/workbench-inventory/)
 - **Pages setup:** In the repo **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”). The `Docs` workflow builds VitePress and deploys via `actions/deploy-pages`. If you previously used the `gh-pages` branch with another action, that branch is no longer required for publishing.
-- **Local:** `npm run docs:dev` — open the URL Vite prints (includes the `/workbench-inventory/` base path). To build: `npm run docs:build`.
+- **Local:** `pnpm run docs:dev` — open the URL Vite prints (includes the `/workbench-inventory/` base path). To build: `pnpm run docs:build`.
 - **Contributing:** [CONTRIBUTING.md](./CONTRIBUTING.md)
 - **Changelog:** [CHANGELOG.md](./CHANGELOG.md)
 

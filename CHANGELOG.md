@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Tooling — pnpm workspace — 2026-04-21
+
+**Done**
+
+- **Package manager:** Switched the monorepo from npm workspaces to **pnpm** (`pnpm-workspace.yaml`, root `packageManager` pin, `pnpm-lock.yaml`). Root scripts use `pnpm --filter frontend …` where the frontend package is involved. **Dockerfile** and **GitHub Actions** (`ci.yml`, `docs.yml`) install with `pnpm install --frozen-lockfile`; prod image stage runs `pnpm prune --prod` after the build `node_modules` copy. Docs (**README**, **CONTRIBUTING**, getting started, development, Raspberry Pi native, PR template) and **PLAN.md** CI/delivery commands updated accordingly; **`package-lock.json`** is gitignored; **`.prettierignore`** lists `pnpm-lock.yaml`.
+
 ### Frontend — top shell, page structure, bookmarkable routes — 2026-04-21
 
 **Done**
@@ -188,7 +194,7 @@
 
 **Done**
 
-- VitePress site under `docs/` (`npm run docs:dev` / `docs:build`); workflow `.github/workflows/docs.yml` publishes to `gh-pages` with `VITEPRESS_BASE` set from the repository name.
+- VitePress site under `docs/` (`pnpm run docs:dev` / `docs:build`); workflow `.github/workflows/docs.yml` publishes to `gh-pages` with `VITEPRESS_BASE` set from the repository name.
 
 ### [Phase 10.4] Dockerfile — 2026-04-20
 
@@ -604,12 +610,12 @@
 
 **Done**
 
-- Monorepo with npm workspace `frontend/` (Vite + React + TypeScript) and NestJS backend at repo root (`src/`).
+- Monorepo with pnpm workspace `frontend/` (Vite + React + TypeScript) and NestJS backend at repo root (`src/`).
 - Root scripts: `lint`, `format`, `format:check`, `test` (Jest + Vitest), `test:watch`, `test:cov`, `typecheck`, `build`, `start`, `start:dev`, `start:prod`.
 - Strict TypeScript via `tsconfig.base.json` (backend `tsconfig.json`, frontend extends base in `tsconfig.app.json`).
 - ESLint 9 flat config (`eslint.config.mjs`) with TypeScript rules for `src/` and React hooks / refresh for `frontend/`; Prettier via `eslint-config-prettier` and `.prettierrc` (PLAN.md excluded from formatting).
 - TypeORM + `better-sqlite3`: database path from `DB_PATH`, default `${cwd}/data/inventory.db`; `PRAGMA journal_mode=WAL` on startup (`DatabaseInitService`).
-- `@nestjs/serve-static` serves `dist/frontend` when present (after `npm run build`); API under global prefix `/api`.
+- `@nestjs/serve-static` serves `dist/frontend` when present (after `pnpm run build`); API under global prefix `/api`.
 - Core dependencies from PLAN installed (TypeORM stack, websockets, schedule, serialport, canvas, bwip-js, dotenv, socket.io).
 - Dev tooling: Jest + ts-jest for backend; Vitest + Testing Library + jsdom for frontend smoke test.
 - `.env.example` documenting primary environment variables.
@@ -624,4 +630,4 @@
 
 - **Node version:** Target **Node.js 24+** (`package.json` `engines`, CI, Docker). Local dev with `nvm use 24` is supported.
 - **`@nestjs/platform-socket.io`:** Not added yet; `socket.io` is installed for later WebSocket gateway work (Phase 3).
-- **Static assets:** `ServeStaticModule` is only registered when `dist/frontend` exists (typically after `npm run build`), so `nest start` without a prior full build still runs API-only — intentional for backend-only dev.
+- **Static assets:** `ServeStaticModule` is only registered when `dist/frontend` exists (typically after `pnpm run build`), so `nest start` without a prior full build still runs API-only — intentional for backend-only dev.

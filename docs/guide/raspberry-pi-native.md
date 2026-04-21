@@ -49,9 +49,10 @@ sudo mkdir -p /opt/inventory
 sudo chown "$USER:$USER" /opt/inventory
 cd /opt/inventory
 git clone https://github.com/bankersman/workbench-inventory.git .
-npm ci
-npm run build
-npm prune --omit=dev
+corepack enable
+pnpm install --frozen-lockfile
+pnpm run build
+pnpm prune --prod
 ```
 
 Create data directories (paths must match `DB_PATH`):
@@ -118,9 +119,10 @@ The app does not install a full-screen browser by itself. Typical approaches: Ch
 ```bash
 cd /opt/inventory
 sudo -u inventory git pull
-sudo -u inventory npm ci
-sudo -u inventory npm run build
-sudo -u inventory npm prune --omit=dev
+sudo -u inventory corepack enable
+sudo -u inventory pnpm install --frozen-lockfile
+sudo -u inventory pnpm run build
+sudo -u inventory pnpm prune --prod
 sudo systemctl restart workbench-inventory
 ```
 

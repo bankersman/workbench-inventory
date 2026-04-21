@@ -16,7 +16,7 @@ Open `http://localhost:3000`. Persisted files live under `./data` (database) and
 | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | [Docker (GHCR)](/guide/docker)                                                | Pull pre-built multi-arch images, one-line `docker run`, or Compose without building locally |
 | [Raspberry Pi (native)](/guide/raspberry-pi-native)                           | Systemd install on a Pi without Docker                                                       |
-| [Local development](/guide/getting-started/local)                             | `npm run start:dev` + Vite while you change code                                             |
+| [Local development](/guide/getting-started/local)                             | `pnpm run start:dev` + Vite while you change code                                            |
 | [Hardware](/guide/hardware/printers) · [USB scanner](/guide/hardware/scanner) | Label printing / Brother sidecar, or serial barcode scanner setup                            |
 
 If you only need the **app image** (no label sidecar), use the **`docker run`** one-liner on [Docker (GHCR)](/guide/docker) — no Git checkout required.

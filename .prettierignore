@@ -1,4 +1,5 @@
 PLAN.md
+pnpm-lock.yaml
 .env.example
 dist
 node_modules

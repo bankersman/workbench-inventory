@@ -572,7 +572,7 @@ flowchart TB
 - **Server state:** **TanStack Query** (`QueryClientProvider` in `frontend/src/main.tsx`)—caching, mutations, invalidation after actions.
 - **HTTP helpers:** **`apiBase()`** (supports `VITE_API_BASE`), **`fetchJson`**, **`fetchNoContent`**; **`parseApiErrorMessage`** for Nest JSON bodies (`message` / `message[]` / `error`).
 - **Production static:** Vite build output to `dist/`; Nest **`ServeStaticModule`** serves the SPA; **SPA fallback** so deep links (`/projects`, `/items`, `/order`, …) return **`index.html`** (not 404). With **Express 5** / **path-to-regexp v6**, `exclude` must use a valid pattern (e.g. `'/api/{*path}'`), not `'/api*'` (invalid—runtime throw caused **500** on non-root paths before the fix). API routes stay under the global prefix (e.g. `/api`).
-- **Dev:** Vite dev server proxies `/api` (and scanner/socket as configured); full stack = Nest + `npm run dev --workspace frontend`; single-port deep links = production build + Nest.
+- **Dev:** Vite dev server proxies `/api` (and scanner/socket as configured); full stack = Nest + `pnpm --filter frontend run dev`; single-port deep links = production build + Nest.
 
 ### Theme, shell, and global chrome
 
@@ -593,7 +593,7 @@ flowchart TB
 
 ### Overhaul phases (0–7) and tracker
 
-Delivery gate after each phase: **`npm test`**, **`npm run lint`**, **`npm run typecheck`**, **`npm run format:check`**, **`npm run build`**; **CHANGELOG** entry; check off phase in **`progress-frontend-overhaul.md`**; git commit (see that file for line items).
+Delivery gate after each phase: **`pnpm test`**, **`pnpm run lint`**, **`pnpm run typecheck`**, **`pnpm run format:check`**, **`pnpm run build`**; **CHANGELOG** entry; check off phase in **`progress-frontend-overhaul.md`**; git commit (see that file for line items).
 
 | Phase | Scope (summary) |
 |-------|-------------------|
@@ -1173,10 +1173,10 @@ anyone without a Pi or local Node setup.
 Trigger: push to any branch, pull request to `main`.
 
 Jobs:
-1. **lint** — `npm run lint`
-2. **typecheck** — `npm run typecheck`
-3. **test** — `npm run test:cov`, upload coverage report as artifact
-4. **build** — `npm run build` (NestJS + Vite), verify output exists
+1. **lint** — `pnpm run lint`
+2. **typecheck** — `pnpm run typecheck`
+3. **test** — `pnpm run test:cov`, upload coverage report as artifact
+4. **build** — `pnpm run build` (NestJS + Vite), verify output exists
 
 All jobs run in parallel where possible. PR merge blocked if any job fails.
 

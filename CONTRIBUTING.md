@@ -4,24 +4,24 @@ Thanks for helping improve Workbench Inventory. This document explains how to se
 
 ## Development setup
 
-1. Install **Node.js 24+** and **npm** (see `package.json` `engines.node`). With [nvm](https://github.com/nvm-sh/nvm), run `nvm install` / `nvm use` in the repo root (`.nvmrc` pins **24**).
-2. Clone the repository and run `npm install` at the repo root (workspaces install the frontend).
+1. Install **Node.js 24+** and **pnpm** (see `package.json` `engines.node` and `packageManager`). With [nvm](https://github.com/nvm-sh/nvm), run `nvm install` / `nvm use` in the repo root (`.nvmrc` pins **24**). Enable Corepack once (`corepack enable`) so the pinned pnpm version from `packageManager` is on your `PATH`, or install pnpm per [pnpm.io/installation](https://pnpm.io/installation).
+2. Clone the repository and run `pnpm install` at the repo root (the workspace installs `frontend/`).
 3. Copy environment variables as needed (see `docs/guide/configuration.md` and any `.env.example`).
-4. Run database migrations: `npm run migration:run`.
-5. Start the API: `npm run start:dev`.
-6. In another terminal, start the Vite app: `cd frontend && npm run dev`.
+4. Run database migrations: `pnpm run migration:run`.
+5. Start the API: `pnpm run start:dev`.
+6. In another terminal, start the Vite app: `pnpm --filter frontend run dev` (or `cd frontend && pnpm run dev`).
 
 Quality checks before opening a PR:
 
 ```bash
-npm run lint
-npm run format:check
-npm run typecheck
-npm run test
-npm run build
+pnpm run lint
+pnpm run format:check
+pnpm run typecheck
+pnpm run test
+pnpm run build
 ```
 
-**VitePress** (`docs/`): the default `base` matches GitHub Pages at `https://bankersman.github.io/workbench-inventory/`. For a local dev server at the site root, run `VITEPRESS_BASE=/ npm run docs:dev`.
+**VitePress** (`docs/`): the default `base` matches GitHub Pages at `https://bankersman.github.io/workbench-inventory/`. For a local dev server at the site root, run `VITEPRESS_BASE=/ pnpm run docs:dev`.
 
 ## Branches and commits
 
@@ -33,7 +33,7 @@ npm run build
 - Describe **what** changed and **why** (not only the diff).
 - Ensure **CI-equivalent** checks pass locally: lint, format, typecheck, tests, build.
 - If you change user-visible behavior, update **CHANGELOG.md** under `[Unreleased]` and, when relevant, the VitePress docs under `docs/`.
-- If you add a dependency, explain briefly and keep the lockfile in sync (`npm install` at root).
+- If you add a dependency, explain briefly and keep the lockfile in sync (`pnpm add …` at the repo root or under `frontend/` as appropriate).
 
 ## Review expectations
 
@@ -61,7 +61,7 @@ ESLint and Prettier enforce most formatting and common issues. Prefer explicit t
 
 ## Tests
 
-- Backend: Jest (`npm run test`, `npm run test:cov`).
-- Frontend: Vitest in `frontend/` (`npm run test --workspace frontend`).
+- Backend: Jest (`pnpm run test`, `pnpm run test:cov`).
+- Frontend: Vitest in `frontend/` (`pnpm --filter frontend run test`).
 
 When adding features, add focused unit tests for services and pure utilities; UI tests are welcome for critical flows when they stay stable.

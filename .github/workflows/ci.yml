@@ -15,38 +15,47 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-          cache: npm
-      - run: npm ci
-      - run: npm run lint
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
 
   typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-          cache: npm
-      - run: npm ci
-      - run: npm run typecheck
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run typecheck
 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-          cache: npm
+          cache: pnpm
       - name: Install native deps (canvas, better-sqlite3)
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
-      - run: npm ci
-      - run: npm run test:cov
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run test:cov
       - uses: actions/upload-artifact@v7
         with:
           name: coverage
@@ -56,13 +65,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-          cache: npm
+          cache: pnpm
       - name: Install native deps (canvas)
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
-      - run: npm ci
-      - run: npm run build
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build

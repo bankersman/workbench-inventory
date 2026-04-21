@@ -14,23 +14,28 @@ RUN apt-get update \
     librsvg2-dev \
   && rm -rf /var/lib/apt/lists/*
 
-COPY package.json package-lock.json ./
+RUN corepack enable
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY frontend/package.json frontend/package.json
 
-RUN npm ci
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
 
 FROM node:24-bookworm AS prod_deps
 
 WORKDIR /app
 
-COPY --from=build /app/package.json /app/package-lock.json ./
+RUN corepack enable
+
+COPY --from=build /app/package.json /app/pnpm-lock.yaml /app/pnpm-workspace.yaml ./
+COPY --from=build /app/frontend/package.json ./frontend/
 COPY --from=build /app/node_modules ./node_modules
 
-RUN npm prune --omit=dev
+RUN pnpm prune --prod
 
 FROM node:24-bookworm AS native_libs
 
