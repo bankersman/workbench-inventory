@@ -15,7 +15,7 @@ export function StatusBar({ state, onCancel, onConfirm, onDecQty, onIncQty }: St
 
   return (
     <header
-      className="sticky top-0 z-[35] border-b border-stone-200 bg-stone-100/95 px-3 py-2.5 backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/95"
+      className="border-b border-stone-200 bg-stone-100/95 px-3 py-2.5 backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/95"
       role="status"
     >
       <div className="flex flex-wrap items-center gap-2 text-sm text-zinc-800 dark:text-zinc-100">

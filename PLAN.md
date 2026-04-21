@@ -15,7 +15,7 @@
 | Framework | NestJS | Modules, DI, scheduler, WebSocket, all built-in |
 | ORM | TypeORM | Native NestJS integration, database-agnostic |
 | Database | SQLite via `better-sqlite3` | Single file, WAL mode. Assumed for development and production target. TypeORM config abstracted so other DBs are possible without code changes |
-| Frontend | React 18 + Vite + Tailwind CSS + TanStack Query | Served as static files from NestJS; workshop/kiosk UI with **light + dark** theme, bottom nav, GitHub link in shell—see **Workshop UI — frontend overhaul** below |
+| Frontend | React 18 + Vite + Tailwind CSS + TanStack Query | Served as static files from NestJS; workshop/kiosk UI with **light + dark** theme, **sticky top menubar** (nav + theme + GitHub), bookmarkable routes for create/edit—see **Workshop UI — frontend overhaul** below |
 | Barcode input | `serialport` npm package | Scanner in USB CDC serial mode, server-side only |
 | Scheduler | `@nestjs/schedule` | Cron-based backup, no OS-level cron required |
 | WebSocket | `@nestjs/websockets` + `socket.io` | Scanner event broadcast to kiosk only |
@@ -534,7 +534,7 @@ This section records the **UX-first frontend overhaul**: cohesive workshop/kiosk
 ### Principles (overhaul)
 
 - **User and job first:** Screens answer concrete tasks—“what does this build still need?”, “where is this part?”, “fix count after a stock-take”, “order what’s low”—not one generic form per DTO.
-- **Look and feel:** One visual language (type scale, spacing, color roles, hover/focus/disabled/loading). **Touch-friendly** targets and bottom nav suited to kiosk use. Empty and error states are **designed** (inline banners, confirmations with plain-language consequences for destructive actions).
+- **Look and feel:** One visual language (type scale, spacing, color roles, hover/focus/disabled/loading). **Touch-friendly** targets and a **top navigation bar** suited to kiosk use. Empty and error states are **designed** (inline banners, confirmations with plain-language consequences for destructive actions).
 - **Implementation serves UX:** REST + TanStack Query are plumbing; the product is the flow.
 
 ### Visual direction
@@ -576,8 +576,8 @@ flowchart TB
 
 ### Theme, shell, and global chrome
 
-- **Themes:** **Light** and **dark** are both first-class. User toggle in **Settings** and quick toggle in **footer** (`AppFooter`). Persistence: **`localStorage`** key **`workbench-theme`** (`light` | `dark`). First visit with no stored value: **`prefers-color-scheme`**, then persist on toggle.
-- **GitHub:** Persistent link to **`https://github.com/bankersman/workbench-inventory`** in the shell (footer), **`target="_blank"`**, **`rel="noopener noreferrer"`**, accessible name (“GitHub” / “Source”).
+- **Themes:** **Light** and **dark** are both first-class. Primary toggle in the **header** (`ThemeToggle`); Settings notes that the header switch is canonical. Persistence: **`localStorage`** key **`workbench-theme`** (`light` | `dark`). First visit with no stored value: **`prefers-color-scheme`**, then persist on toggle.
+- **GitHub:** Persistent link to **`https://github.com/bankersman/workbench-inventory`** in the shell (**header**), **`target="_blank"`**, **`rel="noopener noreferrer"`**, accessible name (“Source on GitHub”).
 - **Layout:** **`AppLayout`** (main content, max width), **`StatusBar`** (command mode), bottom **nav** (Home, Inventory, Projects, Order, Settings), **`CommandPalette`** (scanner-free CMD/QTY tiles). Main landmark **`id="main-content"`** for focus/skip patterns.
 - **Product title:** `index.html` / app chrome use a real product name (e.g. **Workbench Inventory**).
 
@@ -629,7 +629,7 @@ Static path **`items/new`** is registered **before** **`items/:id`** so “new�
 | Area | Examples |
 |------|-----------|
 | Nest static | `src/app.module.ts` (`ServeStaticModule`, `renderPath` / SPA fallback) |
-| Tailwind + app shell | `frontend/vite.config.ts`, `frontend/src/main.tsx`, `frontend/src/index.css`, `frontend/src/AppLayout.tsx`, `frontend/src/components/AppFooter.tsx` |
+| Tailwind + app shell | `frontend/vite.config.ts`, `frontend/src/main.tsx`, `frontend/src/index.css`, `frontend/src/AppLayout.tsx`, `frontend/src/components/AppHeader.tsx`, `frontend/src/components/ThemeToggle.tsx` |
 | API + query | `frontend/src/api.ts`, `frontend/src/queryClient.ts` |
 | Screens | `frontend/src/screens/*.tsx` |
 | Progress | `progress-frontend-overhaul.md` (phases 0–7 checklist) |
@@ -1022,7 +1022,7 @@ running regardless, kiosk command mode accessible without scanner via on-screen 
 
 #### Step 4.1 — App shell
 - Vite + React + **Tailwind CSS** + **light/dark** theme (class on root, user toggle + persistence—see **Workshop UI — frontend overhaul**); touch-friendly targets (~44–48px primary controls)
-- Bottom navigation: Home, Inventory, Projects, Order, Settings; shell includes **GitHub** link and optional **AppFooter** theme toggle
+- **Top menubar:** Home, Inventory, Parts, Projects, Order, Settings; shell includes **GitHub** icon link and **ThemeToggle** (switch) in the header; create/edit flows use dedicated routes (e.g. `/projects/new`, `/items/:id/edit`)
 - **TanStack Query** for server state on task screens; **`apiBase()`** / **`fetchJson`** for API calls
 
 #### Step 4.2 — Scanner hook and state machine

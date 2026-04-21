@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Frontend — top shell, page structure, bookmarkable routes — 2026-04-21
+
+**Done**
+
+- **Layout:** Replaced bottom nav + `AppFooter` with a **sticky header** (`AppHeader`: title, main nav including **Parts** `/items`, theme **switch** with sun/moon icons, **GitHub** mark link). `StatusBar` + idle banner stay above the header; `main` padding adjusted; command FAB sits at safe-area bottom.
+- **Page shell:** Added `PageHero` / `PageBody` / `SectionCard` ([`PageShell.tsx`](frontend/src/components/PageShell.tsx)) and applied across Home, lists, Order, Settings, inventory/detail screens for clearer hero vs body and card-style sections.
+- **Order list:** Restructured into action card, optional shopping-list card, and separate **Low stock** / **Project gaps** panels with badges and clearer controls ([`OrderListScreen.tsx`](frontend/src/screens/OrderListScreen.tsx)).
+- **Routes:** Static paths registered before `:id` segments in [`App.tsx`](frontend/src/App.tsx): new storage unit (`/inventory/new`), storage unit edit, new container under a unit, container edit, item edit/adjust, project create/edit, BOM line create/edit, category create/edit under `settings/categories/…`. List/detail screens link to these routes; category create/edit modals removed from Settings (delete confirm kept).
+
 ### Fix — SPA deep links (ServeStatic exclude) — 2026-04-21
 
 **Done**
@@ -63,7 +72,7 @@
 **Done**
 
 - **Tailwind CSS v4** with Vite plugin; **`dark`** class variant; semantic CSS variables for legacy [`App.css`](frontend/src/App.css) (command palette) until full migration.
-- **Theme:** [`ThemeProvider`](frontend/src/theme/ThemeProvider.tsx), [`useTheme`](frontend/src/theme/useTheme.ts), **localStorage** `workbench-theme`, **`prefers-color-scheme`** default; **Light/Dark** in [Settings](frontend/src/screens/SettingsScreen.tsx) and quick toggle in [AppFooter](frontend/src/components/AppFooter.tsx).
+- **Theme:** [`ThemeProvider`](frontend/src/theme/ThemeProvider.tsx), [`useTheme`](frontend/src/theme/useTheme.ts), **localStorage** `workbench-theme`, **`prefers-color-scheme`** default; **Light/Dark** toggle in the [AppHeader](frontend/src/components/AppHeader.tsx) (`ThemeToggle`); Settings points users to the header control.
 - **GitHub** link in footer to [bankersman/workbench-inventory](https://github.com/bankersman/workbench-inventory).
 - **TanStack Query:** [`queryClient`](frontend/src/queryClient.ts), lists on [Projects](frontend/src/screens/ProjectsListScreen.tsx) and [Inventory](frontend/src/screens/InventoryScreen.tsx).
 - **Shell:** [AppLayout](frontend/src/AppLayout.tsx), [StatusBar](frontend/src/StatusBar.tsx), bottom nav, [Home](frontend/src/screens/HomeScreen.tsx) restyled; [`index.html`](frontend/index.html) title **Workbench Inventory**.

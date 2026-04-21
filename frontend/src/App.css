@@ -166,7 +166,7 @@
 .command-fab {
   position: fixed;
   right: 16px;
-  bottom: 80px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
   z-index: 40;
   width: 56px;
   height: 56px;
