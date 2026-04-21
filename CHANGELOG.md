@@ -22,6 +22,14 @@
 - Item create/edit screens now render dynamic **Category fields** from the selected category schema and persist item `attributes` in `POST /items` and `PATCH /items/:id` payloads, including number coercion and reset-on-category-change behavior.
 - Added focused tests in [`frontend/src/screens/ItemAttributeForms.test.tsx`](frontend/src/screens/ItemAttributeForms.test.tsx) for number/text/enum payload coercion, category-change resets, and edit-form initialization from existing attribute values.
 
+### Frontend — category attributes UI (step 4) — 2026-04-21
+
+**Done**
+
+- Added a **Specifications** section to part detail pages that maps category attribute definitions to stored item values, including unit suffixes and null placeholders.
+- Added fallback key/value rendering when category metadata is unavailable but item attributes exist.
+- Added tests in [`frontend/src/screens/ItemDetailScreen.test.tsx`](frontend/src/screens/ItemDetailScreen.test.tsx) for category-based rendering and fallback behavior.
+
 ### Tooling — pnpm workspace — 2026-04-21
 
 **Done**

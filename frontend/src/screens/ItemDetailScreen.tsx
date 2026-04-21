@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { fetchJson, fetchNoContent } from '../api';
 import { PageBody, PageHero, SectionCard } from '../components/PageShell';
+import type { CategoryAttributeDefinition } from '../types/category';
 
 interface ItemDetail {
   id: number;
@@ -18,7 +19,7 @@ interface ItemDetail {
   reorderQty: number | null;
   notes: string | null;
   attributes: Record<string, string | number | null>;
-  category?: { id: number; name: string } | null;
+  category?: { id: number; name: string; attributes: CategoryAttributeDefinition[] } | null;
   container?: { id: number; barcode: string; name: string };
 }
 
@@ -85,6 +86,10 @@ export function ItemDetailScreen() {
 
   const item = itemQ.data;
   const avail = availQ.data;
+  const categoryDefs = item.category?.attributes ?? [];
+  const hasFallbackAttributes =
+    !item.category &&
+    Object.entries(item.attributes).some(([, value]) => value !== null && value !== '');
 
   return (
     <div>
@@ -183,6 +188,41 @@ export function ItemDetailScreen() {
             <p className="mt-2 text-zinc-700 dark:text-zinc-300">{item.notes}</p>
           ) : null}
         </SectionCard>
+        {categoryDefs.length > 0 || hasFallbackAttributes ? (
+          <SectionCard title="Specifications">
+            {categoryDefs.length > 0 ? (
+              <ul className="space-y-2 text-zinc-800 dark:text-zinc-200">
+                {categoryDefs.map((def) => {
+                  const raw = item.attributes[def.key];
+                  const value =
+                    raw === null || raw === undefined || raw === '' ? (
+                      <span className="text-zinc-500 dark:text-zinc-400">—</span>
+                    ) : (
+                      <span>
+                        {String(raw)}
+                        {def.unit ? ` ${def.unit}` : ''}
+                      </span>
+                    );
+                  return (
+                    <li key={def.key}>
+                      <span className="font-medium">{def.label}: </span>
+                      {value}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <ul className="space-y-2 text-zinc-800 dark:text-zinc-200">
+                {Object.entries(item.attributes).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-medium">{key}: </span>
+                    <span>{value == null || value === '' ? '—' : String(value)}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </SectionCard>
+        ) : null}
 
         {deleteOpen ? (
           <div
