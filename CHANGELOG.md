@@ -8,6 +8,13 @@
 
 - Added shared frontend category attribute typings in [`frontend/src/types/category.ts`](frontend/src/types/category.ts) to mirror backend `Category.attributes` schema (`number` / `text` / `enum` with optional enum `options`).
 
+### Frontend — category attributes UI (step 2) — 2026-04-21
+
+**Done**
+
+- Category create/edit screens now include a custom-attribute editor (`key`, `label`, `type`, optional `unit`, enum `options`) and submit `attributes` in category `POST`/`PATCH` payloads with client-side validation for required fields, key format, uniqueness, and enum options.
+- Added frontend tests in [`frontend/src/screens/CategoryScreens.test.tsx`](frontend/src/screens/CategoryScreens.test.tsx) covering attribute row add/remove behavior, duplicate-key validation, enum options payload formatting, and edit-screen patch payloads.
+
 ### Tooling — pnpm workspace — 2026-04-21
 
 **Done**
