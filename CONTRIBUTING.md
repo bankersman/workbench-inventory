@@ -49,7 +49,7 @@ Reviewers look for: correctness, tests for non-trivial logic, consistent pattern
 
 1. Extend `LabelService` (`src/labels/label.service.ts`) with layout logic; keep PNG generation bounded and deterministic for tests where possible.
 2. Expose the template string via `PreviewLabelDto` / UI selectors.
-3. Ensure the Python sidecar still accepts base64 PNG for `POST /print` (no change needed if the payload format is unchanged).
+3. Physical printing still flows through `POST /api/labels/print` → `BrotherQlService` (`@brother-ql/node`); keep PNG output compatible with the printer pipeline.
 
 ## Adding a default category
 

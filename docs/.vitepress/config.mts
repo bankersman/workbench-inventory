@@ -38,7 +38,7 @@ export default defineConfig({
       {
         text: 'Hardware',
         items: [
-          { text: 'Printers & label sidecar', link: '/guide/hardware/printers' },
+          { text: 'Brother QL labels', link: '/guide/hardware/printers' },
           { text: 'USB barcode scanner', link: '/guide/hardware/scanner' },
         ],
       },
@@ -64,7 +64,7 @@ export default defineConfig({
             text: 'Hardware',
             collapsed: false,
             items: [
-              { text: 'Printers & label sidecar', link: '/guide/hardware/printers' },
+              { text: 'Brother QL labels', link: '/guide/hardware/printers' },
               { text: 'USB barcode scanner', link: '/guide/hardware/scanner' },
             ],
           },

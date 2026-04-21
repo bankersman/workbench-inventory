@@ -31,7 +31,7 @@ features:
     details: USB serial (CDC) barcode input with line-terminated reads — optional until you configure SCANNER_PORT.
   - icon: 🏷️
     title: Labels
-    details: Code 128 labels rendered as PNG; optional Python sidecar for Brother QL forwarding when you need physical prints.
+    details: Code 128 labels rendered as PNG; optional Brother QL hardware via @brother-ql/node when you need physical prints.
   - icon: 💾
     title: SQLite & backups
     details: Single-file database with scheduled backups and optional rsync to a NAS path.
@@ -47,6 +47,6 @@ features:
 | Clone & run with Compose      | [Getting started](/guide/getting-started/)           |
 | Pull pre-built images         | [Docker (GHCR)](/guide/docker)                       |
 | Env vars and paths            | [Configuration](/guide/configuration)                |
-| Printers & label sidecar      | [Printers & label sidecar](/guide/hardware/printers) |
+| Brother QL labels             | [Brother QL label printing](/guide/hardware/printers) |
 | USB scanner in Docker         | [USB barcode scanner](/guide/hardware/scanner)       |
 | Deploy on a Pi without Docker | [Raspberry Pi (native)](/guide/raspberry-pi-native)  |

@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Brother QL — `@brother-ql/node` (replace Python sidecar) — 2026-04-21
+
+**Done**
+
+- **Printing:** Nest uses [`@brother-ql/node`](https://www.npmjs.com/package/@brother-ql/node) with `BROTHER_QL_*` env (`BACKEND` `tcp`|`usb`, `MODEL`, `LABEL`, TCP `HOST`/`PORT`, optional `TIMEOUT_MS`). `GET /api/labels/printer-status` replaces `sidecar-status`.
+- **Docker:** Distroless image bundles `usb` prebuild libs via `collect-distroless-libs.sh` for the Brother USB stack; single-service **Compose** and a single **GHCR** image (removed `label-sidecar` service, Python image, and `LABEL_SIDECAR_*`).
+- **Docs / Settings:** Hardware and configuration guides updated; Settings shows Brother QL status and env help.
+
 ### Frontend — category attributes UI (step 1) — 2026-04-21
 
 **Done**

@@ -126,6 +126,6 @@ sudo -u inventory pnpm prune --prod
 sudo systemctl restart workbench-inventory
 ```
 
-## 9. Optional: label sidecar
+## 9. Brother QL printing
 
-If you use the Python Brother sidecar on the same Pi, run it separately (another systemd unit or process) and set `LABEL_SIDECAR_URL` in `.env` (e.g. `http://127.0.0.1:5050`). The main app does not start Python for you. See **[Printers & label sidecar](/guide/hardware/printers)** for API and hardware context.
+Physical Brother QL printing runs **in the Nest process** via **`@brother-ql/node`**. Set **`BROTHER_QL_*`** in `.env` or the systemd unit (see **[Brother QL label printing](/guide/hardware/printers)**).

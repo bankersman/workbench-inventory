@@ -20,13 +20,6 @@ Open the printed dev URL in your browser. The app is a React SPA (Tailwind CSS, 
 
 Lint, test, and build commands are on the [Development](/guide/development) page.
 
-## Optional label sidecar (local Python)
+## Brother QL printing
 
-For hardware label forwarding while developing:
-
-```bash
-pip install -r label-sidecar/requirements.txt
-python label-sidecar/sidecar.py
-```
-
-Set `LABEL_SIDECAR_URL` if not using the default `http://127.0.0.1:5050`. The sidecar listens on `LABEL_SIDECAR_PORT` (default `5050`), not `PORT`. See [Printers & label sidecar](/guide/hardware/printers) for Docker and Brother QL context.
+Physical printing uses **`@brother-ql/node`** in the Nest process. Set **`BROTHER_QL_*`** in the environment (see [Brother QL label printing](/guide/hardware/printers) and [Configuration](/guide/configuration)).

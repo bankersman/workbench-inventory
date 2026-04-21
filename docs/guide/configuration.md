@@ -11,9 +11,12 @@ Environment variables (see also `.env.example` if present):
 | `MOUSER_API_KEY`                 | Mouser API key for price lookup                                                                          |
 | `TME_APP_KEY` / `TME_APP_SECRET` | TME API credentials                                                                                      |
 | `NAS_PATH`                       | Optional `rsync` destination for backups                                                                 |
-| `LABEL_SIDECAR_URL`              | Python label sidecar base URL (Compose default: `http://label-sidecar:5050`)                             |
-| `LABEL_SIDECAR_PORT`             | Sidecar listen port (default `5050`). Separate from `PORT` (main app).                                   |
-| `BROTHER_QL_PRINTER`             | Optional printer identifier for the sidecar                                                              |
+| `BROTHER_QL_BACKEND`             | `tcp` or `usb` — required for physical Brother QL printing (see **[Brother QL](/guide/hardware/printers)**) |
+| `BROTHER_QL_MODEL`               | Brother QL model id (e.g. `QL-710W`)                                                                     |
+| `BROTHER_QL_LABEL`               | Label / media id (e.g. `62`)                                                                             |
+| `BROTHER_QL_HOST`                | TCP printer host (default `127.0.0.1`)                                                                   |
+| `BROTHER_QL_PORT`                | TCP printer port (default `9100`)                                                                        |
+| `BROTHER_QL_TIMEOUT_MS`          | Optional TCP print timeout (default `10000`)                                                             |
 
 The kiosk WebSocket namespace is `/ws/scanner` with Socket.IO path `/socket.io`.
 

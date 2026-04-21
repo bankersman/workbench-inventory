@@ -2,16 +2,15 @@
 
 Tagged releases build **multi-arch** images (`linux/amd64`, `linux/arm64`) and push them to **GitHub Container Registry** (`ghcr.io`).
 
-| Image                                                  | Purpose                    |
-| ------------------------------------------------------ | -------------------------- |
-| `ghcr.io/bankersman/workbench-inventory`               | NestJS app + static UI     |
-| `ghcr.io/bankersman/workbench-inventory-label-sidecar` | Python Flask label service |
+| Image                                    | Purpose                |
+| ---------------------------------------- | ---------------------- |
+| `ghcr.io/bankersman/workbench-inventory`   | NestJS app + static UI |
 
 Tags follow the release (for example `v0.0.1` → images tagged `0.0.1`, `0.0`, and `latest` on that release line).
 
-## Label sidecar is optional
+## Physical label printing
 
-You can run **only** the main app image. Inventory, UI, barcode **preview**, and API features work without Python. The sidecar is only needed to **forward label print jobs** to optional Brother QL hardware (`POST /api/labels/print`). If no sidecar is reachable, Settings shows the sidecar as not ready and print-to-printer returns an error; everything else keeps working.
+Inventory, UI, barcode **preview**, and API features work without a Brother QL. To print labels from the container, configure **`BROTHER_QL_*`** on the app service (see **[Brother QL label printing](/guide/hardware/printers)**). If printing is not configured or the printer is unreachable, Settings shows the printer as not ready and `POST /api/labels/print` may return an error; everything else keeps working.
 
 ## App only — one line (no repo clone)
 
@@ -47,11 +46,9 @@ docker compose -f docker-compose.ghcr.yml up -d
 
 Open `http://localhost:3000` in a browser. The database file is under `./data` and backups under `./backups`, same as the [build-from-source](/guide/getting-started/) compose file.
 
-The Compose file includes **both** the app and the **label sidecar**. To run **without** the sidecar, use the [one-line `docker run`](#app-only-one-line-no-repo-clone) above instead of Compose.
-
 ### Pin a version
 
-Edit `docker-compose.ghcr.yml` (or use [overrides](https://docs.docker.com/compose/how-tos/multiple-compose-files/merge/)) so each `image:` ends with a specific tag, for example `ghcr.io/bankersman/workbench-inventory:0.0.1` and `ghcr.io/bankersman/workbench-inventory-label-sidecar:0.0.1`. Use the **same tag** on both services.
+Edit `docker-compose.ghcr.yml` (or use [overrides](https://docs.docker.com/compose/how-tos/multiple-compose-files/merge/)) so `image:` ends with a specific tag, for example `ghcr.io/bankersman/workbench-inventory:0.0.1`.
 
 ## Authentication
 

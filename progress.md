@@ -96,7 +96,7 @@ _Status: complete._
 
 _Status: complete._
 
-- [x] Step 7.1 — Python sidecar
+- [x] Step 7.1 — Brother QL via `@brother-ql/node`
 - [x] Step 7.2 — Label service
 - [x] Step 7.3 — Label and command sheet endpoints
 - [x] Step 7.4 — Label UI

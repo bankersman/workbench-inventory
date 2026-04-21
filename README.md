@@ -12,13 +12,13 @@ cd workshop-inventory
 docker compose up --build
 ```
 
-**Run the app image only** (no Git clone; optional label sidecar omitted):
+**Run the app image only** (no Git clone):
 
 ```bash
 mkdir -p data backups && docker run --rm -p 3000:3000 -v "$(pwd)/data:/opt/inventory/data" -v "$(pwd)/backups:/opt/inventory/backups" -e PORT=3000 -e DB_PATH=/opt/inventory/data/inventory.db ghcr.io/bankersman/workbench-inventory:latest
 ```
 
-**Compose (app + label sidecar)** — copy [`docker-compose.ghcr.yml`](./docker-compose.ghcr.yml) from this repo or use a checkout:
+**Compose (pre-built image)** — copy [`docker-compose.ghcr.yml`](./docker-compose.ghcr.yml) from this repo or use a checkout:
 
 ```bash
 docker compose -f docker-compose.ghcr.yml pull
@@ -27,7 +27,7 @@ docker compose -f docker-compose.ghcr.yml up -d
 
 More detail (custom host port, pinning versions, `ghcr.io` login, volume permissions) is in **[Docker (GHCR)](https://bankersman.github.io/workbench-inventory/guide/docker.html)** ([`docs/guide/docker.md`](./docs/guide/docker.md)).
 
-Open [http://localhost:3000](http://localhost:3000). Compose runs two **distroless** services (Nest app + Python label sidecar on port 5050). Persisted data lives in `./data` and backups in `./backups`.
+Open [http://localhost:3000](http://localhost:3000). Compose runs one **distroless** service (Nest app + static UI). Persisted data lives in `./data` and backups in `./backups`.
 
 ### Optional USB barcode scanner
 
@@ -43,7 +43,7 @@ From the repo root: `pnpm install --frozen-lockfile`, then run the Nest API (`pn
 
 ### Web UI (kiosk app)
 
-The React SPA is styled with **Tailwind CSS** and loads server state via **TanStack Query**. It includes a bottom nav shell, light/dark theme (Settings or footer), and task-oriented flows: **Inventory** (storage areas and bins), **Parts** (search, create, adjust stock), **Projects** (BOM, CSV import/export, completion), **Order** (reorder list), and **Settings** (categories, backup, scanner/sidecar status).
+The React SPA is styled with **Tailwind CSS** and loads server state via **TanStack Query**. It includes a bottom nav shell, light/dark theme (Settings or footer), and task-oriented flows: **Inventory** (storage areas and bins), **Parts** (search, create, adjust stock), **Projects** (BOM, CSV import/export, completion), **Order** (reorder list), and **Settings** (categories, backup, scanner and Brother QL status).
 
 ## Documentation
 

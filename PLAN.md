@@ -20,7 +20,7 @@
 | Scheduler | `@nestjs/schedule` | Cron-based backup, no OS-level cron required |
 | WebSocket | `@nestjs/websockets` + `socket.io` | Scanner event broadcast to kiosk only |
 | Supplier APIs | Mouser REST, TME REST | Both optional, both free with registration |
-| Label printing | Brother QL via `brother_ql` Python sidecar | REST wrapper called from NestJS |
+| Label printing | Brother QL via `@brother-ql/node` in Nest | `BrotherQlService`, `BROTHER_QL_*` env |
 
 ---
 
@@ -589,7 +589,7 @@ flowchart TB
 | **Locate stock** | Browse storage → container → item; search/filter parts by name, category, location. |
 | **Correct counts** | Adjust quantity with clear before/after and container context. |
 | **Reorder** | Order list screen actionable and consistent with shell (`OrderListScreen`). |
-| **Admin** | Categories, backup, scanner/sidecar—same shell and plain language (`SettingsScreen`). |
+| **Admin** | Categories, backup, scanner/printer—same shell and plain language (`SettingsScreen`). |
 
 ### Overhaul phases (0–7) and tracker
 
@@ -602,7 +602,7 @@ Delivery gate after each phase: **`pnpm test`**, **`pnpm run lint`**, **`pnpm ru
 | **2** | Projects list/create; project detail—BOM with availability, line CRUD, CSV import preview/confirm, exports, complete/delete. |
 | **3** | Inventory hub—add storage area; storage unit edit/delete, create bin; container detail—location/project, edit/delete. |
 | **4** | Parts list—search + filters; **`/items/new`** create; item detail—availability, adjust quantity (delta + reason), edit, delete; links from home/container. |
-| **5** | Settings—**category** CRUD; backup/scanner/sidecar sections in same shell. |
+| **5** | Settings—**category** CRUD; backup/scanner/printer sections in same shell. |
 | **6** | A11y (focus rings on nav, dialog labels); **Vitest** for **pure helpers only** (e.g. `parseApiErrorMessage`)—no E2E / click-suite mandate. |
 | **7** | **Spec/doc alignment:** this **`PLAN.md`** section, **README**, **`docs/`**, **`progress.md`**, CHANGELOG coherence; **`progress-frontend-overhaul.md`** all `[x]`. |
 
@@ -752,7 +752,7 @@ Tap any row to navigate to item detail.
 
 #### Settings
 
-> **Shipped UI (overhaul):** **Categories** supports list + create + edit + delete in the same shell as the rest of the app, including typed custom attribute-definition editing (`number` / `text` / `enum` with optional units/options) and per-category custom-field counts in the list. **Items** create/edit forms now render dynamic category-driven fields and persist item `attributes`. **Appearance** (light/dark), **backup** (run + download), **scanner** and **sidecar** status, **command sheet** link, and supplier keys as environment copy are present with the shared layout.
+> **Shipped UI (overhaul):** **Categories** supports list + create + edit + delete in the same shell as the rest of the app, including typed custom attribute-definition editing (`number` / `text` / `enum` with optional units/options) and per-category custom-field counts in the list. **Items** create/edit forms now render dynamic category-driven fields and persist item `attributes`. **Appearance** (light/dark), **backup** (run + download), **scanner** and **Brother QL** status, **command sheet** link, and supplier keys as environment copy are present with the shared layout.
 
 Organised into sections:
 
@@ -789,12 +789,12 @@ Camera barcode scanning is noted as a future feature for this client type.
 ### Architecture
 
 ```
-NestJS LabelService  →  BrotherQLService (HTTP)  →  Python sidecar (Flask :5050)  →  Brother QL
+NestJS LabelService  →  BrotherQlService (`@brother-ql/node`)  →  Brother QL (TCP :9100 or USB)
 ```
 
 Labels are generated as PNG images server-side using the `canvas` npm package.
 Code 128 barcodes are rendered using the `bwip-js` npm package.
-The PNG is sent to the Python sidecar which forwards to `brother_ql`.
+The PNG buffer is passed to `BrotherQlNodeClient#print` (see `@brother-ql/node`).
 
 ### Label templates
 
@@ -864,7 +864,7 @@ Manual trigger and file download available from the Settings screen and via API.
         tme.service.ts
       labels/
         label.service.ts        PNG generation (canvas + bwip-js)
-        brother-ql.service.ts   HTTP client to Python sidecar
+        brother-ql.service.ts   `@brother-ql/node` client, `BROTHER_QL_*` env
       backup/
         backup.service.ts
         backup.scheduler.ts
@@ -901,9 +901,6 @@ Manual trigger and file download available from the Settings screen and via API.
   data/
     inventory.db
   backups/
-  label-sidecar/
-    sidecar.py
-    requirements.txt            brother_ql, flask, bwip-py (Code 128 fallback if needed)
 ```
 
 ---
@@ -919,7 +916,7 @@ MOUSER_API_KEY=
 TME_APP_KEY=
 TME_APP_SECRET=
 NAS_PATH=                       # optional, e.g. user@nas:/volume1/backups/inventory
-LABEL_SIDECAR_URL=http://localhost:5050
+# Brother QL (optional): BROTHER_QL_BACKEND, MODEL, LABEL, HOST, PORT, TIMEOUT_MS — see docs
 ```
 
 ---
@@ -1107,15 +1104,15 @@ CSV import and export, shopping list generation.
 ### Phase 7 — Label Printing
 **Goal:** Generate and print Code 128 labels for all scannable entities.
 
-#### Step 7.1 — Python sidecar
-- Flask app on port 5050: `POST /print` (PNG + config), `GET /status`
-- `requirements.txt`: `brother_ql`, `flask`
+#### Step 7.1 — Brother QL (`@brother-ql/node`)
+- Nest `BrotherQlService` uses `BrotherQlNodeClient`; env `BROTHER_QL_*` for TCP/USB
+- `GET /api/labels/printer-status` for Settings
 
 #### Step 7.2 — Label service
 - PNG generation per template using `canvas`
 - Code 128 barcode rendering using `bwip-js`
 - All templates defined in this spec
-- `BrotherQLService` HTTP client to sidecar
+- `BrotherQlService` sends PNG bytes to the printer SDK
 
 #### Step 7.3 — Label and command sheet endpoints
 
@@ -1190,9 +1187,8 @@ Jobs:
 1. Build multi-arch Docker image (`linux/amd64`, `linux/arm64` for Pi)
 2. Push to GitHub Container Registry (`ghcr.io`)
 3. Tag as both `v1.2.3` and `latest`
-4. Second image for the label sidecar: `ghcr.io/owner/workbench-inventory-label-sidecar` (same tags)
 
-The **label sidecar** is a **separate** distroless Python image (`label-sidecar/Dockerfile`). The main app image is distroless Node only (`gcr.io/distroless/nodejs24-debian12:nonroot`); native Node addons bundle their shared libraries at build time.
+The **app** image is distroless Node (`gcr.io/distroless/nodejs24-debian12:nonroot`); native Node addons (`canvas`, `better-sqlite3`, `usb` for Brother QL) bundle their shared libraries at build time via `collect-distroless-libs.sh`.
 
 #### Step 10.3 — Docker Compose
 `docker-compose.yml` at repo root for local development and target deployment:
@@ -1201,31 +1197,22 @@ The **label sidecar** is a **separate** distroless Python image (`label-sidecar/
 services:
   app:
     image: ghcr.io/owner/workbench-inventory:latest
-    depends_on:
-      - label-sidecar
     ports:
       - "3000:3000"
-    environment:
-      LABEL_SIDECAR_URL: http://label-sidecar:5050
     volumes:
       - ./data:/opt/inventory/data
       - ./backups:/opt/inventory/backups
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0   # optional, scanner passthrough
     env_file: .env
-  label-sidecar:
-    image: ghcr.io/owner/workbench-inventory-label-sidecar:latest
-    ports:
-      - "5050:5050"
 ```
 
 Volume mounts keep the database and backups outside the container.
 Scanner device passthrough is optional — omit the `devices` section if no scanner.
 
 #### Step 10.4 — Dockerfile
-- **App** (`Dockerfile`): multi-stage build (Node 24 Bookworm) → runtime `gcr.io/distroless/nodejs24-debian12:nonroot`; copy extra `.so` for `canvas` / `better-sqlite3`; health check via Node `fetch` to `/api/health`
-- **Sidecar** (`label-sidecar/Dockerfile`): pip install in build stage → `gcr.io/distroless/python3-debian12:nonroot`
-- Non-root (`65532`) in both runtimes
+- **App** (`Dockerfile`): multi-stage build (Node 24 Bookworm) → runtime `gcr.io/distroless/nodejs24-debian12:nonroot`; copy extra `.so` for `canvas` / `better-sqlite3` / `usb` (Brother QL); health check via Node `fetch` to `/api/health`
+- Non-root (`65532`)
 
 ---
 
