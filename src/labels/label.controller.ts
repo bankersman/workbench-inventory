@@ -39,8 +39,8 @@ export class LabelController {
     return { ok: true };
   }
 
-  @Get('sidecar-status')
-  async sidecarStatus() {
+  @Get('printer-status')
+  async printerStatus() {
     return this.brotherQlService.getStatus();
   }
 }
