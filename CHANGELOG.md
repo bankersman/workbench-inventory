@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Frontend — category attributes UI (step 1) — 2026-04-21
+
+**Done**
+
+- Added shared frontend category attribute typings in [`frontend/src/types/category.ts`](frontend/src/types/category.ts) to mirror backend `Category.attributes` schema (`number` / `text` / `enum` with optional enum `options`).
+
 ### Tooling — pnpm workspace — 2026-04-21
 
 **Done**
