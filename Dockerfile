@@ -39,15 +39,34 @@ RUN pnpm prune --prod
 
 FROM node:24-bookworm AS native_libs
 
+ARG TARGETARCH
+
 WORKDIR /app
 
 COPY --from=prod_deps /app/node_modules ./node_modules
 COPY scripts/collect-distroless-libs.sh /collect-distroless-libs.sh
 
+# Include libusb (etc.) for the `usb` package used by @brother-ql/transport-node (Brother QL USB backend).
 RUN chmod +x /collect-distroless-libs.sh \
-  && /collect-distroless-libs.sh /sysroot \
-    /app/node_modules/canvas/build/Release/canvas.node \
-    /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node
+  && TA="${TARGETARCH:-amd64}" \
+  && USB_BASE="$(ls -d /app/node_modules/.pnpm/usb@*/node_modules/usb 2>/dev/null | head -1)" \
+  && USB_NODE="" \
+  && if [ -n "$USB_BASE" ]; then \
+       case "$TA" in \
+         amd64) USB_NODE="$USB_BASE/prebuilds/linux-x64/node.napi.glibc.node" ;; \
+         arm64) USB_NODE="$USB_BASE/prebuilds/linux-arm64/node.napi.armv8.node" ;; \
+       esac; \
+     fi \
+  && if [ -n "$USB_NODE" ] && [ -f "$USB_NODE" ]; then \
+       /collect-distroless-libs.sh /sysroot \
+         /app/node_modules/canvas/build/Release/canvas.node \
+         /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node \
+         "$USB_NODE"; \
+     else \
+       /collect-distroless-libs.sh /sysroot \
+         /app/node_modules/canvas/build/Release/canvas.node \
+         /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node; \
+     fi
 
 FROM gcr.io/distroless/nodejs24-debian12:nonroot AS runtime
 
