@@ -676,6 +676,9 @@ Actions: edit container, add item, move container (changes storage unit), print 
 
 #### Item Detail
 Shows the item's name, category, and all category-specific attributes (e.g. resistance, package).
+In the shipped UI, this is rendered in a dedicated **Specifications** card that maps category
+attribute labels/units to stored item attribute values; if category metadata is missing, fallback
+key/value attributes are still shown.
 Shows a stock breakdown:
 - Total quantity
 - In warehouse (total minus what's in project bins)
@@ -749,7 +752,7 @@ Tap any row to navigate to item detail.
 
 #### Settings
 
-> **Shipped UI (overhaul):** **Categories** supports list + create + rename + delete by **name** in the same shell as the rest of the app. **Appearance** (light/dark), **backup** (run + download), **scanner** and **sidecar** status, **command sheet** link, and supplier keys as environment copy are present with the shared layout. Full **category attribute-definition** editing (below) may still be future work in the UI.
+> **Shipped UI (overhaul):** **Categories** supports list + create + edit + delete in the same shell as the rest of the app, including typed custom attribute-definition editing (`number` / `text` / `enum` with optional units/options) and per-category custom-field counts in the list. **Items** create/edit forms now render dynamic category-driven fields and persist item `attributes`. **Appearance** (light/dark), **backup** (run + download), **scanner** and **sidecar** status, **command sheet** link, and supplier keys as environment copy are present with the shared layout.
 
 Organised into sections:
 

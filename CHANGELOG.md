@@ -36,6 +36,12 @@
 
 - Settings category rows now show the number of custom fields defined for each category (e.g. `0 fields`, `3 fields`) to make schema coverage visible at a glance.
 
+### Docs — category attributes UI (final step) — 2026-04-21
+
+**Done**
+
+- Updated [`PLAN.md`](PLAN.md) to reflect shipped behavior: category attribute-definition editing in Settings, dynamic category-driven item create/edit fields with persisted `attributes`, and the item-detail **Specifications** rendering/fallback behavior.
+
 ### Tooling — pnpm workspace — 2026-04-21
 
 **Done**
