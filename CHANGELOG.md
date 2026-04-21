@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Docs — PLAN.md workshop UI (full overhaul plan) — 2026-04-21
+
+**Done**
+
+- **[PLAN.md](PLAN.md):** Major **Workshop UI — frontend overhaul (shipped application layer)** section—principles and visual direction from the overhaul spec, technical architecture (**Tailwind**, **TanStack Query**, **`apiBase`/`fetchJson`**, SPA static), theme/shell/GitHub, user-journeys table, **phases 0–7** summary, client **route** table, file references, risks; mermaid diagram; **Frontend Screens** intro distinguishes **shipped UI** vs **full kiosk target**; **Settings** and **Inventory Browser** callouts for what the repo ships today; **Implementation roadmap** Phase 4 Step 4.1 and **Unit Testing** bullets aligned with the shipped stack.
+
 ### Frontend overhaul — Phase 7 — 2026-04-21
 
 **Done**

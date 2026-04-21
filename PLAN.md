@@ -15,7 +15,7 @@
 | Framework | NestJS | Modules, DI, scheduler, WebSocket, all built-in |
 | ORM | TypeORM | Native NestJS integration, database-agnostic |
 | Database | SQLite via `better-sqlite3` | Single file, WAL mode. Assumed for development and production target. TypeORM config abstracted so other DBs are possible without code changes |
-| Frontend | React 18 + Vite + Tailwind CSS + TanStack Query | Served as static files from NestJS; task-oriented kiosk UI (inventory, parts, projects/BOM, order list, settings) |
+| Frontend | React 18 + Vite + Tailwind CSS + TanStack Query | Served as static files from NestJS; workshop/kiosk UI with **light + dark** theme, bottom nav, GitHub link in shell—see **Workshop UI — frontend overhaul** below |
 | Barcode input | `serialport` npm package | Scanner in USB CDC serial mode, server-side only |
 | Scheduler | `@nestjs/schedule` | Cron-based backup, no OS-level cron required |
 | WebSocket | `@nestjs/websockets` + `socket.io` | Scanner event broadcast to kiosk only |
@@ -47,7 +47,7 @@ so all subsequent phases inherit the standards from the start.
 
 ### Unit Testing
 - Backend: Jest via `@nestjs/testing`, one spec file per service/module
-- Frontend: Vitest + `@testing-library/react`
+- Frontend: Vitest + `@testing-library/react`; optional **pure-function** tests (e.g. `parseApiErrorMessage` in `frontend/src/api.ts`) per frontend overhaul Phase 6—no E2E or broad UI click-suite required for that initiative
 - Coverage collected but no hard threshold enforced initially — coverage report generated in CI
 - Priority test targets:
   - `AvailabilityService` — core derived stock calculations, all edge cases covered
@@ -522,13 +522,133 @@ Non-blocking. No action is ever refused. Warnings are modal overlays — one tap
 
 ---
 
+## Workshop UI — frontend overhaul (shipped application layer)
+
+This section records the **UX-first frontend overhaul**: cohesive workshop/kiosk UX (not generic gray admin), **task-oriented flows**, trustworthy feedback, and the **technical stack** that supports it (Tailwind, TanStack Query, SPA static hosting, Nest error parsing). It sits alongside the **scanner state machine**, **Warning System**, and **Frontend Screens** product target elsewhere in this document.
+
+**Relationship to the rest of PLAN.md**
+
+- **[Frontend Screens](#frontend-screens)** below describes the **full kiosk vision** (rich BOM tabs, supplier blocks on items, inventory browser, etc.).
+- This section describes **what the React app in `frontend/` actually ships today** and the **phased delivery** (`progress-frontend-overhaul.md`). Where the two differ, the repo UI follows this section until the screen-level bullets below are implemented end-to-end.
+
+### Principles (overhaul)
+
+- **User and job first:** Screens answer concrete tasks—“what does this build still need?”, “where is this part?”, “fix count after a stock-take”, “order what’s low”—not one generic form per DTO.
+- **Look and feel:** One visual language (type scale, spacing, color roles, hover/focus/disabled/loading). **Touch-friendly** targets and bottom nav suited to kiosk use. Empty and error states are **designed** (inline banners, confirmations with plain-language consequences for destructive actions).
+- **Implementation serves UX:** REST + TanStack Query are plumbing; the product is the flow.
+
+### Visual direction
+
+Avoid a **flat gray Tailwind admin**. Prefer a **workshop-friendly** feel: breathable layout, **warm or soft neutrals**, **rounded** cards and nav (`rounded-xl` scale), subtle borders or soft shadows, generous padding on main content (`p-4`+). **Violet** accent for primary actions and active nav. Readable body size on touch (~16px equivalent for primary content). Short transitions (e.g. 150–200ms) on hover/focus/theme change where helpful. **Anti-patterns:** cramped tables with no affordance; raw unstyled tables; default controls only; walls of undifferentiated gray with no accent.
+
+### Technical architecture
+
+```mermaid
+flowchart TB
+  subgraph jobs [User jobs]
+    P[Project build]
+    L[Locate parts]
+    C[Counts and order]
+  end
+  subgraph ui [React SPA]
+    Shell[Shell and nav]
+    Flows[Task-oriented screens]
+  end
+  subgraph impl [Implementation layer]
+    RQ[TanStack Query]
+    API["fetchJson + apiBase"]
+  end
+  subgraph nest [Nest API]
+    Rest["/api/*"]
+  end
+  jobs --> Flows
+  Shell --> Flows
+  Flows --> RQ
+  RQ --> API
+  API --> Rest
+```
+
+- **Styling:** **Tailwind CSS** (v4 + Vite plugin); `darkMode: 'class'` on `<html>`; **`dark:`** variants so one component tree covers light and dark.
+- **Server state:** **TanStack Query** (`QueryClientProvider` in `frontend/src/main.tsx`)—caching, mutations, invalidation after actions.
+- **HTTP helpers:** **`apiBase()`** (supports `VITE_API_BASE`), **`fetchJson`**, **`fetchNoContent`**; **`parseApiErrorMessage`** for Nest JSON bodies (`message` / `message[]` / `error`).
+- **Production static:** Vite build output to `dist/`; Nest **`ServeStaticModule`** serves the SPA; **SPA fallback** so deep links (`/projects`, `/items`, …) return **`index.html`** (not 404); API under global prefix (e.g. `/api`).
+- **Dev:** Vite dev server proxies `/api` (and scanner/socket as configured); full stack = Nest + `npm run dev --workspace frontend`; single-port deep links = production build + Nest.
+
+### Theme, shell, and global chrome
+
+- **Themes:** **Light** and **dark** are both first-class. User toggle in **Settings** and quick toggle in **footer** (`AppFooter`). Persistence: **`localStorage`** key **`workbench-theme`** (`light` | `dark`). First visit with no stored value: **`prefers-color-scheme`**, then persist on toggle.
+- **GitHub:** Persistent link to **`https://github.com/bankersman/workbench-inventory`** in the shell (footer), **`target="_blank"`**, **`rel="noopener noreferrer"`**, accessible name (“GitHub” / “Source”).
+- **Layout:** **`AppLayout`** (main content, max width), **`StatusBar`** (command mode), bottom **nav** (Home, Inventory, Projects, Order, Settings), **`CommandPalette`** (scanner-free CMD/QTY tiles). Main landmark **`id="main-content"`** for focus/skip patterns.
+- **Product title:** `index.html` / app chrome use a real product name (e.g. **Workbench Inventory**).
+
+### User journeys (overhaul anchor)
+
+| Journey | Outcome the UI should nail |
+|--------|----------------------------|
+| **Project / build** | Project status, BOM vs availability, import BOM, adjust lines, export, mark complete—in context, not raw forms only. |
+| **Locate stock** | Browse storage → container → item; search/filter parts by name, category, location. |
+| **Correct counts** | Adjust quantity with clear before/after and container context. |
+| **Reorder** | Order list screen actionable and consistent with shell (`OrderListScreen`). |
+| **Admin** | Categories, backup, scanner/sidecar—same shell and plain language (`SettingsScreen`). |
+
+### Overhaul phases (0–7) and tracker
+
+Delivery gate after each phase: **`npm test`**, **`npm run lint`**, **`npm run typecheck`**, **`npm run format:check`**, **`npm run build`**; **CHANGELOG** entry; check off phase in **`progress-frontend-overhaul.md`**; git commit (see that file for line items).
+
+| Phase | Scope (summary) |
+|-------|-------------------|
+| **0** | SPA fallback for client routes; **`fetchJson`** Nest error parsing; order list and other callers use **`apiBase()`**. |
+| **1** | Tailwind + semantic layout; theme + GitHub link; TanStack Query on key lists; loading/empty/error patterns. |
+| **2** | Projects list/create; project detail—BOM with availability, line CRUD, CSV import preview/confirm, exports, complete/delete. |
+| **3** | Inventory hub—add storage area; storage unit edit/delete, create bin; container detail—location/project, edit/delete. |
+| **4** | Parts list—search + filters; **`/items/new`** create; item detail—availability, adjust quantity (delta + reason), edit, delete; links from home/container. |
+| **5** | Settings—**category** CRUD; backup/scanner/sidecar sections in same shell. |
+| **6** | A11y (focus rings on nav, dialog labels); **Vitest** for **pure helpers only** (e.g. `parseApiErrorMessage`)—no E2E / click-suite mandate. |
+| **7** | **Spec/doc alignment:** this **`PLAN.md`** section, **README**, **`docs/`**, **`progress.md`**, CHANGELOG coherence; **`progress-frontend-overhaul.md`** all `[x]`. |
+
+### Client routes (shipped)
+
+Static path **`items/new`** is registered **before** **`items/:id`** so “new” is not parsed as an id.
+
+| Route | Screen |
+|-------|--------|
+| `/` | Home |
+| `/inventory` | Storage units hub |
+| `/storage-units/:id` | Storage unit detail |
+| `/containers/:id` | Container detail |
+| `/items` | Parts list (search/filters) |
+| `/items/new` | Create part |
+| `/items/:id` | Part detail |
+| `/projects` | Projects list |
+| `/projects/:id` | Project detail / BOM |
+| `/order` | Order list |
+| `/settings` | Settings (appearance, categories, backup, scanner, labels, command sheet) |
+
+### Files (reference)
+
+| Area | Examples |
+|------|-----------|
+| Nest static | `src/app.module.ts` (`ServeStaticModule`, `renderPath` / SPA fallback) |
+| Tailwind + app shell | `frontend/vite.config.ts`, `frontend/src/main.tsx`, `frontend/src/index.css`, `frontend/src/AppLayout.tsx`, `frontend/src/components/AppFooter.tsx` |
+| API + query | `frontend/src/api.ts`, `frontend/src/queryClient.ts` |
+| Screens | `frontend/src/screens/*.tsx` |
+| Progress | `progress-frontend-overhaul.md` (phases 0–7 checklist) |
+
+### Risks / notes
+
+- **500 on `/api/…`:** Backend/DB issue; clearer UI errors help distinguish from **routing** (wrong HTML vs JSON).
+- **Scope:** Overhaul phases **do not** replace the full **Frontend Screens** spec in one go; they deliver a **credible shell and journeys** first, then doc alignment (Phase 7).
+
+---
+
 ## Frontend Screens
 
 Screens are described from the user's perspective. Implementation details (API calls, state
 management) are left to the agent.
 
-All kiosk screens: dark theme, 48px minimum tap targets, no hover-dependent interactions.
-Scanner input and touch input are always equivalent.
+**Shipped UI today:** The section **Workshop UI — frontend overhaul (shipped application layer)** above describes the React stack, routes, and phased features actually in the repo. The subsections below remain the **full product target** for scanner flows, rich BOM UI, supplier blocks, inventory browser, and warnings—implement or trim over time.
+
+**Interaction model:** Primary controls target **touch** (~44–48px minimum where specified). **Light and dark** themes are supported in the shipped app (not dark-only). **Scanner** and **touch** remain equivalent where the command state machine is wired. Avoid hover-only critical actions.
 
 ---
 
@@ -617,6 +737,9 @@ Actions:
 - Tap any item to navigate to its detail screen
 
 #### Inventory Browser
+
+> **Shipped UI (overhaul):** A **Parts** flow exists at **`/items`** with text search and filters (category, storage unit, container)—see route table in **Workshop UI — frontend overhaul**. Attribute-based filters below are API-capable but not necessarily exposed in the current UI.
+
 A searchable, filterable view of all items.
 Filter by: free text search, category, storage unit / location, low stock only.
 When a category is selected, its specific attributes become filterable
@@ -625,6 +748,9 @@ Each row shows item name, container name, location path, quantity, and stock sta
 Tap any row to navigate to item detail.
 
 #### Settings
+
+> **Shipped UI (overhaul):** **Categories** supports list + create + rename + delete by **name** in the same shell as the rest of the app. **Appearance** (light/dark), **backup** (run + download), **scanner** and **sidecar** status, **command sheet** link, and supplier keys as environment copy are present with the shared layout. Full **category attribute-definition** editing (below) may still be future work in the UI.
+
 Organised into sections:
 
 **Categories** — list of all categories. Add new, edit name and attribute definitions,
@@ -895,8 +1021,9 @@ running regardless, kiosk command mode accessible without scanner via on-screen 
 **Goal:** React kiosk app, scanner state machine, core navigation and screens working.
 
 #### Step 4.1 — App shell
-- Vite + React, dark theme CSS variables, 48px minimum tap targets
-- Bottom navigation: Home, Inventory, Projects, Order List, Settings
+- Vite + React + **Tailwind CSS** + **light/dark** theme (class on root, user toggle + persistence—see **Workshop UI — frontend overhaul**); touch-friendly targets (~44–48px primary controls)
+- Bottom navigation: Home, Inventory, Projects, Order, Settings; shell includes **GitHub** link and optional **AppFooter** theme toggle
+- **TanStack Query** for server state on task screens; **`apiBase()`** / **`fetchJson`** for API calls
 
 #### Step 4.2 — Scanner hook and state machine
 - `useScanner`: WebSocket with `role: kiosk`, exposes latest scan event
